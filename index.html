@@ -241,7 +241,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <li>随机抽 100–200 站在 Sentinel-2 时序上目视判读建设季度</li>
     </ul></div>
     <div class="card"><h3>M2 生境转换与物种暴露</h3><ul>
-      <li>以建设前一年年度土地覆盖为基线(GLC_FCS30D;中国专题用 CLCD)</li>
+      <li>以建设前一年年度土地覆盖为基线:CLCD v1.0.5(1985–2025,中国专题)作主数据,GLC_FCS30D(GEE 内,止于 2022)作交叉核对 [20]</li>
       <li>按生境类型、生物气候区、海拔带统计占用面积</li>
       <li>IUCN/BirdLife 范围 × 生境偏好 × 海拔构建 Area of Habitat;受威胁物种用 SDM</li>
       <li>用 NEE 的同一组指标计算真实选址冲突,判断更接近哪个情景</li>
@@ -309,7 +309,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td><b>全球陆上风机 2024</b></td><td>GonshoreWT2024:全球 416,532 台陆上风机,多源影像与混合学习识别(<i>ESSD</i> 2026)<a href="https://essd.copernicus.org/articles/18/4523/2026/">[链接]</a></td><td>Zenodo 公开下载;是否含建设年份需查数据说明</td></tr>
     <tr><td><b>中国风机 2023</b></td><td>Sentinel-2 识别中国 148,181 台陆上与 7,541 台海上风机(<i>Renew. Sustain. Energy Rev.</i> 2025)<a href="https://www.sciencedirect.com/science/article/abs/pii/S1364032125002394">[链接]</a></td><td>按论文数据声明获取;属性字段待核实</td></tr>
     <tr><td><b>中国光伏 2010–2022</b></td><td>Chen, Zhou, Ge, Dong(2024)深度学习识别的光伏多边形,含建设日期</td><td>按论文数据声明或联系作者;期刊与仓库待核实</td></tr>
-    <tr><td><b>CLCD</b></td><td>中国逐年 30 m 土地覆盖(Yang &amp; Huang 2021, <i>ESSD</i>)</td><td>Zenodo 下载后上传为 GEE 资产;先核对最新版本</td></tr>
+    <tr><td><b>CLCD v1.0.5</b></td><td>中国逐年 30 m 土地覆盖,1985–2025,9 类;Landsat Collection 2 更新,Cloud Optimized GeoTIFF(Albers 投影),CC BY 4.0 [20]</td><td><a href="https://doi.org/10.5281/zenodo.18180184">Zenodo 10.5281/zenodo.18180184</a>;每年全国一幅约 0.8 GB,另有分省包。本项目需 2017–2023 年 7 幅(约 5.7 GB),本地用 exactextract 统计或上传为 GEE 资产</td></tr>
     <tr><td><b>Global Energy Monitor</b></td><td>光伏与风电站点、装机容量、宣布/在建/运行状态</td><td><a href="https://globalenergymonitor.org/">globalenergymonitor.org</a> 申请下载,核对许可</td></tr>
     <tr><td><b>物种分布</b></td><td>IUCN 红色名录范围;BirdLife 鸟类范围;自有 SDM</td><td><a href="https://www.iucnredlist.org/resources/spatial-data-download">IUCN 空间数据</a>;<a href="https://datazone.birdlife.org/">BirdLife DataZone</a> 申请;不得再分发</td></tr>
     <tr><td><b>China BON-Birds</b></td><td>31 省 338 样区,1,822 条样线、1,343 个样点 <a href="https://www.ere.ac.cn/en/article/doi/10.11934/j.issn.1673-4831.2018.01.001">[链接]</a></td><td>无公开门户,需通过合作接洽</td></tr>
@@ -350,7 +350,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </div>
 
   <h3 style="margin-top:28px">① 建设前一年 30 m 土地覆盖(2018 年后新建光伏,14,421 块,3,890 km²)</h3>
-  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。</p>
+  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。CLCD 已更新到 2025 年 [20],下一步用它复算,2023–2024 年站点即可读到真正的前一年覆盖。</p>
   <div class="tw"><table>
     <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按面积)</th><th>按主导类别计站点数</th><th>对照:GRW 自带 ESA CCI 2018,300 m(按面积)</th></tr>
     <tr><td>裸地</td><td><b>39.5%</b></td><td>4.5%</td><td>33.2%</td></tr>
@@ -463,6 +463,7 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileForma
     <li>Li Y., Wang Z., Lei Y., Yu X., Che H., Zhang X. (2026) Ecological effects of photovoltaic deployment in China: a remote sensing assessment. <i>Environ. Res. Commun.</i> 8:041016. <a href="https://doi.org/10.1088/2515-7620/ae625a">链接</a></li>
     <li>彭昀月, 罗永梅, 徐泽楠, 靳彤 (2024) 集中式大型光伏及风电电场生态影响:进展与展望. 生物多样性 32(2):23212. <a href="https://doi.org/10.17520/biods.2023212">链接</a>;同组后续:减缓陆上集中式光伏及风电电场生态影响的早期选址规划方法与工具. 生物多样性 33(1):24063 (2025). <a href="https://www.biodiversity-science.net/CN/Y2025/V33/I1/24063">链接</a></li>
     <li>《中国可再生能源与生物多样性协同发展的机遇与挑战》(征求意见稿)。发布机构与日期待核实,未检索到公开版本,仅作政策背景。</li>
+    <li>Yang J., Huang X. (2026) The 30 m annual land cover datasets and its dynamics in China from 1985 to 2025 (v1.0.5) [Data set]. Zenodo. <a href="https://doi.org/10.5281/zenodo.18180184">链接</a>;方法见 Yang J., Huang X. (2021) <i>Earth Syst. Sci. Data</i> 13:3907–3925。</li>
   </ol>
 </section>
 

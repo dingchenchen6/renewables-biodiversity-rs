@@ -220,7 +220,7 @@ let n = 0;
     "产出:统一设施表(几何、类型、容量、建设季度及其不确定性)",
   ], 13), { hc: C.teal });
   card(s, 6.78, 1.4, 5.95, 5.3, "M2 转换与暴露核算", bul([
-    "建设前生境:建设前一年年度土地覆盖(GLC_FCS30D;中国专题用 CLCD)",
+    "建设前生境:建设前一年年度土地覆盖(CLCD 1985–2025 为主,GLC_FCS30D 交叉核对)",
     "转换核算:按生境类型、生物气候区、海拔带统计占用面积",
     "物种暴露:IUCN/BirdLife 范围 × 生境偏好 × 海拔构建 AOH;受威胁物种用 SDM",
     "按分布区大小、生境专化度、功能群汇总被占用比例",
@@ -311,7 +311,7 @@ let n = 0;
   const rows = [
     [{ text: "数据", options: hdr }, { text: "内容", options: hdr }, { text: "获取方式", options: hdr }],
     [c("中国光伏专题", { bold: true }), c("2015/2020 矢量(含建设年份);2020 年 10 m;CPVPD-2024;农光互补 2010–2022"), c("Scientific Data 等论文的数据仓库,公开下载")],
-    [c("CLCD", { bold: true }), c("中国逐年 30 m 土地覆盖(Yang & Huang 2021)"), c("Zenodo 下载后上传为 GEE 资产;先核对最新版本")],
+    [c("CLCD v1.0.5", { bold: true }), c("中国逐年 30 m 土地覆盖 1985–2025(Yang & Huang 2026,Zenodo,CC BY 4.0)"), c("doi:10.5281/zenodo.18180184;需 2017–2023 年 7 幅,约 5.7 GB")],
     [c("Global Energy Monitor", { bold: true }), c("光伏与风电站点,装机容量,宣布/在建/运行状态"), c("globalenergymonitor.org 申请下载,核对许可")],
     [c("物种分布", { bold: true }), c("IUCN 红色名录范围;BirdLife 鸟类范围;自有 SDM"), c("IUCN 空间数据下载页;BirdLife DataZone 申请;不得再分发")],
     [c("China BON-Birds", { bold: true }), c("31 省 338 样区,1,822 条样线、1,343 个样点"), c("无公开门户,需通过合作接洽")],
