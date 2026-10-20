@@ -189,7 +189,7 @@ let n = 0;
 {
   const s = pres.addSlide(); n++; title(s, "M1 设施清单 · M2 生境转换与物种暴露");
   card(s, 0.6, 1.4, 5.95, 5.3, "M1 设施清单与建设日期", bul([
-    "主数据:GRW 光伏与风电,筛选 country_code = CHN,保留 construction_date",
+    "主数据:GRW 光伏与风电,筛选 COUNTRY = China,保留 construction_year 与 construction_quarter;2017 年为左删失",
     "补 2018 年前:中国 2015/2020 矢量光伏数据集的建设年份字段",
     "复合利用:2010–2022 农光互补矢量数据",
     "容量与状态:Global Energy Monitor 光伏/风电追踪库;\"已宣布未建\"站点是天然反事实候选",
@@ -259,7 +259,7 @@ let n = 0;
 
 // ---- 11 数据源 GEE / data sources (GEE) -----------------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "数据源与获取 ①:Google Earth Engine", "目录中已核实存在;注册 GEE 项目后需在线复核");
+  const s = pres.addSlide(); n++; title(s, "数据源与获取 ①:Google Earth Engine", "全部数据集已于 2026-10-20 在线实测可访问");
   const hdr = { fill: { color: C.deep }, color: C.white, bold: true, fontFace: F, fontSize: 12 };
   const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 11, color: C.ink }, o) });
   const m = (t) => c(t, { fontFace: "Courier New", fontSize: 9.5 });
@@ -277,7 +277,7 @@ let n = 0;
     [c("冠层高度"), c("GLAD GEDI-Landsat"), m("projects/sat-io/open-datasets/GLAD/GEDI_V27")],
   ];
   s.addTable(rows, { x: 0.6, y: 1.65, w: W - 1.2, colW: [1.9, 3.8, 6.43], rowH: 0.44, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
-  s.addText("MODIS GPP 与蒸散产品、ERA5-Land 月聚合版本本次未核验,使用前确认。", { x: 0.6, y: 6.75, w: W - 1.2, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
+  s.addText("另已实测可用:MODIS GPP(MOD17A2HGF)、蒸散(MOD16A2GF)、ERA5-Land 月聚合(MONTHLY_AGGR)。", { x: 0.6, y: 6.75, w: W - 1.2, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
   pageNo(s, n);
 }
 
@@ -343,6 +343,30 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 14b 首批实测 / first live results ----------------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "首批实测:中国站点规模与建设前生境", "GRW,项目 renewable-conservation,2026-10-20;只计 2018 年后新建站点(2017 为左删失)");
+  const stats = [["20,231", "光伏地块(全部)"], ["6,312 km²", "光伏总面积"], ["119,974", "风机(全部)"], ["14,421 · 72,838", "2018 年后新建光伏 · 风机"]];
+  stats.forEach((st, i) => {
+    const y = 1.75 + i * 1.22;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y, w: 3.6, h: 1.05, fill: { color: i % 2 ? C.tint : C.tintA }, line: { color: i % 2 ? C.tint : C.tintA }, rectRadius: 0.06 });
+    s.addText(st[0], { x: 0.8, y: y + 0.08, w: 3.3, h: 0.55, fontFace: "Arial", fontSize: 22, bold: true, color: C.deep, margin: 0 });
+    s.addText(st[1], { x: 0.8, y: y + 0.6, w: 3.3, h: 0.35, fontFace: F, fontSize: 12, color: C.mute, margin: 0 });
+  });
+  const cats = ["裸地", "草地", "耕地", "森林", "水体", "其他"];
+  s.addChart(pres.charts.BAR, [
+    { name: "光伏(面积 %)", labels: cats, values: [33.2, 31.2, 26.5, 0.7, 4.1, 4.3] },
+    { name: "风机(数量 %)", labels: cats, values: [21.8, 34.9, 19.4, 12.2, 0.8, 10.9] },
+  ], { x: 4.5, y: 1.6, w: 8.2, h: 4.6, barDir: "col", barGrouping: "clustered",
+       chartColors: [C.amber, C.teal], showLegend: true, legendPos: "t", legendFontSize: 12, legendFontFace: F,
+       showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 10, dataLabelFormatCode: "0.0",
+       catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
+       valAxisMaxVal: 40, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
+       showTitle: true, title: "建设前土地覆盖(ESA CCI 2018,300 m)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
+  s.addText("提示:ESA CCI 为 300 m 粗分辨率;2018 年建成站点的\"2018 年覆盖\"可能已是建成后状态,正式分析改用建设前一年的 30 m 年度土地覆盖。", { x: 4.5, y: 6.35, w: 8.2, h: 0.6, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  pageNo(s, n);
+}
+
 // ---- 15 风险 / risks -----------------------------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "主要风险与对策");
@@ -387,7 +411,7 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
-    "注册 GEE 非商业项目,跑通起步脚本,统计中国站点的季度分布",
+    "GEE 项目已注册;按实测字段跑通起步脚本,导出中国站点",
     "抽样目视验证建设日期,判断 G1",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",

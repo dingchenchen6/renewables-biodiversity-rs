@@ -105,7 +105,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <nav class="toc"><div class="wrap">
   <a href="#verdict">判断</a><a href="#position">定位</a><a href="#evidence">证据台账</a><a href="#question">核心问题</a>
   <a href="#workflow">工作流</a><a href="#modules">模块细节</a><a href="#data">数据源与获取</a><a href="#gates">质量关口</a>
-  <a href="#pilot">两周 pilot</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
+  <a href="#pilot">两周 pilot</a><a href="#first">首批实测</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
 </div></nav>
 
 <main class="wrap">
@@ -208,13 +208,13 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <h2>模块细节</h2>
   <div class="grid g2">
     <div class="card"><h3>M0 准备与数据治理</h3><ul>
-      <li>注册 Google Earth Engine 非商业项目(作者本机尚未注册)</li>
+      <li>GEE 非商业项目已注册(renewable-conservation);国内网络需让脚本经代理访问 googleapis</li>
       <li>China BON-Birds、保护地边界、生态保护红线需合作或授权;记录级观鸟数据不再分发</li>
       <li>联系 NEE 作者组索取情景图层</li>
       <li>看结果前预注册主结局、对照规则、距离环与功效门槛</li>
     </ul></div>
     <div class="card"><h3>M1 设施清单与建设日期</h3><ul>
-      <li>主数据:GRW,筛选 <code>country_code = 'CHN'</code>,保留 <code>construction_date</code></li>
+      <li>主数据:GRW,筛选 <code>COUNTRY = 'China'</code>,保留 <code>construction_year</code> 与 <code>construction_quarter</code>;2017 年一律为第 4 季度,是影像起点前已存在站点的左删失,不能当作建设时间</li>
       <li>补 2018 年前:中国 2015/2020 矢量光伏数据集的建设年份字段;农光互补 2010–2022</li>
       <li>容量与状态:Global Energy Monitor 追踪库;"已宣布未建"站点是天然反事实候选</li>
       <li>交叉验证:光伏用 TZ-SAM 的建设时间上下界校验 GRW 季度日期;风电用 GonshoreWT2024 与中国 2023 年风机图校验点位与覆盖</li>
@@ -262,12 +262,12 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 
 <section id="data">
   <h2>数据源与获取</h2>
-  <p class="lead">GEE 数据集均在目录中核实存在;注册 Earth Engine 项目后需在线复核。</p>
+  <p class="lead">下表全部 GEE 数据集已于 2026-10-20 在线实测可访问。</p>
   <h3>Google Earth Engine</h3>
   <div class="tw"><table>
     <tr><th>用途</th><th>数据集</th><th>GEE ID / 说明页</th></tr>
-    <tr><td>设施与建设日期</td><td>Global Renewables Watch v1(光伏多边形、风机点位,季度建设日期)</td><td><code>projects/sat-io/open-datasets/GRW/SOLAR_V1</code><br><code>projects/sat-io/open-datasets/GRW/WIND_V1</code><br><a href="https://gee-community-catalog.org/projects/grw/">说明页</a></td></tr>
-    <tr><td>光伏建设时间互校</td><td>TransitionZero Solar Asset Mapper(TZ-SAM,季度更新;&gt;500 kW;含 <code>constructed_after</code>/<code>constructed_before</code> 建设时间上下界与 <code>capacity_mw</code>;CC BY-NC 4.0)</td><td><code>projects/sat-io/open-datasets/TZERO/TZ-SOLAR-2025Q1_ANALYSIS_POLYGONS</code>(后续季度替换版本号)<br><a href="https://gee-community-catalog.org/projects/tzero/">说明页</a></td></tr>
+    <tr><td>设施与建设日期</td><td>Global Renewables Watch v1(光伏多边形、风机点位;字段 <code>COUNTRY</code>、<code>construction_year</code>、<code>construction_quarter</code>、<code>area</code>、<code>landcover_in_2018</code>)</td><td><code>projects/sat-io/open-datasets/GRW/SOLAR_V1</code><br><code>projects/sat-io/open-datasets/GRW/WIND_V1</code><br><a href="https://gee-community-catalog.org/projects/grw/">说明页</a></td></tr>
+    <tr><td>光伏建设时间互校</td><td>TransitionZero Solar Asset Mapper(TZ-SAM,季度更新;&gt;500 kW;建设时间字段在 GEE 中截断为 <code>construc_1</code>/<code>constructe</code>,容量为 <code>capacity_m</code>;无国家字段,需用国界空间筛选;CC BY-NC 4.0)</td><td><code>projects/sat-io/open-datasets/TZERO/TZ-SOLAR-2025Q1_ANALYSIS_POLYGONS</code>(后续季度替换版本号)<br><a href="https://gee-community-catalog.org/projects/tzero/">说明页</a></td></tr>
     <tr><td>风电场交叉验证</td><td>Dunnett 等协调化全球风电场位置</td><td><code>projects/sat-io/open-datasets/global_wind_farms_2020</code><br><a href="https://gee-community-catalog.org/projects/energy_farms/">说明页</a></td></tr>
     <tr><td>年度土地覆盖</td><td>GLC_FCS30D,1985–2022,30 m</td><td><code>projects/sat-io/open-datasets/GLC-FCS30D/annual</code><br><a href="https://gee-community-catalog.org/projects/glc_fcs/">说明页</a></td></tr>
     <tr><td>10 m 土地覆盖</td><td>Dynamic World;ESA WorldCover;ESRI 10 m LULC 2017–2025</td><td><code>GOOGLE/DYNAMICWORLD/V1</code> · <code>ESA/WorldCover/v200</code> · <code>projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS</code></td></tr>
@@ -279,7 +279,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>人类改造</td><td>TNC Global Human Modification v3</td><td><code>TNC/HM/v3/300m_c</code></td></tr>
     <tr><td>冠层高度</td><td>GLAD GEDI-Landsat 冠层高度</td><td><code>projects/sat-io/open-datasets/GLAD/GEDI_V27</code></td></tr>
   </table></div>
-  <p class="note">MODIS GPP 与蒸散产品、ERA5-Land 月聚合版本本次未核验,使用前确认。</p>
+  <p class="note">另已实测可用:MODIS GPP <code>MODIS/061/MOD17A2HGF</code>、蒸散 <code>MODIS/061/MOD16A2GF</code>、ERA5-Land 月聚合 <code>ECMWF/ERA5_LAND/MONTHLY_AGGR</code>。</p>
   <h3 style="margin-top:22px">GEE 之外</h3>
   <div class="tw"><table>
     <tr><th>数据</th><th>内容</th><th>获取方式</th></tr>
@@ -317,38 +317,62 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </div>
 </section>
 
+<section id="first">
+  <h2>首批实测:中国站点规模与建设前生境</h2>
+  <p class="lead">GRW 数据,GEE 项目 renewable-conservation,2026-10-20 实测。2017 年一律为第 4 季度,是影像起点前已存在站点的左删失,下表"新建"只计 2018 年起。</p>
+  <div class="grid g4">
+    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">20,231</div>光伏地块(全部)</div>
+    <div class="card"><div style="font:700 26px Arial;color:var(--deep)">6,312 km²</div>光伏总面积</div>
+    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">119,974</div>风机(全部)</div>
+    <div class="card"><div style="font:700 26px Arial;color:var(--deep)">14,421 · 72,838</div>2018 年后新建光伏 · 风机</div>
+  </div>
+  <div class="tw" style="margin-top:16px"><table>
+    <tr><th>建设前土地覆盖(ESA CCI 2018)</th><th>光伏,按面积</th><th>风机,按数量</th></tr>
+    <tr><td>裸地</td><td>33.2%</td><td>21.8%</td></tr>
+    <tr><td>草地</td><td>31.2%</td><td>34.9%</td></tr>
+    <tr><td>耕地</td><td>26.5%</td><td>19.4%</td></tr>
+    <tr><td>森林</td><td>0.7%</td><td>12.2%</td></tr>
+    <tr><td>水体</td><td>4.1%</td><td>0.8%</td></tr>
+    <tr><td>其他</td><td>4.3%</td><td>10.9%</td></tr>
+  </table></div>
+  <p class="note">ESA CCI 为 300 m 粗分辨率;2018 年建成站点的"2018 年覆盖"可能已是建成后状态。正式分析改用建设前一年的 30 m 年度土地覆盖。按数量计,光伏以耕地上的小型站点为主(约 61%);按面积计,裸地与草地占六成以上。</p>
+  <p class="note">TZ-SAM 交叉核对(2025Q1 版,按中国国界空间筛选):22,100 个光伏多边形,合计约 420 GW;全部有建设时间上界(<code>constructe</code>),14,347 个(65%)同时有下界(<code>construc_1</code>),可为 GRW 季度日期提供独立的时间区间校验。</p>
+</section>
+
 <section id="code">
   <h2>GEE 起步脚本(M1 pilot)</h2>
-  <p class="lead">在 Earth Engine Code Editor 中运行;先用 print 检查字段名与取值格式,再导出。</p>
-<pre><code>// Scientific question / 科学问题:
-// How many ground-mounted solar sites and onshore wind turbines were built
-// in China in each quarter, and on which 2018 land cover?
-// 中国每季度新建多少地面光伏与陆上风机,建在何种 2018 年土地覆盖上?
+  <p class="lead">在 Earth Engine Code Editor 中运行。字段名已在项目 renewable-conservation 中实测核对。</p>
+<pre><code>// 已在 GEE 项目中实测:字段名以此为准(与目录页说明不同)
+// Field names verified live; they differ from the catalog page.
 
 // 读取并筛选中国 / load layers and keep China
 var solar = ee.FeatureCollection('projects/sat-io/open-datasets/GRW/SOLAR_V1')
-  .filter(ee.Filter.eq('country_code', 'CHN'));
+  .filter(ee.Filter.eq('COUNTRY', 'China'));
 var wind = ee.FeatureCollection('projects/sat-io/open-datasets/GRW/WIND_V1')
-  .filter(ee.Filter.eq('country_code', 'CHN'));
+  .filter(ee.Filter.eq('COUNTRY', 'China'));
 
-// 检查字段与数量 / inspect fields and counts
-print('Example solar feature / 光伏样例:', solar.first());
-print('China solar sites / 中国光伏地块数:', solar.size());
-print('China wind turbines / 中国风机数:', wind.size());
+// 2017 年均为第 4 季度:影像起点前已存在,属左删失,不作为建设时间
+// 2017 = 2017Q4 only: left-censored sites present before the first image
+var solarNew = solar.filter(ee.Filter.gte('construction_year', 2018));
+var windNew  = wind.filter(ee.Filter.gte('construction_year', 2018));
 
-// 按建设季度汇总光伏面积与个数 / solar area and count by quarter
-print('Solar by quarter / 光伏按季度:', solar.reduceColumns({
-  reducer: ee.Reducer.sum().combine(ee.Reducer.count(), null, true)
-    .group({groupField: 1, groupName: 'construction_date'}),
-  selectors: ['area_m2', 'construction_date']
+print('China solar polygons / 中国光伏地块:', solar.size());
+print('China wind turbines / 中国风机:', wind.size());
+
+// 按建设年份统计 / counts by construction year
+print('Solar by year / 光伏按年:', solar.aggregate_histogram('construction_year'));
+print('Wind by year / 风机按年:', wind.aggregate_histogram('construction_year'));
+
+// 2018 年后新建光伏的面积,按 2018 年土地覆盖(ESA CCI 代码)汇总
+// area of post-2018 solar by 2018 land cover (ESA CCI codes)
+print('Solar area by land cover / 光伏面积按土地覆盖:', solarNew.reduceColumns({
+  reducer: ee.Reducer.sum().group({groupField: 1, groupName: 'landcover_in_2018'}),
+  selectors: ['area', 'landcover_in_2018']
 }));
 
-// 按建设季度统计风机 / turbine count by quarter
-print('Wind by quarter / 风机按季度:', wind.aggregate_histogram('construction_date'));
-
 // 导出供 R 做空间分析 / export for spatial analysis in R
-Export.table.toDrive({collection: solar, description: 'GRW_solar_CHN', fileFormat: 'GeoJSON'});
-Export.table.toDrive({collection: wind, description: 'GRW_wind_CHN', fileFormat: 'GeoJSON'});</code></pre>
+Export.table.toDrive({collection: solar, description: 'GRW_solar_China', fileFormat: 'GeoJSON'});
+Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileFormat: 'GeoJSON'});</code></pre>
   <p class="note">R 端分析建议:did、fixest(sunab)、HonestDiD、MatchIt、exactextractr、terra、sf、landscapemetrics、spOccupancy。</p>
 </section>
 
@@ -388,7 +412,7 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_CHN', fileFormat:
 
 </main>
 <footer><div class="wrap">
-  丁晨晨 · 北京大学 · 研究工作流 v0.1(2026 年 10 月)。本页为研究计划,数据集 ID 已在 GEE 目录中核实,注册 Earth Engine 后需在线复核。文字与图示采用 CC BY 4.0。
+  丁晨晨 · 北京大学 · 研究工作流 v0.1(2026 年 10 月)。本页为研究计划,全部 22 个 GEE 数据集已于 2026-10-20 在线实测可访问。文字与图示采用 CC BY 4.0。
 </div></footer>
 </body>
 </html>
