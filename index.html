@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>风光电生物多样性遥感评估</title>
+<meta name="description" content="中国风光电扩张的生物多样性影响:遥感事后评估工作流,含数据源获取与相关文献。">
+<style>
+:root{
+  --deep:#0E2F3C; --teal:#1F6F78; --amber:#E9A23B; --sage:#6FA67A; --red:#B5523B;
+  --ink:#1D2A33; --mute:#5E6B75; --bg:#FFFFFF; --panel:#EEF4F4; --panelA:#FBF1DF; --panelR:#F3E7E4;
+  --line:#D5DEE2; --code:#0B2530; --codeText:#D8E6E8; --hero:#0E2F3C; --heroText:#FFFFFF; --heroMute:#9FB8BE;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#E3ECEE; --mute:#9DB0B6; --bg:#0B1A21; --panel:#13303A; --panelA:#3A2E17; --panelR:#3A2420;
+    --line:#26434D; --deep:#CFE6EA; --teal:#5FB8C1; --code:#06141A; --hero:#06141A;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#E3ECEE; --mute:#9DB0B6; --bg:#0B1A21; --panel:#13303A; --panelA:#3A2E17; --panelR:#3A2420;
+  --line:#26434D; --deep:#CFE6EA; --teal:#5FB8C1; --code:#06141A; --hero:#06141A;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.75 "PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC",system-ui,sans-serif}
+a{color:var(--teal)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header.hero{background:var(--hero);color:var(--heroText);padding:72px 0 64px;position:relative;overflow:hidden}
+.hero .rings{position:absolute;right:-60px;top:20px;width:360px;height:360px;border-radius:50%;background:radial-gradient(circle,rgba(233,162,59,.35) 0 30%,rgba(233,162,59,.18) 31% 55%,rgba(233,162,59,.08) 56% 72%,transparent 73%)}
+.hero .tag{color:var(--amber);font-size:15px;letter-spacing:.06em}
+.hero h1{font-size:clamp(28px,5vw,46px);line-height:1.25;margin:10px 0 8px;max-width:780px}
+.hero p.sub{font-size:clamp(16px,2.2vw,20px);color:#CFE3E6;margin:0 0 26px;max-width:760px}
+.hero .formula{display:flex;flex-wrap:wrap;gap:8px}
+.hero .formula span{border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 14px;font-size:14px}
+.hero .meta{margin-top:30px;color:var(--heroMute);font-size:14px}
+.btns{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-block;background:var(--amber);color:#0E2F3C;text-decoration:none;font-weight:600;padding:9px 18px;border-radius:8px;font-size:15px}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)}
+nav.toc{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+nav.toc .wrap{display:flex;gap:18px;overflow-x:auto;white-space:nowrap;padding-top:10px;padding-bottom:10px;font-size:14px}
+nav.toc a{text-decoration:none;color:var(--mute)}
+nav.toc a:hover{color:var(--teal)}
+section{padding:52px 0 8px}
+h2{font-size:clamp(22px,3vw,30px);margin:0 0 6px;color:var(--deep)}
+.lead{color:var(--mute);margin:0 0 22px}
+h3{font-size:18px;margin:0 0 8px;color:var(--deep)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:820px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--panel);border-radius:12px;padding:18px 20px}
+.card.a{background:var(--panelA)} .card.r{background:var(--panelR)}
+.card ul{margin:0;padding-left:1.2em} .card li{margin:.25em 0}
+.stat{background:#0E2F3C;color:#fff;border-radius:12px;padding:24px}
+.stat .big{font:700 clamp(28px,5vw,40px)/1.2 Arial,sans-serif;color:var(--amber)}
+.dot{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;color:#fff;font:700 13px Arial;margin-right:8px;flex:none}
+.row{display:flex;align-items:flex-start;gap:4px;margin:0 0 14px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:620px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:#0E2F3C;color:#fff;font-weight:600}
+th.hl{background:var(--amber);color:#0E2F3C}
+tr:last-child td{border-bottom:0}
+td code,li code,p code{font:12.5px/1.4 "SFMono-Regular",Menlo,Consolas,monospace;background:var(--panel);padding:1px 5px;border-radius:4px;word-break:break-all}
+.pred td{text-align:center;font-weight:700;font-size:17px}
+.pred td:first-child{text-align:left;font-size:15px}
+.dn{color:var(--red)} .up{color:#8A5A12} .ok{color:var(--sage)}
+.flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mod{background:var(--panel);border-radius:12px;padding:16px 12px;text-align:center}
+.mod .b{width:46px;height:46px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;color:#fff;font:700 15px Arial}
+.mod h4{margin:0 0 4px;font-size:15px;color:var(--deep)} .mod p{margin:0;font-size:13px;color:var(--mute);line-height:1.6}
+.rings-fig{display:flex;justify-content:center;align-items:center}
+.gate{display:grid;grid-template-columns:70px 1fr 1fr;gap:12px;align-items:stretch;margin-bottom:12px}
+@media (max-width:700px){.gate{grid-template-columns:1fr}}
+.gate .name{display:flex;align-items:center;gap:8px;font-weight:700;color:var(--deep)}
+.timeline{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;position:relative}
+@media (max-width:820px){.timeline{grid-template-columns:1fr}}
+.timeline .d{font-weight:700;color:var(--deep);margin-bottom:6px}
+pre{background:var(--code);color:var(--codeText);border-radius:12px;padding:18px;overflow-x:auto;font:13px/1.6 "SFMono-Regular",Menlo,Consolas,monospace}
+ol.refs li{margin:.45em 0}
+.note{font-size:14px;color:var(--mute)}
+footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
+.callout{border-radius:12px;padding:16px 20px;background:var(--panelA);margin-top:16px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="rings" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="tag">研究工作流 · v0.1 · 2026 年 10 月</div>
+    <h1>中国风光电扩张的生物多样性影响</h1>
+    <p class="sub">遥感事后评估:占用了什么、改变了什么、与规划预测是否一致</p>
+    <div class="formula"><span>真实设施足迹</span><span>季度建设日期</span><span>晚建站点反事实</span><span>不依赖观测努力的结局</span></div>
+    <div class="btns">
+      <a class="btn" href="RS_Renewables_Biodiversity_Workflow.pptx">下载 PPT</a>
+      <a class="btn ghost" href="RS_Renewables_Biodiversity_Workflow.pdf">下载 PDF</a>
+    </div>
+    <div class="meta">丁晨晨 · 北京大学</div>
+  </div>
+</header>
+
+<nav class="toc"><div class="wrap">
+  <a href="#verdict">判断</a><a href="#position">定位</a><a href="#evidence">证据台账</a><a href="#question">核心问题</a>
+  <a href="#workflow">工作流</a><a href="#modules">模块细节</a><a href="#data">数据源与获取</a><a href="#gates">质量关口</a>
+  <a href="#pilot">两周 pilot</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
+</div></nav>
+
+<main class="wrap">
+
+<section id="verdict">
+  <h2>一句话判断</h2>
+  <p class="lead">可以做,而且时机好。关键在于换掉暴露、结局与反事实,并用结果检验 NEE 论文的事前预测。</p>
+  <div class="grid g2">
+    <div class="stat">
+      <div class="big">2017Q4 – 2024Q2</div>
+      <p>Global Renewables Watch 为全球每个光伏电站和陆上风机标注了季度精度的建设日期。</p>
+      <p style="color:#CFE3E6;margin:0">这让"建设前后、早建与晚建"的交错双重差分第一次可以在全国尺度上做。</p>
+    </div>
+    <div>
+      <div class="row"><span class="dot" style="background:var(--amber)">1</span><div><b>暴露</b>:真实设施足迹与建设日期,而非县级政策指数</div></div>
+      <div class="row"><span class="dot" style="background:#1F6F78">2</span><div><b>结局</b>:栖息地状况的遥感指标与物种暴露,不依赖观测努力</div></div>
+      <div class="row"><span class="dot" style="background:var(--amber)">3</span><div><b>反事实</b>:晚建站点与匹配的未建点,按资源潜力匹配</div></div>
+      <div class="row"><span class="dot" style="background:#1F6F78">4</span><div><b>检验对象</b>:NEE 论文"全国集中"与"省级分散"两种情景的预测</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="position">
+  <h2>定位:两篇论文各缺什么</h2>
+  <p class="lead">Science 有事后视角但暴露与结局都测错了;NEE 有正确尺度但只是潜在冲突。</p>
+  <div class="tw"><table>
+    <tr><th></th><th>Zhang 等 2026 · <i>Science</i></th><th>Zhou…Li 2026 · <i>Nat. Ecol. Evol.</i></th><th class="hl">本工作流</th></tr>
+    <tr><td><b>时间视角</b></td><td>事后,2014–2023</td><td>事前,情景至 2060</td><td><b>事后,2017Q4–2024Q2,可回溯至 2010</b></td></tr>
+    <tr><td><b>暴露</b></td><td>县级政策强度指数;县内不预测实际光伏面积</td><td>规划情景下的潜在选址</td><td><b>遥感识别的真实足迹 + 季度建设日期</b></td></tr>
+    <tr><td><b>结局</b></td><td>县-月观鸟香农指数,由观测努力主导</td><td>与物种分布和保护优先区的重叠</td><td><b>栖息地状况遥感指标 + 物种暴露 + 结构化监测</b></td></tr>
+    <tr><td><b>尺度</b></td><td>县</td><td>全国栅格</td><td><b>站点及外围距离环</b></td></tr>
+    <tr><td><b>因果识别</b></td><td>双向固定效应,存在预趋势</td><td>不涉及,情景比较</td><td><b>交错 DiD,晚建站点作对照</b></td></tr>
+  </table></div>
+  <div class="callout"><b>缺口</b>:真实发生的扩张到底占用了什么、造成了什么,目前没有全国性的因果证据。</div>
+</section>
+
+<section id="evidence">
+  <h2>证据台账</h2>
+  <p class="lead">区分有来源支撑、推断与待核实三类,只在第一类上立论。</p>
+  <div class="grid g3">
+    <div class="card"><h3 style="color:#1F6F78">有来源支撑</h3><ul>
+      <li>NEE:全国集中选址与丰富度优先区冲突低 4–7%,平均重叠物种少 11–33%;但与功能多样性和开阔/干旱生物群区冲突更大;分散选址更多重叠小分布区森林物种 <a href="https://www.nature.com/articles/s41559-026-03098-y">[1]</a></li>
+      <li>GRW:光伏多边形与风机点位,季度建设日期,PlanetScope 4.7 米 <a href="#refs">[3]</a></li>
+      <li>光伏遥感研究普遍报告"变绿",但空间异质且受气候混杂 <a href="#refs">[6, 7]</a></li>
+      <li>青海荒漠野外:板下生物量增加,物种丰富度与香农指数显著下降 <a href="#refs">[8]</a></li>
+      <li>内蒙古风电场:夜间增温、生产力下降 <a href="#refs">[9]</a></li>
+    </ul></div>
+    <div class="card a"><h3 style="color:#8A5A12">推断</h3><ul>
+      <li>大型基地向荒漠、戈壁集中,而那里恰是公民科学数据最稀疏、NEE 预测功能多样性冲突最大的地方</li>
+      <li>"劣质绿化"若存在,应表现为绿度上升、异质性下降;站点尺度可检验,县级 MODIS 不可检验</li>
+    </ul></div>
+    <div class="card r"><h3 style="color:var(--red)">待核实</h3><ul>
+      <li>GRW 在中国的要素数量与建设日期准确度</li>
+      <li>是否已有用建设日期构建反事实的全国风电研究(本次检索未见,不等于不存在)</li>
+      <li>China BON-Birds 的获取途径</li>
+      <li>NEE 情景空间图层能否获取</li>
+    </ul></div>
+  </div>
+</section>
+
+<section id="question">
+  <h2>核心问题与三个竞争假说</h2>
+  <div class="stat" style="margin-bottom:16px">2017–2024 年中国新建的地面光伏与陆上风电,占用了哪些生境与物种栖息地;建设是否因果性地降低了站点及外围的栖息地状况;代价格局更接近 NEE 的"全国集中"还是"省级分散"情景?</div>
+  <div class="grid g3">
+    <div class="card"><h3><span class="dot" style="background:var(--red);width:14px;height:14px"></span>H1 生境置换</h3>建设转换自然生境,站点及外围状况下降,效应随距离衰减。</div>
+    <div class="card"><h3><span class="dot" style="background:var(--sage);width:14px;height:14px"></span>H2 中性或改善</h3>站点多在退化地、裸地或农田,遮荫增湿带来变绿而无生境损失。</div>
+    <div class="card"><h3><span class="dot" style="background:var(--amber);width:14px;height:14px"></span>H3 同质化</h3>绿度上升但结构与光谱异质性下降,生境质量损失被 NDVI 掩盖。</div>
+  </div>
+  <h3 style="margin-top:28px">关键判别:同时看绿度与异质性</h3>
+  <p class="lead">绿度上升不等于多样性上升,这是整条工作流最核心的洞见。</p>
+  <div class="tw"><table class="pred">
+    <tr><th>预测(自然生境站点,建设后)</th><th>绿度 NDVI / GPP</th><th>异质性 Rao's Q / 纹理</th><th>夜间地表温度</th></tr>
+    <tr><td>H1 生境置换</td><td class="dn">↓</td><td class="dn">↓</td><td class="dn">↑</td></tr>
+    <tr><td>H2 中性或改善</td><td class="ok">0 或 ↑</td><td class="ok">0</td><td class="ok">0</td></tr>
+    <tr><td>H3 同质化</td><td class="up">↑</td><td class="dn">↓</td><td>±</td></tr>
+  </table></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card a"><h3>地面证据</h3>青海荒漠野外调查:板下生物量增加,但物种丰富度与香农指数显著下降。遥感只看绿度会把 H3 误判为 H2。</div>
+    <div class="card"><h3>证伪条件</h3>预趋势平坦、功效充足,而自然生境站点各项状况指标的建设后效应都与零无差异,则 H1 被否定;绿度上升处异质性并未下降,则 H3 被否定。</div>
+  </div>
+  <p class="note">挑战的默认假设:① 遥感变绿即生态改善;② 荒漠是低代价选址;③ 政策强度可以代表生态暴露。</p>
+</section>
+
+<section id="workflow">
+  <h2>工作流总览:七个模块</h2>
+  <p class="lead">M0 → M6,每一步都有明确产出与决策门。</p>
+  <div class="flow">
+    <div class="mod"><div class="b" style="background:#5E6B75">M0</div><h4>准备与治理</h4><p>GEE 注册、数据协议、预注册</p></div>
+    <div class="mod"><div class="b" style="background:#1F6F78">M1</div><h4>设施清单</h4><p>GRW + 中国光伏专题 + GEM 容量状态</p></div>
+    <div class="mod"><div class="b" style="background:#1F6F78">M2</div><h4>转换与暴露</h4><p>建设前生境、AOH 物种暴露、对照 NEE</p></div>
+    <div class="mod"><div class="b" style="background:#0E2F3C">M3</div><h4>因果效应</h4><p>交错 DiD、距离环、晚建对照</p></div>
+    <div class="mod"><div class="b" style="background:#0E2F3C">M4</div><h4>机制</h4><p>绿度 vs 异质性</p></div>
+    <div class="mod"><div class="b" style="background:#6FA67A">M5</div><h4>生物学响应</h4><p>BON 样线、努力校正占域</p></div>
+    <div class="mod"><div class="b" style="background:#E9A23B">M6</div><h4>综合</h4><p>真实 vs 规划、荒漠专题</p></div>
+  </div>
+  <div class="callout"><b>备选快报</b>:只做 M1 + M2(真实选址更像哪个情景),无需因果设计。M5 可独立成文,用正确方法回应 Science 的问题。</div>
+</section>
+
+<section id="modules">
+  <h2>模块细节</h2>
+  <div class="grid g2">
+    <div class="card"><h3>M0 准备与数据治理</h3><ul>
+      <li>注册 Google Earth Engine 非商业项目(作者本机尚未注册)</li>
+      <li>China BON-Birds、保护地边界、生态保护红线需合作或授权;记录级观鸟数据不再分发</li>
+      <li>联系 NEE 作者组索取情景图层</li>
+      <li>看结果前预注册主结局、对照规则、距离环与功效门槛</li>
+    </ul></div>
+    <div class="card"><h3>M1 设施清单与建设日期</h3><ul>
+      <li>主数据:GRW,筛选 <code>country_code = 'CHN'</code>,保留 <code>construction_date</code></li>
+      <li>补 2018 年前:中国 2015/2020 矢量光伏数据集的建设年份字段;农光互补 2010–2022</li>
+      <li>容量与状态:Global Energy Monitor 追踪库;"已宣布未建"站点是天然反事实候选</li>
+      <li>交叉验证:Dunnett 等协调化全球风电场位置</li>
+      <li>随机抽 100–200 站在 Sentinel-2 时序上目视判读建设季度</li>
+    </ul></div>
+    <div class="card"><h3>M2 生境转换与物种暴露</h3><ul>
+      <li>以建设前一年年度土地覆盖为基线(GLC_FCS30D;中国专题用 CLCD)</li>
+      <li>按生境类型、生物气候区、海拔带统计占用面积</li>
+      <li>IUCN/BirdLife 范围 × 生境偏好 × 海拔构建 Area of Habitat;受威胁物种用 SDM</li>
+      <li>用 NEE 的同一组指标计算真实选址冲突,判断更接近哪个情景</li>
+      <li>WDPA 对中国保护地覆盖不全,结论需注明</li>
+    </ul></div>
+    <div class="card"><h3>M3 栖息地状况的因果效应</h3>
+      <div class="grid g2" style="gap:10px">
+        <div class="rings-fig"><svg viewBox="0 0 200 200" width="180" height="180" role="img" aria-label="站点与外围距离环示意">
+          <circle cx="100" cy="100" r="95" fill="#1F6F78" fill-opacity=".12" stroke="#1F6F78"/>
+          <circle cx="100" cy="100" r="72" fill="#1F6F78" fill-opacity=".2" stroke="#1F6F78"/>
+          <circle cx="100" cy="100" r="50" fill="#1F6F78" fill-opacity=".3" stroke="#1F6F78"/>
+          <circle cx="100" cy="100" r="29" fill="#1F6F78" fill-opacity=".42" stroke="#1F6F78"/>
+          <rect x="86" y="91" width="28" height="18" fill="#E9A23B" stroke="#0E2F3C"/>
+          <text x="100" y="196" text-anchor="middle" font-size="10" fill="currentColor">0–0.5 · 0.5–1 · 1–2 · 2–5 km</text>
+        </svg></div>
+        <ul style="font-size:14.5px">
+          <li>结局:NDVI、EVI、GPP;Rao's Q、GLCM 纹理;昼夜地表温度、蒸散、土壤水分;景观破碎度</li>
+          <li>Callaway–Sant'Anna 与 Sun–Abraham 互证;晚建站点作对照;CEM 匹配从未建设的点</li>
+        </ul>
+      </div>
+      <ul>
+        <li>匹配变量:光伏潜力或风速(选址按它挑)、坡度、海拔、距道路/电网/居民点、建设前土地覆盖与绿度趋势</li>
+        <li>稳健性:事件研究预趋势;HonestDiD;ERA5-Land 气候协变量;站点聚类或 Conley 标准误;按生境、干旱度、设施类型分层</li>
+      </ul>
+    </div>
+    <div class="card a"><h3>M4 机制:变绿还是同质化</h3><ul>
+      <li>同一批站点并列估计绿度与异质性的事件研究,直接检验 H3</li>
+      <li>光学遥感看不到不透明面板下的植被:板间与外围用遥感,板下用野外样方补充,并在文中正面写明</li>
+    </ul></div>
+    <div class="card"><h3>M5 生物学响应</h3><ul>
+      <li>China BON-Birds 样线邻近设施时做 BACI 比较</li>
+      <li>公民科学:只用完整清单,保留时长、距离、人数;合并同日同点多人清单以去伪重复;"计数全为 1"清单剔除或单独建模</li>
+      <li>多物种占域模型估计"距离 × 建设后"交互,不做县级聚合;先做功效分析</li>
+    </ul></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>M6 综合</h3>主图展示真实选址冲突落在 NEE 两个情景之间的哪个位置;荒漠专题检验扩张最快处是否也是数据最空处;政策含义是选址规则需同时约束丰富度与功能多样性、森林与干旱生物群区。</div>
+</section>
+
+<section id="data">
+  <h2>数据源与获取</h2>
+  <p class="lead">GEE 数据集均在目录中核实存在;注册 Earth Engine 项目后需在线复核。</p>
+  <h3>Google Earth Engine</h3>
+  <div class="tw"><table>
+    <tr><th>用途</th><th>数据集</th><th>GEE ID / 说明页</th></tr>
+    <tr><td>设施与建设日期</td><td>Global Renewables Watch v1(光伏多边形、风机点位,季度建设日期)</td><td><code>projects/sat-io/open-datasets/GRW/SOLAR_V1</code><br><code>projects/sat-io/open-datasets/GRW/WIND_V1</code><br><a href="https://gee-community-catalog.org/projects/grw/">说明页</a></td></tr>
+    <tr><td>风电场交叉验证</td><td>Dunnett 等协调化全球风电场位置</td><td><code>projects/sat-io/open-datasets/global_wind_farms_2020</code><br><a href="https://gee-community-catalog.org/projects/energy_farms/">说明页</a></td></tr>
+    <tr><td>年度土地覆盖</td><td>GLC_FCS30D,1985–2022,30 m</td><td><code>projects/sat-io/open-datasets/GLC-FCS30D/annual</code><br><a href="https://gee-community-catalog.org/projects/glc_fcs/">说明页</a></td></tr>
+    <tr><td>10 m 土地覆盖</td><td>Dynamic World;ESA WorldCover;ESRI 10 m LULC 2017–2025</td><td><code>GOOGLE/DYNAMICWORLD/V1</code> · <code>ESA/WorldCover/v200</code> · <code>projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS</code></td></tr>
+    <tr><td>光学影像</td><td>Sentinel-2 SR;Landsat 8/9 Collection 2 L2</td><td><code>COPERNICUS/S2_SR_HARMONIZED</code> · <code>LANDSAT/LC08/C02/T1_L2</code> · <code>LANDSAT/LC09/C02/T1_L2</code></td></tr>
+    <tr><td>地表温度与植被指数</td><td>MODIS LST 8 天;MODIS 植被指数 16 天</td><td><code>MODIS/061/MOD11A2</code> · <code>MODIS/061/MOD13Q1</code></td></tr>
+    <tr><td>气候协变量</td><td>ERA5-Land</td><td><code>ECMWF/ERA5_LAND/HOURLY</code></td></tr>
+    <tr><td>资源潜力(匹配)</td><td>Global Solar Atlas PVOUT;Global Wind Atlas 风速</td><td><code>projects/sat-io/open-datasets/global_solar_atlas/pvout_LTAy_AvgDailyTotals</code><br><code>projects/sat-io/open-datasets/global_wind_atlas/wind-speed</code></td></tr>
+    <tr><td>保护地</td><td>WDPA(对中国覆盖不全)</td><td><code>WCMC/WDPA/current/polygons</code></td></tr>
+    <tr><td>人类改造</td><td>TNC Global Human Modification v3</td><td><code>TNC/HM/v3/300m_c</code></td></tr>
+    <tr><td>冠层高度</td><td>GLAD GEDI-Landsat 冠层高度</td><td><code>projects/sat-io/open-datasets/GLAD/GEDI_V27</code></td></tr>
+  </table></div>
+  <p class="note">MODIS GPP 与蒸散产品、ERA5-Land 月聚合版本本次未核验,使用前确认。</p>
+  <h3 style="margin-top:22px">GEE 之外</h3>
+  <div class="tw"><table>
+    <tr><th>数据</th><th>内容</th><th>获取方式</th></tr>
+    <tr><td><b>中国光伏专题</b></td><td>2015/2020 矢量(含建设年份)<a href="https://www.nature.com/articles/s41597-024-04356-z">[链接]</a>;2020 年 10 m <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10864270/">[链接]</a>;CPVPD-2024 <a href="https://www.proquest.com/docview/3255958629?pq-origsite=wos">[链接]</a>;农光互补 2010–2022 <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12855862/">[链接]</a></td><td>各论文的数据仓库,公开下载</td></tr>
+    <tr><td><b>CLCD</b></td><td>中国逐年 30 m 土地覆盖(Yang &amp; Huang 2021, <i>ESSD</i>)</td><td>Zenodo 下载后上传为 GEE 资产;先核对最新版本</td></tr>
+    <tr><td><b>Global Energy Monitor</b></td><td>光伏与风电站点、装机容量、宣布/在建/运行状态</td><td><a href="https://globalenergymonitor.org/">globalenergymonitor.org</a> 申请下载,核对许可</td></tr>
+    <tr><td><b>物种分布</b></td><td>IUCN 红色名录范围;BirdLife 鸟类范围;自有 SDM</td><td><a href="https://www.iucnredlist.org/resources/spatial-data-download">IUCN 空间数据</a>;<a href="https://datazone.birdlife.org/">BirdLife DataZone</a> 申请;不得再分发</td></tr>
+    <tr><td><b>China BON-Birds</b></td><td>31 省 338 样区,1,822 条样线、1,343 个样点 <a href="https://www.ere.ac.cn/en/article/doi/10.11934/j.issn.1673-4831.2018.01.001">[链接]</a></td><td>无公开门户,需通过合作接洽</td></tr>
+    <tr><td><b>公民科学</b></td><td>eBird EBD(含努力字段);中国观鸟记录中心记录级数据</td><td><a href="https://ebird.org/data/download">eBird 数据申请</a>;观鸟中心按平台条款;不再分发</td></tr>
+    <tr><td><b>NEE 情景图层</b></td><td>全国集中与省级分散两种选址情景</td><td>查论文数据可用性声明,或联系作者组</td></tr>
+  </table></div>
+</section>
+
+<section id="gates">
+  <h2>质量与证伪关口</h2>
+  <p class="lead">看结果之前写定;任一关口不过,按对策调整后重跑。</p>
+  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)</div><div class="card a">不通过:改用年度时间窗,剔除日期模糊站点</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受</div><div class="card a">不通过:重新匹配或缩小比较组</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局的最小可检测效应小于文献中的合理效应</div><div class="card a">不通过:合并区域或延长时窗</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">遥感状况指标与有地面数据处的多样性指标方向一致</div><div class="card a">不通过:结局只表述为栖息地状况,不外推</div></div>
+</section>
+
+<section id="pilot">
+  <h2>两周 pilot 与决策门</h2>
+  <p class="lead">G1 与 G2 都通过才全国铺开。</p>
+  <div class="timeline">
+    <div class="card"><div class="d">第 1–2 天</div><b>注册 GEE,跑起步脚本</b><p class="note">产出:中国光伏与风电按季度、按 2018 土地覆盖的统计</p></div>
+    <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站目视验证建设季度</b><p class="note">产出:G1 一致率</p></div>
+    <div class="card"><div class="d">第 6–9 天</div><b>西北旱区约 200 个 2019–2021 光伏站 + 匹配晚建站</b><p class="note">产出:绿度与异质性事件研究,预趋势图</p></div>
+    <div class="card"><div class="d">第 10–12 天</div><b>内蒙古草原约 100 个风电场</b><p class="note">产出:MODIS 夜间地表温度,风电可行性</p></div>
+    <div class="card a"><div class="d">第 13–14 天</div><b>写决策备忘录</b><p class="note">产出:继续、调整或放弃</p></div>
+  </div>
+</section>
+
+<section id="code">
+  <h2>GEE 起步脚本(M1 pilot)</h2>
+  <p class="lead">在 Earth Engine Code Editor 中运行;先用 print 检查字段名与取值格式,再导出。</p>
+<pre><code>// Scientific question / 科学问题:
+// How many ground-mounted solar sites and onshore wind turbines were built
+// in China in each quarter, and on which 2018 land cover?
+// 中国每季度新建多少地面光伏与陆上风机,建在何种 2018 年土地覆盖上?
+
+// 读取并筛选中国 / load layers and keep China
+var solar = ee.FeatureCollection('projects/sat-io/open-datasets/GRW/SOLAR_V1')
+  .filter(ee.Filter.eq('country_code', 'CHN'));
+var wind = ee.FeatureCollection('projects/sat-io/open-datasets/GRW/WIND_V1')
+  .filter(ee.Filter.eq('country_code', 'CHN'));
+
+// 检查字段与数量 / inspect fields and counts
+print('Example solar feature / 光伏样例:', solar.first());
+print('China solar sites / 中国光伏地块数:', solar.size());
+print('China wind turbines / 中国风机数:', wind.size());
+
+// 按建设季度汇总光伏面积与个数 / solar area and count by quarter
+print('Solar by quarter / 光伏按季度:', solar.reduceColumns({
+  reducer: ee.Reducer.sum().combine(ee.Reducer.count(), null, true)
+    .group({groupField: 1, groupName: 'construction_date'}),
+  selectors: ['area_m2', 'construction_date']
+}));
+
+// 按建设季度统计风机 / turbine count by quarter
+print('Wind by quarter / 风机按季度:', wind.aggregate_histogram('construction_date'));
+
+// 导出供 R 做空间分析 / export for spatial analysis in R
+Export.table.toDrive({collection: solar, description: 'GRW_solar_CHN', fileFormat: 'GeoJSON'});
+Export.table.toDrive({collection: wind, description: 'GRW_wind_CHN', fileFormat: 'GeoJSON'});</code></pre>
+  <p class="note">R 端分析建议:did、fixest(sunab)、HonestDiD、MatchIt、exactextractr、terra、sf、landscapemetrics、spOccupancy。</p>
+</section>
+
+<section id="risks">
+  <h2>主要风险与对策</h2>
+  <div class="tw"><table>
+    <tr><th>风险</th><th>对策</th></tr>
+    <tr><td><b>遥感结局被当成多样性</b></td><td>构念限定为栖息地状况与暴露;M5 做生物学验证</td></tr>
+    <tr><td><b>选址非随机</b></td><td>晚建站点作对照;按资源潜力与可达性匹配;预趋势检验</td></tr>
+    <tr><td><b>GRW 日期是检出时间,不等于并网时间</b></td><td>目视验证;与 GEM 投运年份比对;时间窗稳健性</td></tr>
+    <tr><td><b>板下植被不可见</b></td><td>板间与外围用遥感,板下用野外数据;正面写入局限</td></tr>
+    <tr><td><b>风电的主要影响(撞击、回避)不在地表</b></td><td>遥感只回答足迹与地表效应;撞击风险以迁徙通道叠加作扩展</td></tr>
+    <tr><td><b>公民科学的努力混杂</b></td><td>完整清单、显式努力、去伪重复、占域模型、功效分析</td></tr>
+  </table></div>
+</section>
+
+<section id="refs">
+  <h2>相关文献</h2>
+  <ol class="refs">
+    <li>Zhou Z., Sun S., Zhang J., Fang Y., Li B.V. (2026) Comparing potential biodiversity conflicts from renewable energy expansion in China at different centralization levels. <i>Nat. Ecol. Evol.</i> 10:1316–1328. <a href="https://www.nature.com/articles/s41559-026-03098-y">链接</a>;研究简报 <a href="https://www.nature.com/articles/s41559-026-03097-z">链接</a></li>
+    <li>Zhang H. et al. (2026) China's solar expansion policy reduces bird diversity. <i>Science</i> 393:831–836. <a href="https://doi.org/10.1126/science.aee0747">链接</a></li>
+    <li>Robinson C. et al. (2025) Global Renewables Watch: a temporal dataset of solar and wind energy derived from satellite imagery. arXiv:2503.14860. <a href="https://arxiv.org/abs/2503.14860">链接</a></li>
+    <li>Vectorized solar photovoltaic installation dataset across China in 2015 and 2020. <i>Scientific Data</i>. <a href="https://www.nature.com/articles/s41597-024-04356-z">链接</a></li>
+    <li>A 10-m national-scale map of ground-mounted photovoltaic power stations in China of 2020. <i>Scientific Data</i> (2024). <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10864270/">链接</a></li>
+    <li>Satellites reveal spatial heterogeneity in dryland photovoltaic plants' effects on vegetation dynamics. <i>Earth's Future</i> (2024). <a href="https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2024EF004427">链接</a></li>
+    <li>Diverse vegetation responses to solar farm installation are also driven by climate change. <i>Commun. Earth Environ.</i> (2025). <a href="https://www.nature.com/articles/s43247-025-02121-7">链接</a></li>
+    <li>Large-scale photovoltaic farms significantly change the vegetation diversity and biomass through influencing soil moisture and physiochemical properties. <i>Vadose Zone J.</i> (2025). <a href="https://acsess.onlinelibrary.wiley.com/doi/full/10.1002/vzj2.70002">链接</a></li>
+    <li>Wind farms increase land surface temperature and reduce vegetation productivity in the Inner Mongolia. <i>Geography and Sustainability</i> (2024). <a href="https://journal.hep.com.cn/gs/EN/1204061893930537245">链接</a></li>
+    <li>Global disparity in synergy of solar power and vegetation growth. <i>Environ. Res. Lett.</i> (2025). <a href="https://iopscience.iop.org/article/10.1088/1748-9326/ada302">链接</a></li>
+    <li>Spatiotemporal dynamics and ecological impact of photovoltaic power plants in China (2000–2023). <i>Big Earth Data</i> (2025). <a href="https://www.tandfonline.com/doi/full/10.1080/20964471.2025.2583587">链接</a></li>
+    <li>Mapping wind turbine distribution in forest areas of China using deep learning methods. <i>Remote Sensing</i> (2025). <a href="https://doi.org/10.3390/rs17050940">链接</a></li>
+    <li>全国鸟类多样性观测网络(China BON-Birds)建设进展. 生态与农村环境学报 (2018). <a href="https://www.ere.ac.cn/en/article/doi/10.11934/j.issn.1673-4831.2018.01.001">链接</a></li>
+    <li>Callaway B., Sant'Anna P.H.C. (2021) Difference-in-differences with multiple time periods. <i>J. Econometrics</i> 225:200–230;Sun L., Abraham S. (2021) <i>J. Econometrics</i> 225:175–199;Rambachan A., Roth J. (2023) A more credible approach to parallel trends. <i>Rev. Econ. Stud.</i> 90:2555–2591.</li>
+    <li>Brooks T.M. et al. (2019) Measuring terrestrial Area of Habitat (AOH) and its utility for the IUCN Red List. <i>Trends Ecol. Evol.</i> 34:977–986.</li>
+  </ol>
+</section>
+
+</main>
+<footer><div class="wrap">
+  丁晨晨 · 北京大学 · 研究工作流 v0.1(2026 年 10 月)。本页为研究计划,数据集 ID 已在 GEE 目录中核实,注册 Earth Engine 后需在线复核。文字与图示采用 CC BY 4.0。
+</div></footer>
+</body>
+</html>
