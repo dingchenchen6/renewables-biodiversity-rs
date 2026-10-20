@@ -384,13 +384,13 @@ let n = 0;
        catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
        valAxisMaxVal: 45, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
        showTitle: true, title: "2018 年后新建光伏:建设前一年土地覆盖(GLC_FCS30D,30 m,按面积)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
-  s.addText("按站点数,近一半建在耕地上。对照 GRW 自带 ESA CCI 2018(300 m):裸地 33.2%、草地 31.2%、耕地 26.5%。风机(ESA CCI,按数量):草地 34.9%、裸地 21.8%、耕地 19.4%、森林 12.2%。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  s.addText("按站点数,近一半建在耕地上。对照 GRW 自带 ESA CCI 2018(300 m):裸地 33.2%、草地 31.2%、耕地 26.5%。风机(GLC_FCS30D 前一年 30 m,72,837 台):裸地 32.9%、耕地 23.3%、草地 21.2%、森林 6.3%(ESA CCI 300 m 给出森林 12.2%,高估约一倍)。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
   pageNo(s, n);
 }
 
 // ---- 14c 选址转向与 G1 / siting shift and date check ------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "选址急转向裸地 · G1 日期校验", "建设前一年 30 m 覆盖按建设年份;哨兵-2 季节 + 阶跃模型,100 站");
+  const s = pres.addSlide(); n++; title(s, "选址急转向裸地 · G1 日期三重核对", "左:建设前一年 30 m 覆盖按建设年份;右:哨兵-2 自动断点、目视复核、TZ-SAM 独立日期");
   const yrs = ["2018", "2019", "2020", "2021", "2022", "2023", "2024*"];
   const ser = [
     ["裸地", [33.6, 18.7, 15.6, 18.9, 44.5, 73.9, 77.9], "CDB48E"],
@@ -406,16 +406,16 @@ let n = 0;
       valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
       showTitle: true, title: "新建光伏面积的建设前覆盖构成(%)", titleFontFace: F, titleFontSize: 13, titleColor: C.deep });
   s.addText("* 2024 年 GRW 只到第 2 季度", { x: 0.6, y: 6.6, w: 7, h: 0.3, fontFace: F, fontSize: 10.5, color: C.mute, margin: 0 });
-  const g = [["0 与 −1", "断点众数:地表变化多在 GRW 季度或前一季度", C.tint],
-             ["77%", "断点在 GRW 季度 ±2 内;低于预设 85%,G1 整体未通过", "F3E7E4"],
-             ["96%", "阶跃信号较强的一半站点落在 ±2 内", C.tintA]];
+  const g = [["77%", "哨兵-2 自动断点在 GRW 季度 ±2 内(100 站;预设 85%)", "F3E7E4"],
+             ["79.6%", "与 TZ-SAM 建设时间上下界一致(n = 7,987)", C.tint],
+             ["14.8%", "GRW 偏晚,中位数晚 4.1 季;目视复核 6 站中 5 站与 TZ 互证", C.tintA]];
   g.forEach((r, i) => {
     const y = 1.6 + i * 1.32;
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.3, y, w: 4.45, h: 1.15, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
     s.addText(r[0], { x: 8.5, y: y + 0.08, w: 4.1, h: 0.5, fontFace: "Arial", fontSize: 22, bold: true, color: C.deep, margin: 0 });
     s.addText(r[1], { x: 8.5, y: y + 0.6, w: 4.1, h: 0.5, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
   });
-  s.addText("对策:GRW 季度前 2 季至当季设为过渡期;主分析用强信号站点,其余用年度窗作稳健性检验。自动判读,目视复核待做。", { x: 8.3, y: 5.6, w: 4.45, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
+  s.addText("对策:主样本只用 GRW 与 TZ-SAM 一致的 6,355 站;处理时点取两者较早者;GRW 季度前 2 季至当季为过渡期。", { x: 8.3, y: 5.6, w: 4.45, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
   pageNo(s, n);
 }
 
@@ -469,7 +469,7 @@ let n = 0;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
     "西北旱区约 200 个 2019–2021 光伏站:绿度与异质性事件研究",
-    "G1 自动判读 77%:目视复核强弱信号站点,定稿过渡期规则",
+    "下载 CLCD 2017–2023,复算光伏与风机的建设前覆盖",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];

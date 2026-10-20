@@ -321,7 +321,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <section id="gates">
   <h2>质量与证伪关口</h2>
   <p class="lead">看结果之前写定;任一关口不过,按对策调整后重跑。</p>
-  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)。<b>首轮自动判读:77%,未通过;强信号站点 96%</b></div><div class="card a">不通过:改用年度时间窗,剔除日期模糊站点</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)。<b>实测:哨兵-2 自动断点 77%,TZ-SAM 外部核对 79.6%,GRW 单独使用未通过</b></div><div class="card a">已执行:GRW 与 TZ-SAM 一致的站点作主样本;处理时点取两者中较早者;设过渡期</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受</div><div class="card a">不通过:重新匹配或缩小比较组</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局的最小可检测效应小于文献中的合理效应</div><div class="card a">不通过:合并区域或延长时窗</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">遥感状况指标与有地面数据处的多样性指标方向一致</div><div class="card a">不通过:结局只表述为栖息地状况,不外推</div></div>
@@ -332,7 +332,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <p class="lead">G1 与 G2 都通过才全国铺开。</p>
   <div class="timeline">
     <div class="card"><div class="d">第 1–2 天</div><b>注册 GEE,跑起步脚本</b><p class="note">产出:中国光伏与风电按季度、按 2018 土地覆盖的统计</p></div>
-    <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站验证建设季度</b><p class="note">产出:G1 一致率。自动判读已完成(77%),目视复核待做</p></div>
+    <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站验证建设季度</b><p class="note">产出:G1 一致率。已完成:自动 77%、目视 23 站、TZ-SAM 79.6%</p></div>
     <div class="card"><div class="d">第 6–9 天</div><b>西北旱区约 200 个 2019–2021 光伏站 + 匹配晚建站</b><p class="note">产出:绿度与异质性事件研究,预趋势图</p></div>
     <div class="card"><div class="d">第 10–12 天</div><b>内蒙古草原约 100 个风电场</b><p class="note">产出:MODIS 夜间地表温度,风电可行性</p></div>
     <div class="card a"><div class="d">第 13–14 天</div><b>写决策备忘录</b><p class="note">产出:继续、调整或放弃</p></div>
@@ -350,7 +350,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </div>
 
   <h3 style="margin-top:28px">① 建设前一年 30 m 土地覆盖(2018 年后新建光伏,14,421 块,3,890 km²)</h3>
-  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。CLCD 已更新到 2025 年 [20],下一步用它复算,2023–2024 年站点即可读到真正的前一年覆盖。</p>
+  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。CLCD 已更新到 2025 年 [20],下一步用它复算,2023–2024 年站点即可读到真正的前一年覆盖。脚本已写好(<code>gee/04</code>);远程按需读取会触发 Zenodo 限流,需先下载 2017–2023 年 7 幅全国图。</p>
   <div class="tw"><table>
     <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按面积)</th><th>按主导类别计站点数</th><th>对照:GRW 自带 ESA CCI 2018,300 m(按面积)</th></tr>
     <tr><td>裸地</td><td><b>39.5%</b></td><td>4.5%</td><td>33.2%</td></tr>
@@ -380,14 +380,34 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </table></div>
   <p class="note">3% 的站点占了 61% 的面积,且主要在裸地上;中小站点则以耕地、草地为主,森林占比也更高。这与 Li 等 2024 [16] "中小站点建在高绿度处、负效应更强"的结果一致,也说明规模效应和原生境效应在设计上必须分开估计。</p>
 
-  <h3 style="margin-top:28px">④ G1 建设日期校验(自动断点,100 站)</h3>
-  <p class="lead">2020–2023 年每年随机抽 25 站(面积 ≥ 1 公顷)。取 GRW 季度前 8 个、后 6 个季度的哨兵-2 季度中位数反射率,用"季节哑变量 + 单一阶跃"模型找断点。</p>
+  <h3 style="margin-top:28px">④ G1 建设日期校验:自动断点、目视复核、独立数据三重核对</h3>
+  <p class="lead">第一步是自动断点:2020–2023 年每年随机抽 25 站(面积 ≥ 1 公顷),取 GRW 季度前 8 个、后 6 个季度的哨兵-2 季度中位数反射率,用"季节哑变量 + 单一阶跃"模型找断点。</p>
   <div class="grid g3">
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">0 与 −1</div>断点众数:地表变化多发生在 GRW 季度或前一季度,符合 GRW"首次可见"的定义</div>
-    <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">77%</div>断点在 GRW 季度 ±2 内,低于预设 85%,<b>G1 整体未通过</b></div>
-    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">96%</div>阶跃信号较强的一半站点(R² 增益 ≥ 0.55)落在 ±2 内</div>
+    <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">77%</div>断点在 GRW 季度 ±2 内,低于预设 85%</div>
+    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">96%</div>阶跃信号较强的一半站点落在 ±2 内</div>
   </div>
-  <p class="note">按预设对策处理:事件研究把 GRW 季度前 2 个季度到当季设为过渡期,不计入前或后;主分析只用阶跃信号清晰的站点,其余站点改用年度时间窗作稳健性检验。方法上有两点教训:单纯的前后均值差会把季节转换误判为断点(第一版因此失效);窗口过窄会让断点堆在边界。本结果是自动判读,目视复核尚未做。</p>
+  <p class="note" style="margin-top:14px"><b>第二步,目视复核</b>:对不一致的 23 站逐季查看哨兵-2 真彩色序列(<a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results/g1_visual">图集</a>)。11 站在窗口起点(GRW 季度前 6 季)已可见面板,即 GRW 检出偏晚;2 站约早 3–4 季建成;5 站其实与 GRW 一致,自动断点抓到的是先期清表或后期扩建;5 站因云或尺度太小无法判断。</p>
+  <p class="note"><b>第三步,独立数据</b>:把 2018 年后新建的 GRW 地块与 TZ-SAM(2025Q1)按最大重叠面积匹配,比较 GRW 季度与 TZ-SAM 的建设时间上下界。目视判为"已有面板"且能匹配到 TZ-SAM 的 6 站中,5 站 TZ-SAM 也显示 GRW 偏晚 3–13 个季度。</p>
+  <div class="tw"><table>
+    <tr><th>GRW 与 TZ-SAM 比较(重叠 ≥ 50%,TZ 日期未左删失,n = 7,987)</th><th>占比</th><th>说明</th></tr>
+    <tr><td>一致(GRW 季度落在 TZ 上下界 ±2 季内)</td><td><b>79.6%</b></td><td>6,355 站</td></tr>
+    <tr><td>GRW 偏晚(晚于 TZ 上界 2 季以上)</td><td><b>14.8%</b></td><td>中位数晚 4.1 季(四分位 2.4–7.2);1–10 公顷站 17.6%,更大站点约 10%</td></tr>
+    <tr><td>GRW 偏早(早于 TZ 下界 2 季以上)</td><td><b>5.6%</b></td><td>多见于 2018–2019 年</td></tr>
+  </table></div>
+  <p class="note"><b>判定</b>:单靠 GRW 日期,G1 未通过(一致率约 80%,低于 85%)。修订规则:① 主分析只用 GRW 与 TZ-SAM 一致的站点(6,355 个,样本仍充足),进入试点的站点再逐站做哨兵-2 断点核对;② 处理时点取 GRW 季度与 TZ 上界中较早者;③ GRW 季度前 2 季到当季设为过渡期;④ 未匹配 TZ-SAM 的站点进入稳健性检验。偏晚的站点会被误判为"建设前",把效应拉向零并制造虚假的预趋势,所以这一步必须先于任何事件研究。</p>
+
+  <h3 style="margin-top:28px">⑤ 风机:建设前一年 30 m 覆盖(2018 年后新建 72,838 台,1 台落在无数据像元)</h3>
+  <div class="tw"><table>
+    <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按台数)</th><th>对照:ESA CCI 2018,300 m</th></tr>
+    <tr><td>裸地</td><td><b>32.9%</b></td><td>21.8%</td></tr>
+    <tr><td>耕地</td><td><b>23.3%</b></td><td>19.4%</td></tr>
+    <tr><td>草地</td><td><b>21.2%</b></td><td>34.9%</td></tr>
+    <tr><td>稀疏植被</td><td><b>10.7%</b></td><td>(并入其他类)</td></tr>
+    <tr><td>森林</td><td><b>6.3%</b>(4,613 台)</td><td>12.2%</td></tr>
+    <tr><td>不透水面 · 其他</td><td>5.5%</td><td>11.7%</td></tr>
+  </table></div>
+  <p class="note">与光伏不同,风机的建设前覆盖构成在 2018–2024 年间基本稳定;森林占比从 8.5% 降到 4.6%。300 m 产品会把林缘、林间草地混成森林,森林占比高估了约一倍。风机点位是机位中心,道路与平台的占地需要另用缓冲区估计。</p>
 </section>
 
 <section id="code">
@@ -434,7 +454,7 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileForma
     <tr><td><b>新颖性:全国绿度评估已有 [16]</b></td><td>主张落在因果设计、异质性、风电与物种暴露;绿度结果作为与 [16] 的对照与复现,不作为卖点</td></tr>
     <tr><td><b>遥感结局被当成多样性</b></td><td>构念限定为栖息地状况与暴露;M5 做生物学验证</td></tr>
     <tr><td><b>选址非随机</b></td><td>晚建站点作对照;按资源潜力与可达性匹配;预趋势检验</td></tr>
-    <tr><td><b>GRW 日期是检出时间,不等于并网时间</b></td><td>目视验证;与 GEM 投运年份比对;时间窗稳健性</td></tr>
+    <tr><td><b>GRW 日期是检出时间,约 15% 偏晚一年左右</b></td><td>TZ-SAM 上下界与哨兵-2 断点交叉核对;处理时点取较早者;只用三源一致站点作主样本;GEM 投运年份作补充</td></tr>
     <tr><td><b>板下植被不可见</b></td><td>板间与外围用遥感,板下用野外数据;正面写入局限</td></tr>
     <tr><td><b>风电的主要影响(撞击、回避)不在地表</b></td><td>遥感只回答足迹与地表效应;撞击风险以迁徙通道叠加作扩展</td></tr>
     <tr><td><b>公民科学的努力混杂</b></td><td>完整清单、显式努力、去伪重复、占域模型、功效分析</td></tr>
