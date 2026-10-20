@@ -49,7 +49,7 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   // 太阳 + 风机意象:同心圆 / concentric rings motif
   [3.2, 2.4, 1.6].forEach((d, i) => s.addShape(pres.shapes.OVAL, { x: 10.4 - d / 2, y: 2.2 - d / 2, w: d, h: d, fill: { color: C.amber, transparency: 70 + i * 8 }, line: { color: C.amber, transparency: 60 } }));
-  s.addText("研究工作流 · v0.1", { x: 0.7, y: 1.1, w: 6, h: 0.4, fontFace: F, fontSize: 16, color: C.amber, margin: 0 });
+  s.addText("研究工作流 · v0.2", { x: 0.7, y: 1.1, w: 6, h: 0.4, fontFace: F, fontSize: 16, color: C.amber, margin: 0 });
   s.addText("中国风光电扩张的生物多样性影响", { x: 0.7, y: 1.7, w: 9, h: 0.9, fontFace: F, fontSize: 40, bold: true, color: C.white, margin: 0 });
   s.addText("遥感事后评估:占用了什么、改变了什么、与规划预测是否一致", { x: 0.7, y: 2.6, w: 9.5, h: 0.6, fontFace: F, fontSize: 20, color: "CFE3E6", margin: 0 });
   s.addText("真实设施足迹 × 季度建设日期 × 晚建站点反事实 × 不依赖观测努力的结局", { x: 0.7, y: 4.4, w: 11, h: 0.5, fontFace: F, fontSize: 16, color: C.white, margin: 0 });
@@ -58,7 +58,7 @@ let n = 0;
 
 // ---- 2 一句话判断 / verdict --------------------------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "一句话判断", "可以做,而且时机好;关键在于换掉暴露、结局与反事实");
+  const s = pres.addSlide(); n++; title(s, "一句话判断", "可以做,时机好;全国绿度评估已有(Li 等 2024),新意在因果对照、异质性、风电与物种暴露");
   s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 1.8, w: 5.6, h: 4.6, fill: { color: C.deep }, line: { color: C.deep }, rectRadius: 0.08 });
   s.addText("2017Q4 – 2024Q2", { x: 0.9, y: 2.2, w: 5.0, h: 0.8, fontFace: "Arial", fontSize: 34, bold: true, color: C.amber, margin: 0 });
   s.addText("Global Renewables Watch 为全球每个光伏电站和陆上风机标注了季度精度的建设日期", { x: 0.9, y: 3.1, w: 5.0, h: 1.2, fontFace: F, fontSize: 15, color: C.white, margin: 0 });
@@ -96,6 +96,24 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 3b 国内遥感评估 / domestic remote-sensing studies -----------------------
+{
+  const s = pres.addSlide(); n++; title(s, "国内已有的遥感评估:已回答什么", "绿度变化已有全国描述,方向依原生境与干旱度而异");
+  const hdr = { fill: { color: C.deep }, color: C.white, bold: true, fontFace: F, fontSize: 13 };
+  const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 11.5, color: C.ink }, o) });
+  const rows = [
+    [{ text: "研究", options: hdr }, { text: "样本与方法", options: hdr }, { text: "主要发现", options: hdr }, { text: "留给本工作流的空间", options: Object.assign({}, hdr, { fill: { color: C.amber }, color: C.deep }) }],
+    [c("Li X. 等 2024\nRenewable Energy [12]", { bold: true }), c("全国光伏图 × 30 m 植被指数;建设期与运行期"), c("建设期绿度下降,森林最大、裸地最小;中小站点负效应更强;运行期回升,裸地最明显;约 21% 超过建设前"), c("只有绿度;无未建对照,区域变绿与气候趋势难剥离")],
+    [c("Li Y. 等 2026\nEnviron. Res. Commun. [13]", { bold: true }), c("57 站,\"空间-时间\"法;EVI、FVC、NPP、土壤水分、气温"), c("湿润区耕地负响应最强(ΔEVI −0.03);草地较弱;裸地 FVC、NPP 小幅上升且土壤水分增加;夜间增温为主"), c("站点少;无物种与异质性;无风电")],
+    [c("彭昀月 等 2024\n生物多样性 [14]", { bold: true }), c("集中式光伏与风电生态影响综述"), c("光伏改变土壤、植被与栖息地质量;风电集中于植被扰动、撞击与破碎化;机制与生态系统层面研究不足"), c("呼吁统一调查方法与物种层面研究,对应 M3–M5")],
+  ];
+  s.addTable(rows, { x: 0.6, y: 1.65, w: W - 1.2, colW: [2.4, 2.9, 4.33, 2.5], rowH: [0.5, 1.15, 1.15, 1.15], border: { type: "solid", pt: 1, color: "D5DEE2" }, fill: { color: C.white }, valign: "middle" });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y: 5.95, w: W - 1.2, h: 0.95, fill: { color: C.tintA }, line: { color: C.tintA }, rectRadius: 0.06 });
+  s.addText("修订后的缺口:① 有未建对照与预趋势检验的因果估计;② 绿度之外的异质性与物种暴露;③ 风电与光伏同框;④ 真实选址对照 NEE 情景。政策语境另见《中国可再生能源与生物多样性协同发展的机遇与挑战》征求意见稿 [15]。",
+    { x: 0.8, y: 6.0, w: W - 1.6, h: 0.85, fontFace: F, fontSize: 13, color: C.ink, valign: "middle", margin: 0 });
+  pageNo(s, n);
+}
+
 // ---- 4 证据台账 / evidence ledger -----------------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "证据台账", "区分有来源支撑、推断与待核实三类,只在第一类上立论");
@@ -105,11 +123,15 @@ let n = 0;
     "光伏遥感研究普遍报告\"变绿\",但受气候混杂",
     "青海荒漠野外:板下生物量增加,物种丰富度与香农指数下降",
     "内蒙古风电场:夜间增温、生产力下降",
-  ], 12), { hc: C.teal });
+    "全国 30 m:建设期绿度降,运行期回升,约 21% 超过建设前 [12]",
+    "57 站:湿润区耕地负响应最强,裸地小幅变绿伴随土壤水分增加 [13]",
+  ], 11), { hc: C.teal });
   card(s, 4.75, 1.75, 4.0, 5.0, "推断", bul([
     "大型基地向荒漠、戈壁集中,而那里恰是公民科学数据最稀疏、NEE 预测功能多样性冲突最大的地方",
     "\"劣质绿化\"若存在,应表现为绿度上升、异质性下降;站点尺度可检验,县级 MODIS 不可检验",
-  ], 13), { fill: C.tintA, hc: "8A5A12" });
+    "效应由原生境与干旱度共同调节:旱区以土壤水分增益为主,湿润区以遮光为主",
+    "中小站点负效应更强可能是选址混杂(建在高绿度处),需控制建设前绿度",
+  ], 12), { fill: C.tintA, hc: "8A5A12" });
   card(s, 8.9, 1.75, 3.83, 5.0, "待核实", bul([
     "GRW 在中国的要素数量与日期准确度",
     "是否已有用建设日期构建反事实的全国风电研究(本次检索未见)",
@@ -353,17 +375,47 @@ let n = 0;
     s.addText(st[0], { x: 0.8, y: y + 0.08, w: 3.3, h: 0.55, fontFace: "Arial", fontSize: 22, bold: true, color: C.deep, margin: 0 });
     s.addText(st[1], { x: 0.8, y: y + 0.6, w: 3.3, h: 0.35, fontFace: F, fontSize: 12, color: C.mute, margin: 0 });
   });
-  const cats = ["裸地", "草地", "耕地", "森林", "水体", "其他"];
+  const cats = ["裸地", "草地", "耕地", "稀疏植被", "湿地+水体", "不透水面", "森林+灌丛"];
   s.addChart(pres.charts.BAR, [
-    { name: "光伏(面积 %)", labels: cats, values: [33.2, 31.2, 26.5, 0.7, 4.1, 4.3] },
-    { name: "风机(数量 %)", labels: cats, values: [21.8, 34.9, 19.4, 12.2, 0.8, 10.9] },
-  ], { x: 4.5, y: 1.6, w: 8.2, h: 4.6, barDir: "col", barGrouping: "clustered",
-       chartColors: [C.amber, C.teal], showLegend: true, legendPos: "t", legendFontSize: 12, legendFontFace: F,
-       showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 10, dataLabelFormatCode: "0.0",
+    { name: "光伏(面积 %)", labels: cats, values: [39.5, 21.1, 19.5, 8.6, 6.1, 3.2, 2.0] },
+  ], { x: 4.5, y: 1.6, w: 8.2, h: 4.5, barDir: "col",
+       chartColors: [C.amber], showLegend: false,
+       showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 11, dataLabelFormatCode: "0.0",
        catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
-       valAxisMaxVal: 40, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
-       showTitle: true, title: "建设前土地覆盖(ESA CCI 2018,300 m)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
-  s.addText("提示:ESA CCI 为 300 m 粗分辨率;2018 年建成站点的\"2018 年覆盖\"可能已是建成后状态,正式分析改用建设前一年的 30 m 年度土地覆盖。", { x: 4.5, y: 6.35, w: 8.2, h: 0.6, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+       valAxisMaxVal: 45, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
+       showTitle: true, title: "2018 年后新建光伏:建设前一年土地覆盖(GLC_FCS30D,30 m,按面积)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
+  s.addText("按站点数,近一半建在耕地上。对照 GRW 自带 ESA CCI 2018(300 m):裸地 33.2%、草地 31.2%、耕地 26.5%。风机(ESA CCI,按数量):草地 34.9%、裸地 21.8%、耕地 19.4%、森林 12.2%。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  pageNo(s, n);
+}
+
+// ---- 14c 选址转向与 G1 / siting shift and date check ------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "选址急转向裸地 · G1 日期校验", "建设前一年 30 m 覆盖按建设年份;哨兵-2 季节 + 阶跃模型,100 站");
+  const yrs = ["2018", "2019", "2020", "2021", "2022", "2023", "2024*"];
+  const ser = [
+    ["裸地", [33.6, 18.7, 15.6, 18.9, 44.5, 73.9, 77.9], "CDB48E"],
+    ["稀疏植被", [7.9, 8.8, 10.8, 10.7, 12.1, 5.8, 2.6], "A9C3A0"],
+    ["草地", [23.7, 25.0, 41.9, 24.8, 16.1, 7.4, 2.6], C.sage],
+    ["耕地", [21.9, 28.9, 21.7, 31.2, 18.8, 7.4, 4.1], C.amber],
+    ["其他", [12.9, 18.6, 10.0, 14.4, 8.5, 5.5, 12.8], "8C969C"],
+  ];
+  s.addChart(pres.charts.BAR, ser.map(r => ({ name: r[0], labels: yrs, values: r[1] })),
+    { x: 0.5, y: 1.55, w: 7.4, h: 5.0, barDir: "col", barGrouping: "percentStacked", valAxisLabelFormatCode: "0%",
+      chartColors: ser.map(r => r[2]), showLegend: true, legendPos: "b", legendFontSize: 11, legendFontFace: F,
+      catAxisLabelFontFace: "Arial", catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
+      valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
+      showTitle: true, title: "新建光伏面积的建设前覆盖构成(%)", titleFontFace: F, titleFontSize: 13, titleColor: C.deep });
+  s.addText("* 2024 年 GRW 只到第 2 季度", { x: 0.6, y: 6.6, w: 7, h: 0.3, fontFace: F, fontSize: 10.5, color: C.mute, margin: 0 });
+  const g = [["0 与 −1", "断点众数:地表变化多在 GRW 季度或前一季度", C.tint],
+             ["77%", "断点在 GRW 季度 ±2 内;低于预设 85%,G1 整体未通过", "F3E7E4"],
+             ["96%", "阶跃信号较强的一半站点落在 ±2 内", C.tintA]];
+  g.forEach((r, i) => {
+    const y = 1.6 + i * 1.32;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.3, y, w: 4.45, h: 1.15, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: 8.5, y: y + 0.08, w: 4.1, h: 0.5, fontFace: "Arial", fontSize: 22, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: 8.5, y: y + 0.6, w: 4.1, h: 0.5, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
+  });
+  s.addText("对策:GRW 季度前 2 季至当季设为过渡期;主分析用强信号站点,其余用年度窗作稳健性检验。自动判读,目视复核待做。", { x: 8.3, y: 5.6, w: 4.45, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
   pageNo(s, n);
 }
 
@@ -374,6 +426,7 @@ let n = 0;
   const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 12.5, color: C.ink }, o) });
   const rows = [
     [{ text: "风险", options: hdr }, { text: "对策", options: hdr }],
+    [c("新颖性:全国绿度评估已有 [12]", { bold: true }), c("主张落在因果设计、异质性、风电与物种暴露;绿度结果作为与 [12] 的对照")],
     [c("遥感结局被当成多样性", { bold: true }), c("构念限定为栖息地状况与暴露;M5 做生物学验证")],
     [c("选址非随机", { bold: true }), c("晚建站点作对照;按资源潜力与可达性匹配;预趋势检验")],
     [c("GRW 日期是检出时间,不等于并网时间", { bold: true }), c("目视验证;与 GEM 投运年份比对;时间窗稳健性")],
@@ -381,7 +434,7 @@ let n = 0;
     [c("风电的主要影响(撞击、回避)不在地表", { bold: true }), c("遥感只回答足迹与地表效应;撞击风险以迁徙通道叠加作扩展")],
     [c("公民科学的努力混杂", { bold: true }), c("完整清单、显式努力、去伪重复、占域模型、功效分析")],
   ];
-  s.addTable(rows, { x: 0.6, y: 1.4, w: W - 1.2, colW: [4.6, 7.53], rowH: 0.72, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
+  s.addTable(rows, { x: 0.6, y: 1.4, w: W - 1.2, colW: [4.6, 7.53], rowH: 0.66, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
   pageNo(s, n);
 }
 
@@ -400,9 +453,13 @@ let n = 0;
     "Wind farms increase land surface temperature and reduce vegetation productivity in the Inner Mongolia. Geography and Sustainability (2024).",
     "Callaway B., Sant'Anna P.H.C. (2021) J. Econometrics 225:200–230;Sun L., Abraham S. (2021) J. Econometrics 225:175–199;Rambachan A., Roth J. (2023) Rev. Econ. Stud. 90:2555–2591.",
     "Brooks T.M. et al. (2019) Measuring terrestrial Area of Habitat (AOH) and its utility for the IUCN Red List. Trends Ecol. Evol. 34:977–986.",
+    "Li X., He Z., Xia S., Yang Y. (2024) Greenness change associated with construction and operation of photovoltaic solar energy in China. Renewable Energy 226:120461.",
+    "Li Y., Wang Z., Lei Y., Yu X., Che H., Zhang X. (2026) Ecological effects of photovoltaic deployment in China: a remote sensing assessment. Environ. Res. Commun. 8:041016.",
+    "彭昀月, 罗永梅, 徐泽楠, 靳彤 (2024) 集中式大型光伏及风电电场生态影响:进展与展望. 生物多样性 32(2):23212.",
+    "《中国可再生能源与生物多样性协同发展的机遇与挑战》(征求意见稿),发布机构与日期待核实。",
   ];
   s.addText(refs.map((r, i) => ({ text: `[${i + 1}] ` + r, options: { breakLine: i < refs.length - 1 } })),
-    { x: 0.6, y: 1.3, w: W - 1.2, h: 5.6, fontFace: F, fontSize: 12.5, color: C.ink, valign: "top", paraSpaceAfter: 7, margin: 0 });
+    { x: 0.6, y: 1.25, w: W - 1.2, h: 5.7, fontFace: F, fontSize: 11, color: C.ink, valign: "top", paraSpaceAfter: 4, margin: 0 });
   pageNo(s, n);
 }
 
@@ -411,8 +468,8 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
-    "GEE 项目已注册;按实测字段跑通起步脚本,导出中国站点",
-    "抽样目视验证建设日期,判断 G1",
+    "西北旱区约 200 个 2019–2021 光伏站:绿度与异质性事件研究",
+    "G1 自动判读 77%:目视复核强弱信号站点,定稿过渡期规则",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];

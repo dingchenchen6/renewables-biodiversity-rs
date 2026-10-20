@@ -84,13 +84,19 @@ ol.refs li{margin:.45em 0}
 .note{font-size:14px;color:var(--mute)}
 footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);color:var(--mute);font-size:14px}
 .callout{border-radius:12px;padding:16px 20px;background:var(--panelA);margin-top:16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--mute);margin-bottom:10px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.yr{display:grid;grid-template-columns:58px 1fr 74px;align-items:center;gap:10px;margin:7px 0;font-size:14px}
+.sbar{display:flex;height:22px;border-radius:5px;overflow:hidden;background:var(--line)}
+.sbar span{display:block;height:100%}
+.yr .km{color:var(--mute);font-size:13px;text-align:right}
 </style>
 </head>
 <body>
 <header class="hero">
   <div class="rings" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="tag">研究工作流 · v0.1 · 2026 年 10 月</div>
+    <div class="tag">研究工作流 · v0.2 · 2026 年 10 月</div>
     <h1>中国风光电扩张的生物多样性影响</h1>
     <p class="sub">遥感事后评估:占用了什么、改变了什么、与规划预测是否一致</p>
     <div class="formula"><span>真实设施足迹</span><span>季度建设日期</span><span>晚建站点反事实</span><span>不依赖观测努力的结局</span></div>
@@ -112,7 +118,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 
 <section id="verdict">
   <h2>一句话判断</h2>
-  <p class="lead">可以做,而且时机好。关键在于换掉暴露、结局与反事实,并用结果检验 NEE 论文的事前预测。</p>
+  <p class="lead">可以做,而且时机好。但"光伏使绿度如何变化"已有全国 30 m 评估(Li 等 2024),本工作流的新意不在绿度本身,而在四点:未建站点反事实与预趋势检验、绿度与异质性并列、风电同框、物种暴露并对照 NEE 情景。</p>
   <div class="grid g2">
     <div class="stat">
       <div class="big">2017Q4 – 2024Q2</div>
@@ -139,7 +145,15 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td><b>尺度</b></td><td>县</td><td>全国栅格</td><td><b>站点及外围距离环</b></td></tr>
     <tr><td><b>因果识别</b></td><td>双向固定效应,存在预趋势</td><td>不涉及,情景比较</td><td><b>交错 DiD,晚建站点作对照</b></td></tr>
   </table></div>
-  <div class="callout"><b>缺口</b>:真实发生的扩张到底占用了什么、造成了什么,目前没有全国性的因果证据。</div>
+  <h3 style="margin-top:28px">国内已有的遥感评估:已回答什么</h3>
+  <div class="tw"><table>
+    <tr><th>研究</th><th>样本与方法</th><th>主要发现</th><th class="hl">留给本工作流的空间</th></tr>
+    <tr><td><b>Li X. 等 2024</b><br><i>Renewable Energy</i> <a href="#refs">[16]</a></td><td>全国光伏图 × 30 m 植被指数;区分建设期与运行期</td><td>建设期绿度显著下降,森林降幅最大、裸地最小;中小型站点负效应更强(多建在高绿度处);运行期绿度普遍回升,裸地最明显;约 21% 的站点超过建设前水平</td><td>结局只有绿度;前后比较未设未建对照,区域性变绿与气候趋势难以剥离</td></tr>
+    <tr><td><b>Li Y. 等 2026</b><br><i>Environ. Res. Commun.</i> <a href="#refs">[17]</a></td><td>57 个光伏站,"空间-时间"法;EVI、FVC、NPP、土壤水分、气温</td><td>湿润与半湿润区耕地负响应最强(ΔEVI −0.03,ΔFVC −2.7%),草地负响应较弱;裸地 FVC 与 NPP 小幅上升并伴随土壤水分增加;夜间增温为主,草地最强;耕地负响应可能源于遮光</td><td>站点少;未涉及物种与异质性;未覆盖风电</td></tr>
+    <tr><td><b>彭昀月 等 2024</b><br>《生物多样性》 <a href="#refs">[18]</a></td><td>集中式光伏与风电生态影响综述</td><td>光伏主要改变土壤、植被与栖息地质量,旱区可降温增湿、固沙;风电集中于植被扰动、鸟类撞击与生境破碎化;机制与生态系统层面研究不足</td><td>呼吁统一调查方法、加强物种与生态系统层面研究,正对应 M3–M5</td></tr>
+    <tr><td><b>征求意见稿</b> <a href="#refs">[19]</a></td><td>《中国可再生能源与生物多样性协同发展的机遇与挑战》</td><td>政策语境:协同发展已进入政策讨论</td><td>发布机构与正式版待核实;仅作背景,不引用具体结论</td></tr>
+  </table></div>
+  <div class="callout"><b>缺口(修订)</b>:绿度变化已有全国描述,且方向依原生境而异(森林与湿润区耕地降、裸地升)。尚缺的是:① 有未建对照与预趋势检验的因果估计;② 绿度之外的异质性与物种暴露;③ 风电与光伏在同一框架下比较;④ 真实选址与 NEE 规划情景的直接对照。</div>
 </section>
 
 <section id="evidence">
@@ -152,14 +166,20 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <li>光伏遥感研究普遍报告"变绿",但空间异质且受气候混杂 <a href="#refs">[6, 7]</a></li>
       <li>青海荒漠野外:板下生物量增加,物种丰富度与香农指数显著下降 <a href="#refs">[8]</a></li>
       <li>内蒙古风电场:夜间增温、生产力下降 <a href="#refs">[9]</a></li>
+      <li>全国 30 m:建设期绿度下降,森林最大、裸地最小;中小站点更强;运行期回升,约 21% 超过建设前 <a href="#refs">[16]</a></li>
+      <li>57 站:湿润区耕地负响应最强,裸地 FVC、NPP 小幅上升且土壤水分增加;夜间增温为主 <a href="#refs">[17]</a></li>
     </ul></div>
     <div class="card a"><h3 style="color:#8A5A12">推断</h3><ul>
       <li>大型基地向荒漠、戈壁集中,而那里恰是公民科学数据最稀疏、NEE 预测功能多样性冲突最大的地方</li>
       <li>"劣质绿化"若存在,应表现为绿度上升、异质性下降;站点尺度可检验,县级 MODIS 不可检验</li>
+      <li>[16][17] 的方向差异提示效应由原生境与干旱度共同调节:旱区以土壤水分增益为主,湿润区以遮光为主。两种机制可用土壤水分与板间/板下对比区分</li>
+      <li>中小站点负效应更强,可能是选址的混杂(建在高绿度处),而非规模本身;需在匹配中控制建设前绿度</li>
     </ul></div>
     <div class="card r"><h3 style="color:var(--red)">待核实</h3><ul>
       <li>GRW 在中国的要素数量与建设日期准确度</li>
       <li>是否已有用建设日期构建反事实的全国风电研究(本次检索未见,不等于不存在)</li>
+      <li>[16] 的"建设期""运行期"如何界定,是否有任何对照组(需读全文)</li>
+      <li>征求意见稿 [19] 的发布机构、日期与正式版</li>
       <li>China BON-Birds 的获取途径</li>
       <li>NEE 情景空间图层能否获取</li>
     </ul></div>
@@ -171,7 +191,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="stat" style="margin-bottom:16px">2017–2024 年中国新建的地面光伏与陆上风电,占用了哪些生境与物种栖息地;建设是否因果性地降低了站点及外围的栖息地状况;代价格局更接近 NEE 的"全国集中"还是"省级分散"情景?</div>
   <div class="grid g3">
     <div class="card"><h3><span class="dot" style="background:var(--red);width:14px;height:14px"></span>H1 生境置换</h3>建设转换自然生境,站点及外围状况下降,效应随距离衰减。</div>
-    <div class="card"><h3><span class="dot" style="background:var(--sage);width:14px;height:14px"></span>H2 中性或改善</h3>站点多在退化地、裸地或农田,遮荫增湿带来变绿而无生境损失。</div>
+    <div class="card"><h3><span class="dot" style="background:var(--sage);width:14px;height:14px"></span>H2 中性或改善</h3>站点多在退化地、裸地或农田,遮荫增湿带来变绿而无生境损失。已有证据:裸地站点运行期绿度回升、土壤水分增加 [16, 17]。</div>
     <div class="card"><h3><span class="dot" style="background:var(--amber);width:14px;height:14px"></span>H3 同质化</h3>绿度上升但结构与光谱异质性下降,生境质量损失被 NDVI 掩盖。</div>
   </div>
   <h3 style="margin-top:28px">关键判别:同时看绿度与异质性</h3>
@@ -184,7 +204,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </table></div>
   <div class="grid g2" style="margin-top:16px">
     <div class="card a"><h3>地面证据</h3>青海荒漠野外调查:板下生物量增加,但物种丰富度与香农指数显著下降。遥感只看绿度会把 H3 误判为 H2。</div>
-    <div class="card"><h3>证伪条件</h3>预趋势平坦、功效充足,而自然生境站点各项状况指标的建设后效应都与零无差异,则 H1 被否定;绿度上升处异质性并未下降,则 H3 被否定。</div>
+    <div class="card"><h3>证伪条件</h3>H2 在裸地上已有支持,所以关键检验在两处:裸地站点的变绿是否伴随异质性下降(H3 对 H2),森林与湿润区耕地站点的下降是否在未建对照下仍然成立(H1)。具体而言,预趋势平坦、功效充足,而自然生境站点各项状况指标的建设后效应都与零无差异,则 H1 被否定;绿度上升处异质性并未下降,则 H3 被否定。</div>
   </div>
   <p class="note">挑战的默认假设:① 遥感变绿即生态改善;② 荒漠是低代价选址;③ 政策强度可以代表生态暴露。</p>
 </section>
@@ -245,11 +265,13 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <ul>
         <li>匹配变量:光伏潜力或风速(选址按它挑)、坡度、海拔、距道路/电网/居民点、建设前土地覆盖与绿度趋势</li>
         <li>稳健性:事件研究预趋势;HonestDiD;ERA5-Land 气候协变量;站点聚类或 Conley 标准误;按生境、干旱度、设施类型分层</li>
+        <li>预设调节变量(来自 [16, 17]):建设前土地覆盖、干旱指数、站点面积等级;面积效应需在控制建设前绿度后再解释</li>
       </ul>
     </div>
     <div class="card a"><h3>M4 机制:变绿还是同质化</h3><ul>
       <li>同一批站点并列估计绿度与异质性的事件研究,直接检验 H3</li>
       <li>光学遥感看不到不透明面板下的植被:板间与外围用遥感,板下用野外样方补充,并在文中正面写明</li>
+      <li>区分两条通路 [17]:旱区"遮荫增湿"(土壤水分 ↑、绿度 ↑)与湿润区"遮光限制"(土壤水分不变、绿度 ↓);用 ERA5-Land 或 SMAP 土壤水分与夜间地表温度共同判别</li>
     </ul></div>
     <div class="card"><h3>M5 生物学响应</h3><ul>
       <li>China BON-Birds 样线邻近设施时做 BACI 比较</li>
@@ -299,7 +321,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <section id="gates">
   <h2>质量与证伪关口</h2>
   <p class="lead">看结果之前写定;任一关口不过,按对策调整后重跑。</p>
-  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)</div><div class="card a">不通过:改用年度时间窗,剔除日期模糊站点</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)。<b>首轮自动判读:77%,未通过;强信号站点 96%</b></div><div class="card a">不通过:改用年度时间窗,剔除日期模糊站点</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受</div><div class="card a">不通过:重新匹配或缩小比较组</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局的最小可检测效应小于文献中的合理效应</div><div class="card a">不通过:合并区域或延长时窗</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">遥感状况指标与有地面数据处的多样性指标方向一致</div><div class="card a">不通过:结局只表述为栖息地状况,不外推</div></div>
@@ -310,7 +332,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <p class="lead">G1 与 G2 都通过才全国铺开。</p>
   <div class="timeline">
     <div class="card"><div class="d">第 1–2 天</div><b>注册 GEE,跑起步脚本</b><p class="note">产出:中国光伏与风电按季度、按 2018 土地覆盖的统计</p></div>
-    <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站目视验证建设季度</b><p class="note">产出:G1 一致率</p></div>
+    <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站验证建设季度</b><p class="note">产出:G1 一致率。自动判读已完成(77%),目视复核待做</p></div>
     <div class="card"><div class="d">第 6–9 天</div><b>西北旱区约 200 个 2019–2021 光伏站 + 匹配晚建站</b><p class="note">产出:绿度与异质性事件研究,预趋势图</p></div>
     <div class="card"><div class="d">第 10–12 天</div><b>内蒙古草原约 100 个风电场</b><p class="note">产出:MODIS 夜间地表温度,风电可行性</p></div>
     <div class="card a"><div class="d">第 13–14 天</div><b>写决策备忘录</b><p class="note">产出:继续、调整或放弃</p></div>
@@ -318,25 +340,54 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 </section>
 
 <section id="first">
-  <h2>首批实测:中国站点规模与建设前生境</h2>
-  <p class="lead">GRW 数据,GEE 项目 renewable-conservation,2026-10-20 实测。2017 年一律为第 4 季度,是影像起点前已存在站点的左删失,下表"新建"只计 2018 年起。</p>
+  <h2>首批实测:中国站点规模、建设前生境与日期校验</h2>
+  <p class="lead">GRW 数据,GEE 项目 renewable-conservation,2026-10-20 实测。2017 年一律为第 4 季度,是影像起点前已存在站点的左删失,"新建"只计 2018 年起。脚本见仓库 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/gee"><code>gee/</code></a>,结果表见 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results"><code>results/</code></a>。</p>
   <div class="grid g4">
     <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">20,231</div>光伏地块(全部)</div>
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">6,312 km²</div>光伏总面积</div>
     <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">119,974</div>风机(全部)</div>
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">14,421 · 72,838</div>2018 年后新建光伏 · 风机</div>
   </div>
-  <div class="tw" style="margin-top:16px"><table>
-    <tr><th>建设前土地覆盖(ESA CCI 2018)</th><th>光伏,按面积</th><th>风机,按数量</th></tr>
-    <tr><td>裸地</td><td>33.2%</td><td>21.8%</td></tr>
-    <tr><td>草地</td><td>31.2%</td><td>34.9%</td></tr>
-    <tr><td>耕地</td><td>26.5%</td><td>19.4%</td></tr>
-    <tr><td>森林</td><td>0.7%</td><td>12.2%</td></tr>
-    <tr><td>水体</td><td>4.1%</td><td>0.8%</td></tr>
-    <tr><td>其他</td><td>4.3%</td><td>10.9%</td></tr>
+
+  <h3 style="margin-top:28px">① 建设前一年 30 m 土地覆盖(2018 年后新建光伏,14,421 块,3,890 km²)</h3>
+  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。</p>
+  <div class="tw"><table>
+    <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按面积)</th><th>按主导类别计站点数</th><th>对照:GRW 自带 ESA CCI 2018,300 m(按面积)</th></tr>
+    <tr><td>裸地</td><td><b>39.5%</b></td><td>4.5%</td><td>33.2%</td></tr>
+    <tr><td>草地</td><td><b>21.1%</b></td><td>28.1%</td><td>31.2%</td></tr>
+    <tr><td>耕地</td><td><b>19.5%</b></td><td>46.4%</td><td>26.5%</td></tr>
+    <tr><td>稀疏植被</td><td><b>8.6%</b></td><td>4.1%</td><td>(并入其他类)</td></tr>
+    <tr><td>湿地</td><td><b>3.7%</b></td><td>4.2%</td><td rowspan="2">水体 4.1%</td></tr>
+    <tr><td>水体</td><td><b>2.4%</b></td><td>1.6%</td></tr>
+    <tr><td>不透水面</td><td><b>3.2%</b></td><td>8.1%</td><td>(并入其他类)</td></tr>
+    <tr><td>森林 · 灌丛</td><td><b>1.7% · 0.3%</b></td><td>2.9% · 0.2%</td><td>0.7%</td></tr>
   </table></div>
-  <p class="note">ESA CCI 为 300 m 粗分辨率;2018 年建成站点的"2018 年覆盖"可能已是建成后状态。正式分析改用建设前一年的 30 m 年度土地覆盖。按数量计,光伏以耕地上的小型站点为主(约 61%);按面积计,裸地与草地占六成以上。</p>
-  <p class="note">TZ-SAM 交叉核对(2025Q1 版,按中国国界空间筛选):22,100 个光伏多边形,合计约 420 GW;全部有建设时间上界(<code>constructe</code>),14,347 个(65%)同时有下界(<code>construc_1</code>),可为 GRW 季度日期提供独立的时间区间校验。</p>
+  <p class="note">按面积,裸地、草地、耕地三者约占八成;按站点数,近一半是建在耕地上的站点。湿地与水体合计约 6%,多半对应渔光互补,需要单独作为一类处理。</p>
+
+  <h3 style="margin-top:28px">② 选址在 2022 年后急转向裸地</h3>
+  <div class="card" style="padding:16px 18px">
+    <div class="legend"><span><i style="background:#E9A23B"></i>耕地</span><span><i style="background:#6FA67A"></i>草地</span><span><i style="background:#A9C3A0"></i>稀疏植被</span><span><i style="background:#CDB48E"></i>裸地</span><span><i style="background:#1F6F78"></i>森林</span><span><i style="background:#5B8DB8"></i>湿地</span><span><i style="background:#2F5D8A"></i>水体</span><span><i style="background:#8C969C"></i>不透水面</span><span><i style="background:#3E8E5E"></i>灌丛</span></div>
+    <div class="yr"><b>2018</b><div class="sbar"><span style="width:21.93%;background:#E9A23B" title="耕地 21.9%"></span><span style="width:23.70%;background:#6FA67A" title="草地 23.7%"></span><span style="width:7.93%;background:#A9C3A0" title="稀疏植被 7.9%"></span><span style="width:33.55%;background:#CDB48E" title="裸地 33.6%"></span><span style="width:1.61%;background:#1F6F78" title="森林 1.6%"></span><span style="width:3.41%;background:#5B8DB8" title="湿地 3.4%"></span><span style="width:2.03%;background:#2F5D8A" title="水体 2.0%"></span><span style="width:5.61%;background:#8C969C" title="不透水面 5.6%"></span><span style="width:0.22%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">1020 km²</span></div><div class="yr"><b>2019</b><div class="sbar"><span style="width:28.86%;background:#E9A23B" title="耕地 28.9%"></span><span style="width:25.05%;background:#6FA67A" title="草地 25.0%"></span><span style="width:8.75%;background:#A9C3A0" title="稀疏植被 8.8%"></span><span style="width:18.65%;background:#CDB48E" title="裸地 18.7%"></span><span style="width:1.76%;background:#1F6F78" title="森林 1.8%"></span><span style="width:6.42%;background:#5B8DB8" title="湿地 6.4%"></span><span style="width:3.01%;background:#2F5D8A" title="水体 3.0%"></span><span style="width:7.16%;background:#8C969C" title="不透水面 7.2%"></span><span style="width:0.33%;background:#3E8E5E" title="灌丛 0.3%"></span></div><span class="km">369 km²</span></div><div class="yr"><b>2020</b><div class="sbar"><span style="width:21.67%;background:#E9A23B" title="耕地 21.7%"></span><span style="width:41.95%;background:#6FA67A" title="草地 41.9%"></span><span style="width:10.75%;background:#A9C3A0" title="稀疏植被 10.8%"></span><span style="width:15.63%;background:#CDB48E" title="裸地 15.6%"></span><span style="width:1.87%;background:#1F6F78" title="森林 1.9%"></span><span style="width:3.72%;background:#5B8DB8" title="湿地 3.7%"></span><span style="width:1.34%;background:#2F5D8A" title="水体 1.3%"></span><span style="width:2.78%;background:#8C969C" title="不透水面 2.8%"></span><span style="width:0.29%;background:#3E8E5E" title="灌丛 0.3%"></span></div><span class="km">533 km²</span></div><div class="yr"><b>2021</b><div class="sbar"><span style="width:31.23%;background:#E9A23B" title="耕地 31.2%"></span><span style="width:24.82%;background:#6FA67A" title="草地 24.8%"></span><span style="width:10.74%;background:#A9C3A0" title="稀疏植被 10.7%"></span><span style="width:18.92%;background:#CDB48E" title="裸地 18.9%"></span><span style="width:3.47%;background:#1F6F78" title="森林 3.5%"></span><span style="width:6.36%;background:#5B8DB8" title="湿地 6.4%"></span><span style="width:1.95%;background:#2F5D8A" title="水体 1.9%"></span><span style="width:2.07%;background:#8C969C" title="不透水面 2.1%"></span><span style="width:0.45%;background:#3E8E5E" title="灌丛 0.4%"></span></div><span class="km">433 km²</span></div><div class="yr"><b>2022</b><div class="sbar"><span style="width:18.82%;background:#E9A23B" title="耕地 18.8%"></span><span style="width:16.06%;background:#6FA67A" title="草地 16.1%"></span><span style="width:12.06%;background:#A9C3A0" title="稀疏植被 12.1%"></span><span style="width:44.48%;background:#CDB48E" title="裸地 44.5%"></span><span style="width:1.60%;background:#1F6F78" title="森林 1.6%"></span><span style="width:3.08%;background:#5B8DB8" title="湿地 3.1%"></span><span style="width:1.62%;background:#2F5D8A" title="水体 1.6%"></span><span style="width:1.65%;background:#8C969C" title="不透水面 1.7%"></span><span style="width:0.61%;background:#3E8E5E" title="灌丛 0.6%"></span></div><span class="km">635 km²</span></div><div class="yr"><b>2023</b><div class="sbar"><span style="width:7.43%;background:#E9A23B" title="耕地 7.4%"></span><span style="width:7.41%;background:#6FA67A" title="草地 7.4%"></span><span style="width:5.82%;background:#A9C3A0" title="稀疏植被 5.8%"></span><span style="width:73.91%;background:#CDB48E" title="裸地 73.9%"></span><span style="width:0.81%;background:#1F6F78" title="森林 0.8%"></span><span style="width:2.09%;background:#5B8DB8" title="湿地 2.1%"></span><span style="width:1.55%;background:#2F5D8A" title="水体 1.5%"></span><span style="width:0.75%;background:#8C969C" title="不透水面 0.7%"></span><span style="width:0.24%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">608 km²</span></div><div class="yr"><b>2024 *</b><div class="sbar"><span style="width:4.07%;background:#E9A23B" title="耕地 4.1%"></span><span style="width:2.60%;background:#6FA67A" title="草地 2.6%"></span><span style="width:2.58%;background:#A9C3A0" title="稀疏植被 2.6%"></span><span style="width:77.86%;background:#CDB48E" title="裸地 77.9%"></span><span style="width:1.14%;background:#1F6F78" title="森林 1.1%"></span><span style="width:1.60%;background:#5B8DB8" title="湿地 1.6%"></span><span style="width:8.75%;background:#2F5D8A" title="水体 8.8%"></span><span style="width:1.22%;background:#8C969C" title="不透水面 1.2%"></span><span style="width:0.18%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">292 km²</span></div>
+  </div>
+  <p class="note">裸地占新建面积的比例,2019–2021 年为 16–19%,2022 年升至 45%,2023 年为 74%,2024 年上半年为 78%;同期耕地由 22–31% 降到 4–7%。这与"沙戈荒"大型基地的推进时间吻合。* 2024 年 GRW 只到第 2 季度,其土地覆盖用 2022 年;2018 年的面积可能仍混有影像起点前建成的站点。</p>
+
+  <h3 style="margin-top:28px">③ 规模分化:小站占耕地,大站占裸地</h3>
+  <div class="tw"><table>
+    <tr><th>站点面积</th><th>站点数</th><th>面积占比</th><th>耕地</th><th>草地</th><th>裸地</th><th>森林</th></tr>
+    <tr><td>1–10 公顷</td><td>9,945</td><td>9.0%</td><td><b>45.5%</b></td><td>27.8%</td><td>2.9%</td><td>4.2%</td></tr>
+    <tr><td>10–100 公顷</td><td>3,992</td><td>30.1%</td><td><b>39.2%</b></td><td>27.7%</td><td>7.0%</td><td>3.6%</td></tr>
+    <tr><td>&gt;100 公顷</td><td>484</td><td>60.9%</td><td>5.9%</td><td>16.8%</td><td><b>61.0%</b></td><td>0.4%</td></tr>
+  </table></div>
+  <p class="note">3% 的站点占了 61% 的面积,且主要在裸地上;中小站点则以耕地、草地为主,森林占比也更高。这与 Li 等 2024 [16] "中小站点建在高绿度处、负效应更强"的结果一致,也说明规模效应和原生境效应在设计上必须分开估计。</p>
+
+  <h3 style="margin-top:28px">④ G1 建设日期校验(自动断点,100 站)</h3>
+  <p class="lead">2020–2023 年每年随机抽 25 站(面积 ≥ 1 公顷)。取 GRW 季度前 8 个、后 6 个季度的哨兵-2 季度中位数反射率,用"季节哑变量 + 单一阶跃"模型找断点。</p>
+  <div class="grid g3">
+    <div class="card"><div style="font:700 26px Arial;color:var(--deep)">0 与 −1</div>断点众数:地表变化多发生在 GRW 季度或前一季度,符合 GRW"首次可见"的定义</div>
+    <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">77%</div>断点在 GRW 季度 ±2 内,低于预设 85%,<b>G1 整体未通过</b></div>
+    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">96%</div>阶跃信号较强的一半站点(R² 增益 ≥ 0.55)落在 ±2 内</div>
+  </div>
+  <p class="note">按预设对策处理:事件研究把 GRW 季度前 2 个季度到当季设为过渡期,不计入前或后;主分析只用阶跃信号清晰的站点,其余站点改用年度时间窗作稳健性检验。方法上有两点教训:单纯的前后均值差会把季节转换误判为断点(第一版因此失效);窗口过窄会让断点堆在边界。本结果是自动判读,目视复核尚未做。</p>
 </section>
 
 <section id="code">
@@ -380,6 +431,7 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileForma
   <h2>主要风险与对策</h2>
   <div class="tw"><table>
     <tr><th>风险</th><th>对策</th></tr>
+    <tr><td><b>新颖性:全国绿度评估已有 [16]</b></td><td>主张落在因果设计、异质性、风电与物种暴露;绿度结果作为与 [16] 的对照与复现,不作为卖点</td></tr>
     <tr><td><b>遥感结局被当成多样性</b></td><td>构念限定为栖息地状况与暴露;M5 做生物学验证</td></tr>
     <tr><td><b>选址非随机</b></td><td>晚建站点作对照;按资源潜力与可达性匹配;预趋势检验</td></tr>
     <tr><td><b>GRW 日期是检出时间,不等于并网时间</b></td><td>目视验证;与 GEM 投运年份比对;时间窗稳健性</td></tr>
@@ -407,12 +459,16 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileForma
     <li>全国鸟类多样性观测网络(China BON-Birds)建设进展. 生态与农村环境学报 (2018). <a href="https://www.ere.ac.cn/en/article/doi/10.11934/j.issn.1673-4831.2018.01.001">链接</a></li>
     <li>Callaway B., Sant'Anna P.H.C. (2021) Difference-in-differences with multiple time periods. <i>J. Econometrics</i> 225:200–230;Sun L., Abraham S. (2021) <i>J. Econometrics</i> 225:175–199;Rambachan A., Roth J. (2023) A more credible approach to parallel trends. <i>Rev. Econ. Stud.</i> 90:2555–2591.</li>
     <li>Brooks T.M. et al. (2019) Measuring terrestrial Area of Habitat (AOH) and its utility for the IUCN Red List. <i>Trends Ecol. Evol.</i> 34:977–986.</li>
+    <li>Li X., He Z., Xia S., Yang Y. (2024) Greenness change associated with construction and operation of photovoltaic solar energy in China. <i>Renewable Energy</i> 226:120461. <a href="https://doi.org/10.1016/j.renene.2024.120461">链接</a></li>
+    <li>Li Y., Wang Z., Lei Y., Yu X., Che H., Zhang X. (2026) Ecological effects of photovoltaic deployment in China: a remote sensing assessment. <i>Environ. Res. Commun.</i> 8:041016. <a href="https://doi.org/10.1088/2515-7620/ae625a">链接</a></li>
+    <li>彭昀月, 罗永梅, 徐泽楠, 靳彤 (2024) 集中式大型光伏及风电电场生态影响:进展与展望. 生物多样性 32(2):23212. <a href="https://doi.org/10.17520/biods.2023212">链接</a>;同组后续:减缓陆上集中式光伏及风电电场生态影响的早期选址规划方法与工具. 生物多样性 33(1):24063 (2025). <a href="https://www.biodiversity-science.net/CN/Y2025/V33/I1/24063">链接</a></li>
+    <li>《中国可再生能源与生物多样性协同发展的机遇与挑战》(征求意见稿)。发布机构与日期待核实,未检索到公开版本,仅作政策背景。</li>
   </ol>
 </section>
 
 </main>
 <footer><div class="wrap">
-  丁晨晨 · 北京大学 · 研究工作流 v0.1(2026 年 10 月)。本页为研究计划,全部 22 个 GEE 数据集已于 2026-10-20 在线实测可访问。文字与图示采用 CC BY 4.0。
+  丁晨晨 · 北京大学 · 研究工作流 v0.2(2026 年 10 月;v0.2 纳入国内光伏遥感评估文献,并补建设前生境重算与 G1 日期校验)。本页为研究计划,全部 22 个 GEE 数据集已于 2026-10-20 在线实测可访问。文字与图示采用 CC BY 4.0。
 </div></footer>
 </body>
 </html>
