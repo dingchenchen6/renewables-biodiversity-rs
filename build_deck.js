@@ -377,14 +377,15 @@ let n = 0;
   });
   const cats = ["裸地", "草地", "耕地", "稀疏植被", "湿地+水体", "不透水面", "森林+灌丛"];
   s.addChart(pres.charts.BAR, [
-    { name: "光伏(面积 %)", labels: cats, values: [39.5, 21.1, 19.5, 8.6, 6.1, 3.2, 2.0] },
-  ], { x: 4.5, y: 1.6, w: 8.2, h: 4.5, barDir: "col",
-       chartColors: [C.amber], showLegend: false,
-       showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 11, dataLabelFormatCode: "0.0",
+    { name: "CLCD v1.0.5", labels: cats, values: [36.0, 31.2, 23.2, 0, 3.7, 3.9, 2.0] },
+    { name: "GLC_FCS30D", labels: cats, values: [39.5, 21.1, 19.5, 8.6, 6.1, 3.2, 2.0] },
+  ], { x: 4.5, y: 1.6, w: 8.2, h: 4.5, barDir: "col", barGrouping: "clustered",
+       chartColors: [C.teal, C.amber], showLegend: true, legendPos: "t", legendFontSize: 11, legendFontFace: F,
+       showValue: true, dataLabelPosition: "outEnd", dataLabelFontSize: 9, dataLabelFormatCode: "0.0",
        catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
        valAxisMaxVal: 45, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
-       showTitle: true, title: "2018 年后新建光伏:建设前一年土地覆盖(GLC_FCS30D,30 m,按面积)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
-  s.addText("按站点数,近一半建在耕地上。对照 GRW 自带 ESA CCI 2018(300 m):裸地 33.2%、草地 31.2%、耕地 26.5%。风机(GLC_FCS30D 前一年 30 m,72,837 台):裸地 32.9%、耕地 23.3%、草地 21.2%、森林 6.3%(ESA CCI 300 m 给出森林 12.2%,高估约一倍)。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+       showTitle: true, title: "2018 年后新建光伏:建设前一年 30 m 土地覆盖(按面积 %)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
+  s.addText("CLCD 无稀疏植被类(并入草地),湿地并入水体;两产品逐站主导类别一致 75.5%。按站点数一半建在耕地上。风机森林占比:CLCD 12.5%(9,067 台)、GLC 6.3%(4,613 台),只能报区间,需高分影像定标。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
   pageNo(s, n);
 }
 
@@ -416,6 +417,23 @@ let n = 0;
     s.addText(r[1], { x: 8.5, y: y + 0.6, w: 4.1, h: 0.5, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
   });
   s.addText("对策:主样本只用 GRW 与 TZ-SAM 一致的 6,355 站;处理时点取两者较早者;GRW 季度前 2 季至当季为过渡期。", { x: 8.3, y: 5.6, w: 4.45, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
+  pageNo(s, n);
+}
+
+// ---- 14d 西北旱区试点 / NW dryland pilot ---------------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "西北旱区试点:交错 DiD 事件研究", "365 站(2019–2021 处理 198,2022–2023 晚建对照 167);Landsat 生长季 NDVI,2016–2024");
+  s.addImage({ path: "results/figures/pilot_nw_eventstudy.png", x: 0.5, y: 1.55, w: 7.3, h: 5.45 });
+  const g = [["站内:G2 未通过", "建后 1–3 年 −0.022(−0.042, −0.002),但建设前偏离达 0.025;设 2 年预期期后降为 −0.004", "F3E7E4"],
+             ["外围环:设计可用", "建设前平坦(p = 0.60);60–500 m 未检出外溢,−0.009(−0.026, 0.007)", C.tint],
+             ["异质性:未检出", "站内与外围环 NDVI 标准差均无变化;H3 未获支持也未被否定", C.tintA]];
+  g.forEach((r, i) => {
+    const y = 1.6 + i * 1.32;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.1, y, w: 4.65, h: 1.18, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: 8.3, y: y + 0.08, w: 4.3, h: 0.4, fontFace: F, fontSize: 15, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: 8.3, y: y + 0.5, w: 4.3, h: 0.65, fontFace: F, fontSize: 11, color: C.ink, margin: 0 });
+  });
+  s.addText("修改:按建设前 NDVI 轨迹与选址变量匹配从未建设点;前期延至 2010;站内改用 10 m 板间像元;HonestDiD 报告界。", { x: 8.1, y: 5.6, w: 4.65, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
   pageNo(s, n);
 }
 
@@ -468,8 +486,8 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
-    "西北旱区约 200 个 2019–2021 光伏站:绿度与异质性事件研究",
-    "下载 CLCD 2017–2023,复算光伏与风机的建设前覆盖",
+    "重做对照:按建设前 NDVI 轨迹匹配从未建设点,前期延至 2010",
+    "森林风机 6–13% 区间:高分影像抽样定标",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];

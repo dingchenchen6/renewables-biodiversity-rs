@@ -111,7 +111,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <nav class="toc"><div class="wrap">
   <a href="#verdict">判断</a><a href="#position">定位</a><a href="#evidence">证据台账</a><a href="#question">核心问题</a>
   <a href="#workflow">工作流</a><a href="#modules">模块细节</a><a href="#data">数据源与获取</a><a href="#gates">质量关口</a>
-  <a href="#pilot">两周 pilot</a><a href="#first">首批实测</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
+  <a href="#pilot">两周 pilot</a><a href="#first">首批实测</a><a href="#pilotnw">旱区试点</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
 </div></nav>
 
 <main class="wrap">
@@ -241,7 +241,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <li>随机抽 100–200 站在 Sentinel-2 时序上目视判读建设季度</li>
     </ul></div>
     <div class="card"><h3>M2 生境转换与物种暴露</h3><ul>
-      <li>以建设前一年年度土地覆盖为基线:CLCD v1.0.5(1985–2025,中国专题)作主数据,GLC_FCS30D(GEE 内,止于 2022)作交叉核对 [20]</li>
+      <li>以建设前一年年度土地覆盖为基线:CLCD v1.0.5(1985–2025,中国专题)与 GLC_FCS30D 并用;两者对森林、灌丛、耕地的划分分歧大,涉及森林的结论报告两者区间并以高分影像抽样定标 [20]</li>
       <li>按生境类型、生物气候区、海拔带统计占用面积</li>
       <li>IUCN/BirdLife 范围 × 生境偏好 × 海拔构建 Area of Habitat;受威胁物种用 SDM</li>
       <li>用 NEE 的同一组指标计算真实选址冲突,判断更接近哪个情景</li>
@@ -322,7 +322,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <h2>质量与证伪关口</h2>
   <p class="lead">看结果之前写定;任一关口不过,按对策调整后重跑。</p>
   <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)。<b>实测:哨兵-2 自动断点 77%,TZ-SAM 外部核对 79.6%,GRW 单独使用未通过</b></div><div class="card a">已执行:GRW 与 TZ-SAM 一致的站点作主样本;处理时点取两者中较早者;设过渡期</div></div>
-  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受</div><div class="card a">不通过:重新匹配或缩小比较组</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受。<b>西北试点:外围环通过(p = 0.60),站内未通过(p = 0.054,且预趋势与效应同量级)</b></div><div class="card a">已定对策:按建设前 NDVI 轨迹与选址变量匹配从未建设点,前期延长至 2010 年,站内改用 10 m 板间像元</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局的最小可检测效应小于文献中的合理效应</div><div class="card a">不通过:合并区域或延长时窗</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">遥感状况指标与有地面数据处的多样性指标方向一致</div><div class="card a">不通过:结局只表述为栖息地状况,不外推</div></div>
 </section>
@@ -333,7 +333,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="timeline">
     <div class="card"><div class="d">第 1–2 天</div><b>注册 GEE,跑起步脚本</b><p class="note">产出:中国光伏与风电按季度、按 2018 土地覆盖的统计</p></div>
     <div class="card"><div class="d">第 3–5 天</div><b>抽 100 站验证建设季度</b><p class="note">产出:G1 一致率。已完成:自动 77%、目视 23 站、TZ-SAM 79.6%</p></div>
-    <div class="card"><div class="d">第 6–9 天</div><b>西北旱区约 200 个 2019–2021 光伏站 + 匹配晚建站</b><p class="note">产出:绿度与异质性事件研究,预趋势图</p></div>
+    <div class="card"><div class="d">第 6–9 天</div><b>西北旱区约 200 个 2019–2021 光伏站 + 匹配晚建站</b><p class="note">产出:绿度与异质性事件研究,预趋势图。已完成:198 个处理站 + 167 个晚建对照;站内 G2 未通过,外围环通过</p></div>
     <div class="card"><div class="d">第 10–12 天</div><b>内蒙古草原约 100 个风电场</b><p class="note">产出:MODIS 夜间地表温度,风电可行性</p></div>
     <div class="card a"><div class="d">第 13–14 天</div><b>写决策备忘录</b><p class="note">产出:继续、调整或放弃</p></div>
   </div>
@@ -350,26 +350,24 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </div>
 
   <h3 style="margin-top:28px">① 建设前一年 30 m 土地覆盖(2018 年后新建光伏,14,421 块,3,890 km²)</h3>
-  <p class="lead">每块地读取建设前一年的 GLC_FCS30D(30 m,2022 年封顶),逐地块统计各类像元占比,再按面积加权。CLCD 已更新到 2025 年 [20],下一步用它复算,2023–2024 年站点即可读到真正的前一年覆盖。脚本已写好(<code>gee/04</code>);远程按需读取会触发 Zenodo 限流,需先下载 2017–2023 年 7 幅全国图。</p>
+  <p class="lead">每块地读取建设前一年的覆盖,逐地块统计各类像元占比,再按面积加权。两套 30 m 产品互为校核:CLCD v1.0.5(中国专题,2017–2023 年 7 幅,已下载并通过 MD5 校验,本地读取)与 GLC_FCS30D(GEE,止于 2022)。</p>
   <div class="tw"><table>
-    <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按面积)</th><th>按主导类别计站点数</th><th>对照:GRW 自带 ESA CCI 2018,300 m(按面积)</th></tr>
-    <tr><td>裸地</td><td><b>39.5%</b></td><td>4.5%</td><td>33.2%</td></tr>
-    <tr><td>草地</td><td><b>21.1%</b></td><td>28.1%</td><td>31.2%</td></tr>
-    <tr><td>耕地</td><td><b>19.5%</b></td><td>46.4%</td><td>26.5%</td></tr>
-    <tr><td>稀疏植被</td><td><b>8.6%</b></td><td>4.1%</td><td>(并入其他类)</td></tr>
-    <tr><td>湿地</td><td><b>3.7%</b></td><td>4.2%</td><td rowspan="2">水体 4.1%</td></tr>
-    <tr><td>水体</td><td><b>2.4%</b></td><td>1.6%</td></tr>
-    <tr><td>不透水面</td><td><b>3.2%</b></td><td>8.1%</td><td>(并入其他类)</td></tr>
-    <tr><td>森林 · 灌丛</td><td><b>1.7% · 0.3%</b></td><td>2.9% · 0.2%</td><td>0.7%</td></tr>
+    <tr><th>建设前覆盖</th><th>CLCD 前一年(按面积)</th><th>GLC_FCS30D 前一年(按面积)</th><th>CLCD 按主导类别计站点数</th></tr>
+    <tr><td>裸地</td><td><b>36.0%</b></td><td>39.5%</td><td>3.2%</td></tr>
+    <tr><td>草地(GLC 含稀疏植被)</td><td><b>31.2%</b></td><td>29.7%</td><td>28.6%</td></tr>
+    <tr><td>耕地</td><td><b>23.2%</b></td><td>19.5%</td><td>51.8%</td></tr>
+    <tr><td>水体 · 湿地</td><td><b>3.7% · 0</b></td><td>2.4% · 3.7%</td><td>3.4%</td></tr>
+    <tr><td>不透水面</td><td><b>3.9%</b></td><td>3.2%</td><td>9.5%</td></tr>
+    <tr><td>森林 · 灌丛</td><td><b>1.8% · 0.2%</b></td><td>1.7% · 0.3%</td><td>3.6%</td></tr>
   </table></div>
-  <p class="note">按面积,裸地、草地、耕地三者约占八成;按站点数,近一半是建在耕地上的站点。湿地与水体合计约 6%,多半对应渔光互补,需要单独作为一类处理。</p>
+  <p class="note">逐站比较主导类别,两套产品一致的站点占 75.5%(按面积 76.6%)。分歧集中在三处:GLC 判为森林的站点,CLCD 有 46% 判为耕地;GLC 的灌丛在 CLCD 中多为森林;GLC 的湿地(多为渔光互补水面与滩涂)在 CLCD 中归为水体或耕地。裸地、草地、耕地三大类的结论在两套产品中都成立。</p>
 
   <h3 style="margin-top:28px">② 选址在 2022 年后急转向裸地</h3>
   <div class="card" style="padding:16px 18px">
     <div class="legend"><span><i style="background:#E9A23B"></i>耕地</span><span><i style="background:#6FA67A"></i>草地</span><span><i style="background:#A9C3A0"></i>稀疏植被</span><span><i style="background:#CDB48E"></i>裸地</span><span><i style="background:#1F6F78"></i>森林</span><span><i style="background:#5B8DB8"></i>湿地</span><span><i style="background:#2F5D8A"></i>水体</span><span><i style="background:#8C969C"></i>不透水面</span><span><i style="background:#3E8E5E"></i>灌丛</span></div>
     <div class="yr"><b>2018</b><div class="sbar"><span style="width:21.93%;background:#E9A23B" title="耕地 21.9%"></span><span style="width:23.70%;background:#6FA67A" title="草地 23.7%"></span><span style="width:7.93%;background:#A9C3A0" title="稀疏植被 7.9%"></span><span style="width:33.55%;background:#CDB48E" title="裸地 33.6%"></span><span style="width:1.61%;background:#1F6F78" title="森林 1.6%"></span><span style="width:3.41%;background:#5B8DB8" title="湿地 3.4%"></span><span style="width:2.03%;background:#2F5D8A" title="水体 2.0%"></span><span style="width:5.61%;background:#8C969C" title="不透水面 5.6%"></span><span style="width:0.22%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">1020 km²</span></div><div class="yr"><b>2019</b><div class="sbar"><span style="width:28.86%;background:#E9A23B" title="耕地 28.9%"></span><span style="width:25.05%;background:#6FA67A" title="草地 25.0%"></span><span style="width:8.75%;background:#A9C3A0" title="稀疏植被 8.8%"></span><span style="width:18.65%;background:#CDB48E" title="裸地 18.7%"></span><span style="width:1.76%;background:#1F6F78" title="森林 1.8%"></span><span style="width:6.42%;background:#5B8DB8" title="湿地 6.4%"></span><span style="width:3.01%;background:#2F5D8A" title="水体 3.0%"></span><span style="width:7.16%;background:#8C969C" title="不透水面 7.2%"></span><span style="width:0.33%;background:#3E8E5E" title="灌丛 0.3%"></span></div><span class="km">369 km²</span></div><div class="yr"><b>2020</b><div class="sbar"><span style="width:21.67%;background:#E9A23B" title="耕地 21.7%"></span><span style="width:41.95%;background:#6FA67A" title="草地 41.9%"></span><span style="width:10.75%;background:#A9C3A0" title="稀疏植被 10.8%"></span><span style="width:15.63%;background:#CDB48E" title="裸地 15.6%"></span><span style="width:1.87%;background:#1F6F78" title="森林 1.9%"></span><span style="width:3.72%;background:#5B8DB8" title="湿地 3.7%"></span><span style="width:1.34%;background:#2F5D8A" title="水体 1.3%"></span><span style="width:2.78%;background:#8C969C" title="不透水面 2.8%"></span><span style="width:0.29%;background:#3E8E5E" title="灌丛 0.3%"></span></div><span class="km">533 km²</span></div><div class="yr"><b>2021</b><div class="sbar"><span style="width:31.23%;background:#E9A23B" title="耕地 31.2%"></span><span style="width:24.82%;background:#6FA67A" title="草地 24.8%"></span><span style="width:10.74%;background:#A9C3A0" title="稀疏植被 10.7%"></span><span style="width:18.92%;background:#CDB48E" title="裸地 18.9%"></span><span style="width:3.47%;background:#1F6F78" title="森林 3.5%"></span><span style="width:6.36%;background:#5B8DB8" title="湿地 6.4%"></span><span style="width:1.95%;background:#2F5D8A" title="水体 1.9%"></span><span style="width:2.07%;background:#8C969C" title="不透水面 2.1%"></span><span style="width:0.45%;background:#3E8E5E" title="灌丛 0.4%"></span></div><span class="km">433 km²</span></div><div class="yr"><b>2022</b><div class="sbar"><span style="width:18.82%;background:#E9A23B" title="耕地 18.8%"></span><span style="width:16.06%;background:#6FA67A" title="草地 16.1%"></span><span style="width:12.06%;background:#A9C3A0" title="稀疏植被 12.1%"></span><span style="width:44.48%;background:#CDB48E" title="裸地 44.5%"></span><span style="width:1.60%;background:#1F6F78" title="森林 1.6%"></span><span style="width:3.08%;background:#5B8DB8" title="湿地 3.1%"></span><span style="width:1.62%;background:#2F5D8A" title="水体 1.6%"></span><span style="width:1.65%;background:#8C969C" title="不透水面 1.7%"></span><span style="width:0.61%;background:#3E8E5E" title="灌丛 0.6%"></span></div><span class="km">635 km²</span></div><div class="yr"><b>2023</b><div class="sbar"><span style="width:7.43%;background:#E9A23B" title="耕地 7.4%"></span><span style="width:7.41%;background:#6FA67A" title="草地 7.4%"></span><span style="width:5.82%;background:#A9C3A0" title="稀疏植被 5.8%"></span><span style="width:73.91%;background:#CDB48E" title="裸地 73.9%"></span><span style="width:0.81%;background:#1F6F78" title="森林 0.8%"></span><span style="width:2.09%;background:#5B8DB8" title="湿地 2.1%"></span><span style="width:1.55%;background:#2F5D8A" title="水体 1.5%"></span><span style="width:0.75%;background:#8C969C" title="不透水面 0.7%"></span><span style="width:0.24%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">608 km²</span></div><div class="yr"><b>2024 *</b><div class="sbar"><span style="width:4.07%;background:#E9A23B" title="耕地 4.1%"></span><span style="width:2.60%;background:#6FA67A" title="草地 2.6%"></span><span style="width:2.58%;background:#A9C3A0" title="稀疏植被 2.6%"></span><span style="width:77.86%;background:#CDB48E" title="裸地 77.9%"></span><span style="width:1.14%;background:#1F6F78" title="森林 1.1%"></span><span style="width:1.60%;background:#5B8DB8" title="湿地 1.6%"></span><span style="width:8.75%;background:#2F5D8A" title="水体 8.8%"></span><span style="width:1.22%;background:#8C969C" title="不透水面 1.2%"></span><span style="width:0.18%;background:#3E8E5E" title="灌丛 0.2%"></span></div><span class="km">292 km²</span></div>
   </div>
-  <p class="note">裸地占新建面积的比例,2019–2021 年为 16–19%,2022 年升至 45%,2023 年为 74%,2024 年上半年为 78%;同期耕地由 22–31% 降到 4–7%。这与"沙戈荒"大型基地的推进时间吻合。* 2024 年 GRW 只到第 2 季度,其土地覆盖用 2022 年;2018 年的面积可能仍混有影像起点前建成的站点。</p>
+  <p class="note">上图为 GLC_FCS30D。裸地占新建面积的比例,2019–2021 年为 16–19%,2022 年升至 45%,2023 年为 74%,2024 年上半年为 78%;同期耕地由 22–31% 降到 4–7%。CLCD 复算给出同样的拐点:2019–2021 年 12–18%,2022 年 42%,2023 年 71%,2024 年 70%(用 2023 年覆盖,不再封顶)。这与"沙戈荒"大型基地的推进时间吻合。* 2024 年 GRW 只到第 2 季度;2018 年的面积可能仍混有影像起点前建成的站点。</p>
 
   <h3 style="margin-top:28px">③ 规模分化:小站占耕地,大站占裸地</h3>
   <div class="tw"><table>
@@ -378,7 +376,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>10–100 公顷</td><td>3,992</td><td>30.1%</td><td><b>39.2%</b></td><td>27.7%</td><td>7.0%</td><td>3.6%</td></tr>
     <tr><td>&gt;100 公顷</td><td>484</td><td>60.9%</td><td>5.9%</td><td>16.8%</td><td><b>61.0%</b></td><td>0.4%</td></tr>
   </table></div>
-  <p class="note">3% 的站点占了 61% 的面积,且主要在裸地上;中小站点则以耕地、草地为主,森林占比也更高。这与 Li 等 2024 [16] "中小站点建在高绿度处、负效应更强"的结果一致,也说明规模效应和原生境效应在设计上必须分开估计。</p>
+  <p class="note">3% 的站点占了 61% 的面积,且主要在裸地上;中小站点则以耕地、草地为主,森林占比也更高。CLCD 复算一致:&gt;100 公顷站点裸地 55.8%、耕地 6.8%;1–10 公顷站点耕地 52.0%、森林 4.6%。这与 Li 等 2024 [16] "中小站点建在高绿度处、负效应更强"的结果一致,也说明规模效应和原生境效应在设计上必须分开估计。</p>
 
   <h3 style="margin-top:28px">④ G1 建设日期校验:自动断点、目视复核、独立数据三重核对</h3>
   <p class="lead">第一步是自动断点:2020–2023 年每年随机抽 25 站(面积 ≥ 1 公顷),取 GRW 季度前 8 个、后 6 个季度的哨兵-2 季度中位数反射率,用"季节哑变量 + 单一阶跃"模型找断点。</p>
@@ -397,17 +395,36 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </table></div>
   <p class="note"><b>判定</b>:单靠 GRW 日期,G1 未通过(一致率约 80%,低于 85%)。修订规则:① 主分析只用 GRW 与 TZ-SAM 一致的站点(6,355 个,样本仍充足),进入试点的站点再逐站做哨兵-2 断点核对;② 处理时点取 GRW 季度与 TZ 上界中较早者;③ GRW 季度前 2 季到当季设为过渡期;④ 未匹配 TZ-SAM 的站点进入稳健性检验。偏晚的站点会被误判为"建设前",把效应拉向零并制造虚假的预趋势,所以这一步必须先于任何事件研究。</p>
 
-  <h3 style="margin-top:28px">⑤ 风机:建设前一年 30 m 覆盖(2018 年后新建 72,838 台,1 台落在无数据像元)</h3>
+  <h3 style="margin-top:28px">⑤ 风机:建设前一年 30 m 覆盖(2018 年后新建 72,838 台)</h3>
   <div class="tw"><table>
-    <tr><th>建设前覆盖</th><th>GLC_FCS30D 前一年,30 m(按台数)</th><th>对照:ESA CCI 2018,300 m</th></tr>
-    <tr><td>裸地</td><td><b>32.9%</b></td><td>21.8%</td></tr>
-    <tr><td>耕地</td><td><b>23.3%</b></td><td>19.4%</td></tr>
-    <tr><td>草地</td><td><b>21.2%</b></td><td>34.9%</td></tr>
-    <tr><td>稀疏植被</td><td><b>10.7%</b></td><td>(并入其他类)</td></tr>
-    <tr><td>森林</td><td><b>6.3%</b>(4,613 台)</td><td>12.2%</td></tr>
-    <tr><td>不透水面 · 其他</td><td>5.5%</td><td>11.7%</td></tr>
+    <tr><th>建设前覆盖(按台数)</th><th>CLCD 前一年</th><th>GLC_FCS30D 前一年</th><th>ESA CCI 2018,300 m</th></tr>
+    <tr><td>草地(GLC 含稀疏植被)</td><td><b>39.9%</b></td><td>31.9%</td><td>34.9%</td></tr>
+    <tr><td>裸地</td><td><b>24.6%</b></td><td>32.9%</td><td>21.8%</td></tr>
+    <tr><td>耕地</td><td><b>21.3%</b></td><td>23.3%</td><td>19.4%</td></tr>
+    <tr><td>森林</td><td><b>12.5%(9,067 台)</b></td><td>6.3%(4,613 台)</td><td>12.2%</td></tr>
+    <tr><td>其他</td><td>1.7%</td><td>5.6%</td><td>11.7%</td></tr>
   </table></div>
-  <p class="note">与光伏不同,风机的建设前覆盖构成在 2018–2024 年间基本稳定;森林占比从 8.5% 降到 4.6%。300 m 产品会把林缘、林间草地混成森林,森林占比高估了约一倍。风机点位是机位中心,道路与平台的占地需要另用缓冲区估计。</p>
+  <p class="note"><b>更正</b>:上一版据 GLC_FCS30D 写"300 m 产品把森林高估约一倍",这一结论不成立。中国专题的 30 m CLCD 给出 12.5%,与 ESA CCI 接近,所以差异来自两套 30 m 产品在南方山地森林、灌丛、耕地边界上的分歧,而不是分辨率。风机占用森林的规模目前只能给出区间:约 4,600–9,100 台,占 6–13%。这个区间本身就说明,森林风电的评估必须用高分辨率影像抽样验证,不能直接采信任一产品。风机构成在 2018–2024 年间基本稳定(CLCD 森林占比 13.6% → 11.0%),与光伏转向裸地的趋势不同。点位是机位中心,道路与平台的占地需另用缓冲区估计。</p>
+</section>
+
+<section id="pilotnw">
+  <h2>西北旱区试点:交错 DiD 事件研究</h2>
+  <p class="lead">回答 G2(设计)与 G3(功效)两个关口。样本:西北五省区 2019–2024 年建成、面积 ≥ 10 公顷、且 GRW 与 TZ-SAM 日期一致的光伏站 365 个。其中 2019–2021 年建成的 198 个为处理组,2022–2023 年建成的 167 个作"尚未建设"对照。结局为 2016–2024 年每年 6–9 月 Landsat NDVI 的均值与空间标准差,分站内与 60–500 m 外围环两部分统计(外围环剔除所有光伏地块)。</p>
+  <figure style="margin:0"><img src="results/figures/pilot_nw_eventstudy.png" alt="西北旱区光伏站事件研究:站内与外围环的 NDVI 均值和标准差" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <p class="note">点为估计值,竖线为 95% 置信区间;灰带为建设当年(过渡期),参照年为 e = −1。蓝色为 Callaway–Sant'Anna(尚未建设站点作对照),橙色为 Sun–Abraham(限 2022 年前)。</p>
+  <div class="tw" style="margin-top:12px"><table>
+    <tr><th>结局</th><th>建后 1–3 年平均效应(95% CI)</th><th>建设前系数联合检验 p</th><th>建设前最大偏离</th><th>判读</th></tr>
+    <tr><td>站内 NDVI 均值</td><td>−0.022(−0.042, −0.002)</td><td>0.054</td><td>0.025</td><td class="dn">预趋势与效应同量级,不可信</td></tr>
+    <tr><td>站内 NDVI 标准差</td><td>−0.004(−0.009, 0.002)</td><td>0.81</td><td>0.002</td><td>未检出</td></tr>
+    <tr><td>外围环 NDVI 均值</td><td>−0.009(−0.026, 0.007)</td><td>0.60</td><td>0.006</td><td class="ok">预趋势平坦;未检出外溢</td></tr>
+    <tr><td>外围环 NDVI 标准差</td><td>+0.001(−0.006, 0.008)</td><td>0.60</td><td>0.001</td><td>未检出</td></tr>
+  </table></div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card r"><h3>站内结局:G2 未通过</h3>建设前系数为正并逐年递减(−5 年 +0.020,−2 年 +0.013),说明处理站点在动工前几年就已相对变绿得慢。估计对设定很敏感:设 2 年预期期后效应缩到 −0.004(−0.036, 0.030);以省份为条件后预趋势反而更强(p = 0.006)。另一个原因是队列与省份分布失衡,例如内蒙古多为早建、甘肃多为晚建。此外,建后 30 m 像元混合面板与板间地表,站内 NDVI 下降有一部分是机械性的。</div>
+    <div class="card"><h3>外围环结局:设计可用,未见外溢</h3>无条件设定下建设前平坦(p = 0.60)。60–500 m 范围内建后 1–3 年未检出绿度或异质性变化,标准误约 0.009,对应可检出的最小效应约 0.025 NDVI。e = +3 的下降只来自 2019 一个队列,区间很宽。设预期期或按省份条件化后外围环估计变得不稳定,说明对照组构成仍是主要问题。</div>
+  </div>
+  <div class="callout"><b>对全国方案的修改</b>:① 对照不再只用尚未建设站点,改为按建设前 NDVI 轨迹(2013–2018 年水平与斜率)、PVOUT、坡度、距电网距离匹配的从未建设点,或用合成 DiD;② 前期延长到 2010 年(Landsat 7/8),让预趋势检验有足够功效;③ 站内结局改用哨兵-2 10 m 板间像元,与面板的机械效应分开;④ 用 HonestDiD 报告在预趋势斜率外推下效应的界;⑤ H3 在本试点中没有得到支持或否定,两个标准差指标都未检出变化。按建设前覆盖分层,裸地站点站内 −0.010(SE 0.005),草地站点 +0.017(SE 0.014),方向与 Li 等 2024 [16] 的分生境结果一致,但都不显著。</div>
+  <p class="note">脚本:<code>gee/09_pilot_nw_panel.py</code>(面板提取)、<code>analysis/pilot_nw_eventstudy.R</code>(主估计与图)、<code>analysis/pilot_nw_sensitivity.R</code>(预期期与省份条件化)。结果表在 <code>results/pilot_nw_*.csv</code>。</p>
 </section>
 
 <section id="code">

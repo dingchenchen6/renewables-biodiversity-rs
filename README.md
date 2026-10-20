@@ -9,7 +9,7 @@
 | 文件 | 内容 |
 |---|---|
 | `index.html` | 在线页面:定位、证据台账、核心问题、七个模块、数据源与获取、质量关口、两周 pilot、GEE 起步脚本、文献 |
-| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 20 页幻灯片 |
+| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 21 页幻灯片 |
 | `build_deck.js` | 幻灯片生成脚本(pptxgenjs) |
 | `gee/01_preconstruction_landcover.py` | 2018 年后新建光伏的建设前一年 30 m 土地覆盖(GLC_FCS30D) |
 | `gee/02_g1_date_check.py` | G1:抽 100 站取哨兵-2 季度反射率序列 |
@@ -18,8 +18,11 @@
 | `gee/05_g1_visual_strips.py` | G1 目视复核:不一致站点的哨兵-2 季度真彩色序列 |
 | `gee/06_g1_tzsam_crosscheck.py` · `gee/07_g1_tzsam_summary.py` | G1 外部核对:GRW 与 TZ-SAM 按最大重叠匹配,比较建设日期 |
 | `gee/08_wind_preconstruction_glc.py` | 风机的建设前一年 30 m 覆盖 |
+| `gee/09_pilot_nw_panel.py` | 西北旱区试点:365 站 × 2016–2024 年 Landsat 生长季 NDVI 均值与标准差(站内、60–500 m 外围环) |
+| `gee/10_compare_clcd_glc.py` | CLCD 与 GLC_FCS30D 建设前覆盖对比 |
+| `analysis/pilot_nw_eventstudy.R` · `analysis/pilot_nw_sensitivity.R` | 交错 DiD(Callaway–Sant'Anna、Sun–Abraham)与敏感性(预期期、省份条件化) |
 | `results/` | 上述脚本输出(站点级与汇总表、目视图集 `g1_visual/`;GRW、TZ-SAM、GLC_FCS30D 的派生量) |
 
-GEE 数据集 ID 已于 2026-10-20 在项目 renewable-conservation 中在线实测。Python 脚本运行:`HTTPS_PROXY=socks5h://127.0.0.1:7897 python gee/01_preconstruction_landcover.py`(国内网络需代理;需 earthengine-api、pandas、pysocks)。派生数据遵循各源数据许可:GRW(CC BY 4.0)、GLC_FCS30D、TZ-SAM(CC BY-NC 4.0,`results/g1_tzsam_*` 仅限非商业使用)。`results/g1_visual/` 图集含经修改的 Copernicus Sentinel 数据(2018–2024)。
+GEE 数据集 ID 已于 2026-10-20 在项目 renewable-conservation 中在线实测。Python 脚本运行:`HTTPS_PROXY=socks5h://127.0.0.1:7897 python gee/01_preconstruction_landcover.py`(国内网络需代理;需 earthengine-api、pandas、pysocks)。CLCD v1.0.5(Yang & Huang,Zenodo doi:10.5281/zenodo.18180184,CC BY 4.0)需先下载 2017–2023 年全国幅,再设 `CLCD_DIR` 运行 `gee/04`。派生数据遵循各源数据许可:GRW(CC BY 4.0)、GLC_FCS30D、TZ-SAM(CC BY-NC 4.0,`results/g1_tzsam_*` 仅限非商业使用)。`results/g1_visual/` 图集含经修改的 Copernicus Sentinel 数据(2018–2024)。
 
 文字与图示:CC BY 4.0;代码:MIT。
