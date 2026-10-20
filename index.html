@@ -217,7 +217,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <li>主数据:GRW,筛选 <code>country_code = 'CHN'</code>,保留 <code>construction_date</code></li>
       <li>补 2018 年前:中国 2015/2020 矢量光伏数据集的建设年份字段;农光互补 2010–2022</li>
       <li>容量与状态:Global Energy Monitor 追踪库;"已宣布未建"站点是天然反事实候选</li>
-      <li>交叉验证:Dunnett 等协调化全球风电场位置</li>
+      <li>交叉验证:光伏用 TZ-SAM 的建设时间上下界校验 GRW 季度日期;风电用 GonshoreWT2024 与中国 2023 年风机图校验点位与覆盖</li>
       <li>随机抽 100–200 站在 Sentinel-2 时序上目视判读建设季度</li>
     </ul></div>
     <div class="card"><h3>M2 生境转换与物种暴露</h3><ul>
@@ -267,6 +267,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="tw"><table>
     <tr><th>用途</th><th>数据集</th><th>GEE ID / 说明页</th></tr>
     <tr><td>设施与建设日期</td><td>Global Renewables Watch v1(光伏多边形、风机点位,季度建设日期)</td><td><code>projects/sat-io/open-datasets/GRW/SOLAR_V1</code><br><code>projects/sat-io/open-datasets/GRW/WIND_V1</code><br><a href="https://gee-community-catalog.org/projects/grw/">说明页</a></td></tr>
+    <tr><td>光伏建设时间互校</td><td>TransitionZero Solar Asset Mapper(TZ-SAM,季度更新;&gt;500 kW;含 <code>constructed_after</code>/<code>constructed_before</code> 建设时间上下界与 <code>capacity_mw</code>;CC BY-NC 4.0)</td><td><code>projects/sat-io/open-datasets/TZERO/TZ-SOLAR-2025Q1_ANALYSIS_POLYGONS</code>(后续季度替换版本号)<br><a href="https://gee-community-catalog.org/projects/tzero/">说明页</a></td></tr>
     <tr><td>风电场交叉验证</td><td>Dunnett 等协调化全球风电场位置</td><td><code>projects/sat-io/open-datasets/global_wind_farms_2020</code><br><a href="https://gee-community-catalog.org/projects/energy_farms/">说明页</a></td></tr>
     <tr><td>年度土地覆盖</td><td>GLC_FCS30D,1985–2022,30 m</td><td><code>projects/sat-io/open-datasets/GLC-FCS30D/annual</code><br><a href="https://gee-community-catalog.org/projects/glc_fcs/">说明页</a></td></tr>
     <tr><td>10 m 土地覆盖</td><td>Dynamic World;ESA WorldCover;ESRI 10 m LULC 2017–2025</td><td><code>GOOGLE/DYNAMICWORLD/V1</code> · <code>ESA/WorldCover/v200</code> · <code>projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS</code></td></tr>
@@ -283,6 +284,9 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="tw"><table>
     <tr><th>数据</th><th>内容</th><th>获取方式</th></tr>
     <tr><td><b>中国光伏专题</b></td><td>2015/2020 矢量(含建设年份)<a href="https://www.nature.com/articles/s41597-024-04356-z">[链接]</a>;2020 年 10 m <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10864270/">[链接]</a>;CPVPD-2024 <a href="https://www.proquest.com/docview/3255958629?pq-origsite=wos">[链接]</a>;农光互补 2010–2022 <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12855862/">[链接]</a></td><td>各论文的数据仓库,公开下载</td></tr>
+    <tr><td><b>全球陆上风机 2024</b></td><td>GonshoreWT2024:全球 416,532 台陆上风机,多源影像与混合学习识别(<i>ESSD</i> 2026)<a href="https://essd.copernicus.org/articles/18/4523/2026/">[链接]</a></td><td>Zenodo 公开下载;是否含建设年份需查数据说明</td></tr>
+    <tr><td><b>中国风机 2023</b></td><td>Sentinel-2 识别中国 148,181 台陆上与 7,541 台海上风机(<i>Renew. Sustain. Energy Rev.</i> 2025)<a href="https://www.sciencedirect.com/science/article/abs/pii/S1364032125002394">[链接]</a></td><td>按论文数据声明获取;属性字段待核实</td></tr>
+    <tr><td><b>中国光伏 2010–2022</b></td><td>Chen, Zhou, Ge, Dong(2024)深度学习识别的光伏多边形,含建设日期</td><td>按论文数据声明或联系作者;期刊与仓库待核实</td></tr>
     <tr><td><b>CLCD</b></td><td>中国逐年 30 m 土地覆盖(Yang &amp; Huang 2021, <i>ESSD</i>)</td><td>Zenodo 下载后上传为 GEE 资产;先核对最新版本</td></tr>
     <tr><td><b>Global Energy Monitor</b></td><td>光伏与风电站点、装机容量、宣布/在建/运行状态</td><td><a href="https://globalenergymonitor.org/">globalenergymonitor.org</a> 申请下载,核对许可</td></tr>
     <tr><td><b>物种分布</b></td><td>IUCN 红色名录范围;BirdLife 鸟类范围;自有 SDM</td><td><a href="https://www.iucnredlist.org/resources/spatial-data-download">IUCN 空间数据</a>;<a href="https://datazone.birdlife.org/">BirdLife DataZone</a> 申请;不得再分发</td></tr>
