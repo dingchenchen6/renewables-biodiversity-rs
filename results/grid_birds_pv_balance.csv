@@ -1,0 +1,27 @@
+exposure,var,smd_before,smd_after
+PV >= 5 km2 (2020-24),mean_P4,0.382,0.182
+PV >= 5 km2 (2020-24),d34,0.333,-0.022
+PV >= 5 km2 (2020-24),forest4,-1.003,-0.314
+PV >= 5 km2 (2020-24),grass4,-0.504,-0.089
+PV >= 5 km2 (2020-24),crop4,0.88,0.256
+PV >= 5 km2 (2020-24),hfi4,0.704,0.195
+PV >= 5 km2 (2020-24),tmp4,0.99,0.218
+PV >= 5 km2 (2020-24),d_hfi,0.863,0.315
+PV >= 5 km2 (2020-24),d_tmp,0.368,-0.012
+PV >= 5 km2 (2020-24),d_crop,0.157,0.158
+PV >= 5 km2 (2020-24),d_imp,0.317,0.184
+PV >= 5 km2 (2020-24),lon,0.268,0.121
+PV >= 5 km2 (2020-24),lat,0.1,0.004
+wind >= 50 turbines (2020-24),mean_P4,0.777,0.172
+wind >= 50 turbines (2020-24),d34,0.37,0.009
+wind >= 50 turbines (2020-24),forest4,-0.484,-0.343
+wind >= 50 turbines (2020-24),grass4,-0.157,-0.063
+wind >= 50 turbines (2020-24),crop4,0.831,0.377
+wind >= 50 turbines (2020-24),hfi4,0.845,0.271
+wind >= 50 turbines (2020-24),tmp4,0.919,0.28
+wind >= 50 turbines (2020-24),d_hfi,0.688,0.382
+wind >= 50 turbines (2020-24),d_tmp,0.309,-0.14
+wind >= 50 turbines (2020-24),d_crop,0.024,0.08
+wind >= 50 turbines (2020-24),d_imp,0.42,0.238
+wind >= 50 turbines (2020-24),lon,1.016,0.129
+wind >= 50 turbines (2020-24),lat,0.209,-0.021

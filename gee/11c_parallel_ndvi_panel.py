@@ -47,10 +47,12 @@ def batch_fc(ids: list[str], cand: pd.DataFrame) -> ee.FeatureCollection:
     return units.map(lambda f: f.set("part", "site")).merge(ring)
 
 
-def run_batch(img: ee.Image, ids: list[str], cand: pd.DataFrame) -> pd.DataFrame:
+def run_batch(year: int, pv_free: ee.Image, ids: list[str], cand: pd.DataFrame) -> pd.DataFrame:
     """Reduce one batch; split in half on failure / 单批统计,失败对半拆分."""
     red = ee.Reducer.mean().combine(ee.Reducer.stdDev(), sharedInputs=True)
-    out = img.reduceRegions(collection=batch_fc(ids, cand), reducer=red, scale=30, tileScale=8)
+    fc = batch_fc(ids, cand)
+    img = m11b.year_image(year, pv_free, fc.geometry().bounds(1000))
+    out = img.reduceRegions(collection=fc, reducer=red, scale=30, tileScale=8)
     out = out.map(lambda f: f.set({c: ee.Algorithms.If(f.get(c), f.get(c), -9) for c in COLS[2:]}))
     try:
         arr = out.reduceColumns(ee.Reducer.toList().repeat(len(COLS)), COLS).get("list").getInfo()
@@ -60,7 +62,7 @@ def run_batch(img: ee.Image, ids: list[str], cand: pd.DataFrame) -> pd.DataFrame
             logger.error("unit %s failed: %s", ids[0], e)
             return pd.DataFrame(columns=COLS)
         h = len(ids) // 2
-        return pd.concat([run_batch(img, ids[:h], cand), run_batch(img, ids[h:], cand)])
+        return pd.concat([run_batch(year, pv_free, ids[:h], cand), run_batch(year, pv_free, ids[h:], cand)])
 
 
 def main() -> None:
@@ -78,7 +80,7 @@ def main() -> None:
     logger.info("jobs to run: %s", len(jobs))
 
     def job(y: int, i: int) -> str:
-        df = run_batch(m11b.year_image(y, pv_free), ids[i:i + BATCH], cand).assign(year=y)
+        df = run_batch(y, pv_free, ids[i:i + BATCH], cand).assign(year=y)
         df.to_csv(PARTS / f"{y}_{i:05d}.csv", index=False)
         return f"{y}_{i}"
 

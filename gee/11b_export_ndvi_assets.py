@@ -51,13 +51,26 @@ def units() -> ee.FeatureCollection:
     return site_part.merge(ring_part)
 
 
-def year_image(year: int, pv_free: ee.Image) -> ee.Image:
-    """Band 'ndvi' for unit, 'ndvi_free' with PV pixels masked for rings / 两个波段."""
-    tm = (ee.ImageCollection("LANDSAT/LT05/C02/T1_L2").merge(ee.ImageCollection("LANDSAT/LE07/C02/T1_L2"))
-          .map(lambda i: m11._prep(i, "SR_B3", "SR_B4")))
-    oli = (ee.ImageCollection("LANDSAT/LC08/C02/T1_L2").merge(ee.ImageCollection("LANDSAT/LC09/C02/T1_L2"))
-           .map(lambda i: m11._prep(i, "SR_B4", "SR_B5")))
-    nd = tm.merge(oli).filterDate(f"{year}-06-01", f"{year}-09-30").median()
+def year_image(year: int, pv_free: ee.Image, region: ee.Geometry | None = None) -> ee.Image:
+    """Band 'ndvi' and PV-masked 'ndvi_free' for one growing season / 单一生长季的两个波段.
+
+    先按日期与范围筛选再逐景计算(否则 GEE 会对全球影像逐景运算而超时);
+    2010-2012 用 TM/ETM+,2013 年起只用 OLI,使每年只含一类传感器,
+    2013 年的传感器切换由年份固定效应吸收。
+    Filter by date and bounds before mapping (mapping first forces per-scene
+    work on the global archive); one sensor family per year.
+    """
+    def coll(ids: list[str]) -> ee.ImageCollection:
+        c = ee.ImageCollection(ids[0])
+        for i in ids[1:]:
+            c = c.merge(ee.ImageCollection(i))
+        c = c.filterDate(f"{year}-06-01", f"{year}-09-30")
+        return c.filterBounds(region) if region is not None else c
+    if year < 2013:
+        col = coll(["LANDSAT/LT05/C02/T1_L2", "LANDSAT/LE07/C02/T1_L2"]).map(lambda i: m11._prep(i, "SR_B3", "SR_B4"))
+    else:
+        col = coll(["LANDSAT/LC08/C02/T1_L2", "LANDSAT/LC09/C02/T1_L2"]).map(lambda i: m11._prep(i, "SR_B4", "SR_B5"))
+    nd = col.median()
     return nd.rename("ndvi").addBands(nd.updateMask(pv_free).rename("ndvi_free"))
 
 

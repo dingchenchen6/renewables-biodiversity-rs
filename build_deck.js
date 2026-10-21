@@ -437,6 +437,43 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 14d2 匹配对照修正版 / matched never-built controls --------------------
+{
+  const s = pres.addSlide(); n++; title(s, "修正版:匹配的从未建设对照 + HonestDiD", "362 站 vs 530 个匹配点(2010–2016 NDVI 轨迹、PVOUT、坡度、海拔;省份与 CLCD 覆盖精确匹配);1 年预期期");
+  s.addImage({ path: "results/figures/pilot_nw_matched.png", x: 0.5, y: 1.55, w: 7.2, h: 5.22 });
+  const g = [["站内 NDVI −0.029(约 −11%)", "95% CI −0.043 至 −0.016;HonestDiD 在 Mbar = 0.5 仍显著(−0.054, −0.002)", "F3E7E4"],
+             ["外围环异质性 +0.007(约 +10%)", "外围 NDVI 均值不变;异质性上升,方向与 H3 同质化相反", C.tint],
+             ["G2 有条件通过", "e = −1 已先降一个台阶(清表早于面板可见);留出检验仍拒绝,稳健性靠 HonestDiD 的界", C.tintA]];
+  g.forEach((r, i) => {
+    const y = 1.6 + i * 1.6;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.0, y, w: 4.75, h: 1.42, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: 8.2, y: y + 0.1, w: 4.4, h: 0.42, fontFace: F, fontSize: 15, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: 8.2, y: y + 0.55, w: 4.4, h: 0.8, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
+  });
+  pageNo(s, n);
+}
+
+// ---- 14e 鸟类多样性 / bird diversity ------------------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "鸟类:站点层面的近远区对照与多物种占域", "近区 0–5 km vs 远区 8–20 km,站点 × 年份固定效应;CBRC + eBird/GBIF 合并去重清单");
+  const hdr = { fill: { color: C.deep }, color: C.white, bold: true, fontFace: F, fontSize: 12 };
+  const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 11.5, color: C.ink }, o) });
+  const rows = [
+    [{ text: "近区 × 建设后", options: hdr }, { text: "38 站(每格 ≥ 3)", options: hdr }, { text: "24 站(每格 ≥ 5)", options: hdr }],
+    [c("清单物种数(控制时长、月份、来源)"), c("−10.3%(−22.9, +4.5)"), c("−10.2%(−23.0, +4.6)")],
+    [c("+ 观察者固定效应"), c("−9.6%(−24.3, +8.0)"), c("−9.7%(−24.3, +7.7)")],
+    [c("占域模型:群落平均(logit)"), c("+0.22(−0.11, 0.59)"), c("−0.41(−0.75, −0.04)", { color: C.red, bold: true })],
+    [c("派生丰富度 DiD"), c("+1.6 种(−0.6, 3.9)"), c("−3.9 种(−6.1, −1.7)", { color: C.red, bold: true })],
+  ];
+  s.addTable(rows, { x: 0.5, y: 1.6, w: 7.0, colW: [2.8, 2.1, 2.1], rowH: 0.55, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
+  s.addText("6,682 个研究站点中只有 38 个(<1%)四格各 ≥ 3 份清单;西北试点与大站全部不合格。", { x: 0.5, y: 4.55, w: 7.0, h: 0.5, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 5.15, w: 7.0, h: 1.6, fill: { color: "F3E7E4" }, line: { color: "F3E7E4" }, rectRadius: 0.06 });
+  s.addText("判断:不稳定,暂不下结论。占域结果随纳入门槛翻转(38 站已收敛,R-hat ≤ 1.03),由 14 个稀疏站点驱动;近区建设前 3 年偏高,存在预趋势。大型荒漠基地需结构化监测或 China BON-Birds。", { x: 0.7, y: 5.25, w: 6.6, h: 1.4, fontFace: F, fontSize: 12, color: C.ink, margin: 0 });
+  s.addImage({ path: "results/figures/site_birds_did.png", x: 7.8, y: 1.6, w: 5.0, h: 3.17 });
+  s.addText("清单层面事件研究(38 站)", { x: 7.8, y: 4.85, w: 5.0, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
+  pageNo(s, n);
+}
+
 // ---- 15 风险 / risks -----------------------------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "主要风险与对策");
@@ -486,8 +523,8 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
-    "重做对照:按建设前 NDVI 轨迹匹配从未建设点,前期延至 2010",
-    "森林风机定标扩大样本(含两产品都判非林的一层)",
+    "站内结局改用哨兵-2 10 m 板间像元,分离面板机械效应",
+    "鸟类:24 站留一检验与更长时窗;大型基地布设结构化监测",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];

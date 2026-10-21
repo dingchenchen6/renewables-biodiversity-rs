@@ -40,6 +40,10 @@ set.seed(42)
 args <- commandArgs(trailingOnly = FALSE)
 here <- dirname(normalizePath(sub("^--file=", "", args[grep("^--file=", args)])))
 res <- file.path(dirname(here), "results")
+# 预期期(年):GRW 日期常晚于清表与围栏,设 1 年预期期时参照年为 e = -2
+# anticipation in years: GRW dates often lag site clearing; with 1 the reference is e = -2
+ANTIC <- as.integer(Sys.getenv("ANTIC", "0"))
+SUF <- if (ANTIC > 0) sprintf("_antic%d", ANTIC) else ""
 
 # ---- 1. 数据与匹配变量 / data and matching features --------------------------
 cv <- fread(file.path(res, "matched_units_covariates.csv"))
@@ -70,10 +74,10 @@ smd <- function(d, w = NULL) {
   rbindlist(lapply(vars, function(v) {
     x <- d[[v]]; t1 <- d$treat == 1
     m1 <- weighted.mean(x[t1], w[t1]); m0 <- weighted.mean(x[!t1], w[!t1])
-    data.table(var = v, smd = (m1 - m0) / sd(u[[v]][u$treat == 1]))
+    data.table(var = v, value = (m1 - m0) / sd(u[[v]][u$treat == 1]))
   }))
 }
-bal <- merge(smd(u)[, .(var, smd_before = round(smd, 3))], smd(md, md$weights)[, .(var, smd_after = round(smd, 3))], by = "var")
+bal <- merge(smd(u)[, .(var, smd_before = round(value, 3))], smd(md, md$weights)[, .(var, smd_after = round(value, 3))], by = "var")
 fwrite(bal, file.path(res, "matched_balance.csv")); print(bal)
 
 # ---- 2. 估计面板 / estimation panel ------------------------------------------
@@ -85,8 +89,8 @@ outcomes <- c(site_mean = "站内 NDVI 均值 / on-site NDVI mean", site_stdDev 
 
 holdout_test <- function(a) {
   # 只用未参与匹配的年份:2017 <= t <= g - 2 / hold-out years only
-  sel <- which(a$t >= 2017 & a$t <= a$group - 2)
-  b <- a$att[sel]; inf <- a$inf.function$inf.func[, sel, drop = FALSE]
+  sel <- which(a$t >= 2017 & a$t <= a$group - 2 - ANTIC)
+  b <- a$att[sel]; inf <- as.matrix(a$inffunc)[, sel, drop = FALSE]  # did 2.5: att_gt 的影响函数为 inffunc(稀疏矩阵)
   V <- crossprod(inf) / nrow(inf)^2
   W <- as.numeric(t(b) %*% MASS::ginv(V) %*% b)
   c(p = pchisq(W, df = length(b), lower.tail = FALSE), k = length(b), max_abs = max(abs(b)))
@@ -96,7 +100,7 @@ es_rows <- list(); att_rows <- list(); hd_rows <- list()
 for (y in names(outcomes)) {
   dd <- as.data.frame(d[!is.na(get(y))])
   a <- att_gt(yname = y, tname = "year", idname = "id", gname = "g", data = dd, weightsname = "weights",
-              control_group = "nevertreated", base_period = "universal", allow_unbalanced_panel = TRUE,
+              control_group = "nevertreated", base_period = "universal", allow_unbalanced_panel = TRUE, anticipation = ANTIC,
               est_method = "reg", bstrap = TRUE, biters = 999, clustervars = "id", print_details = FALSE)
   dyn <- aggte(a, type = "dynamic", min_e = -9, max_e = 3, na.rm = TRUE)
   ov <- aggte(a, type = "dynamic", min_e = 1, max_e = 3, na.rm = TRUE)
@@ -106,23 +110,23 @@ for (y in names(outcomes)) {
                               holdout_p = ho[["p"]], holdout_k = ho[["k"]], holdout_max = ho[["max_abs"]])
 
   # HonestDiD:相对幅度界,目标为 e = 1..3 平均 / relative-magnitude bounds for mean of e = 1..3
-  keep <- dyn$egt >= -5 & dyn$egt <= 3 & dyn$egt != -1
+  keep <- dyn$egt >= -5 & dyn$egt <= 3 & dyn$egt != -1 - ANTIC
   e_k <- dyn$egt[keep]; b <- dyn$att.egt[keep]
   inf <- dyn$inf.function$dynamic.inf.func.e[, keep, drop = FALSE]
   S <- crossprod(inf) / nrow(inf)^2
-  npre <- sum(e_k < 0); npost <- sum(e_k >= 0)
-  lvec <- as.numeric(e_k[e_k >= 0] %in% 1:3); lvec <- lvec / sum(lvec)
+  npre <- sum(e_k < -1 - ANTIC); npost <- sum(e_k > -1 - ANTIC)
+  lvec <- as.numeric(e_k[e_k > -1 - ANTIC] %in% 1:3); lvec <- lvec / sum(lvec)
   hd <- tryCatch(createSensitivityResults_relativeMagnitudes(betahat = b, sigma = S, numPrePeriods = npre,
                    numPostPeriods = npost, Mbarvec = c(0.5, 1, 1.5, 2), l_vec = lvec),
                  error = function(e) NULL)
   orig <- constructOriginalCS(betahat = b, sigma = S, numPrePeriods = npre, numPostPeriods = npost, l_vec = lvec)
-  if (!is.null(hd)) hd_rows[[y]] <- rbind(data.table(outcome = y, Mbar = 0, lb = orig$lb, ub = orig$ub),
-                                         data.table(outcome = y, Mbar = hd$Mbar, lb = hd$lb, ub = hd$ub))
+  if (!is.null(hd)) hd_rows[[y]] <- rbind(data.table(outcome = y, Mbar = 0, lb = as.numeric(orig$lb), ub = as.numeric(orig$ub)),
+                                         data.table(outcome = y, Mbar = hd$Mbar, lb = as.numeric(hd$lb), ub = as.numeric(hd$ub)))
 }
 es <- rbindlist(es_rows); att <- rbindlist(att_rows); hdt <- rbindlist(hd_rows)
 att[, `:=`(lo = att - 1.96 * se, hi = att + 1.96 * se)]
-fwrite(es, file.path(res, "matched_eventstudy.csv")); fwrite(att, file.path(res, "matched_att.csv"))
-fwrite(hdt, file.path(res, "matched_honestdid.csv"))
+fwrite(es, file.path(res, paste0("matched_eventstudy", SUF, ".csv"))); fwrite(att, file.path(res, paste0("matched_att", SUF, ".csv")))
+fwrite(hdt, file.path(res, paste0("matched_honestdid", SUF, ".csv")))
 print(att[, lapply(.SD, function(v) if (is.numeric(v)) signif(v, 3) else v)])
 print(hdt[, lapply(.SD, function(v) if (is.numeric(v)) signif(v, 3) else v)])
 
@@ -146,6 +150,6 @@ fig <- ggplot(fe, aes(e, est, colour = design, shape = design)) +
        y = "Effect on NDVI statistic", colour = NULL, shape = NULL) +
   theme_classic(base_size = 10, base_family = "Arial Unicode MS") +
   theme(legend.position = "top", strip.background = element_blank(), strip.text = element_text(face = "bold"))
-ggsave(file.path(res, "figures", "pilot_nw_matched.png"), fig, width = 8, height = 5.8, dpi = 300)
-ggsave(file.path(res, "figures", "pilot_nw_matched.pdf"), fig, width = 8, height = 5.8, device = cairo_pdf)
+ggsave(file.path(res, "figures", paste0("pilot_nw_matched", SUF, ".png")), fig, width = 8, height = 5.8, dpi = 300)
+ggsave(file.path(res, "figures", paste0("pilot_nw_matched", SUF, ".pdf")), fig, width = 8, height = 5.8, device = cairo_pdf)
 cat("done\n")

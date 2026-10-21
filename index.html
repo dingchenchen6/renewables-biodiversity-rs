@@ -111,7 +111,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <nav class="toc"><div class="wrap">
   <a href="#verdict">判断</a><a href="#position">定位</a><a href="#evidence">证据台账</a><a href="#question">核心问题</a>
   <a href="#workflow">工作流</a><a href="#modules">模块细节</a><a href="#data">数据源与获取</a><a href="#gates">质量关口</a>
-  <a href="#pilot">两周 pilot</a><a href="#first">首批实测</a><a href="#pilotnw">旱区试点</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
+  <a href="#pilot">两周 pilot</a><a href="#first">首批实测</a><a href="#pilotnw">旱区试点</a><a href="#birds">鸟类</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
 </div></nav>
 
 <main class="wrap">
@@ -322,7 +322,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <h2>质量与证伪关口</h2>
   <p class="lead">看结果之前写定;任一关口不过,按对策调整后重跑。</p>
   <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">目视判读与 GRW 建设季度相差不超过两个季度的比例达到预设门槛(建议 85%)。<b>实测:哨兵-2 自动断点 77%,TZ-SAM 外部核对 79.6%,GRW 单独使用未通过</b></div><div class="card a">已执行:GRW 与 TZ-SAM 一致的站点作主样本;处理时点取两者中较早者;设过渡期</div></div>
-  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受。<b>西北试点:外围环通过(p = 0.60),站内未通过(p = 0.054,且预趋势与效应同量级)</b></div><div class="card a">已定对策:按建设前 NDVI 轨迹与选址变量匹配从未建设点,前期延长至 2010 年,站内改用 10 m 板间像元</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究预趋势联合检验不显著,HonestDiD 敏感性可接受。<b>西北试点修正版(匹配从未建设点、1 年预期期):站内 NDVI −0.029,HonestDiD 在 Mbar = 0.5 仍显著;留出检验仍拒绝,G2 有条件通过</b></div><div class="card a">已定对策:按建设前 NDVI 轨迹与选址变量匹配从未建设点,前期延长至 2010 年,站内改用 10 m 板间像元</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局的最小可检测效应小于文献中的合理效应</div><div class="card a">不通过:合并区域或延长时窗</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">遥感状况指标与有地面数据处的多样性指标方向一致</div><div class="card a">不通过:结局只表述为栖息地状况,不外推</div></div>
 </section>
@@ -433,7 +433,54 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <div class="card"><h3>外围环结局:设计可用,未见外溢</h3>无条件设定下建设前平坦(p = 0.60)。60–500 m 范围内建后 1–3 年未检出绿度或异质性变化,标准误约 0.009,对应可检出的最小效应约 0.025 NDVI。e = +3 的下降只来自 2019 一个队列,区间很宽。设预期期或按省份条件化后外围环估计变得不稳定,说明对照组构成仍是主要问题。</div>
   </div>
   <div class="callout"><b>对全国方案的修改</b>:① 对照不再只用尚未建设站点,改为按建设前 NDVI 轨迹(2013–2018 年水平与斜率)、PVOUT、坡度、距电网距离匹配的从未建设点,或用合成 DiD;② 前期延长到 2010 年(Landsat 7/8),让预趋势检验有足够功效;③ 站内结局改用哨兵-2 10 m 板间像元,与面板的机械效应分开;④ 用 HonestDiD 报告在预趋势斜率外推下效应的界;⑤ H3 在本试点中没有得到支持或否定,两个标准差指标都未检出变化。按建设前覆盖分层,裸地站点站内 −0.010(SE 0.005),草地站点 +0.017(SE 0.014),方向与 Li 等 2024 [16] 的分生境结果一致,但都不显著。</div>
+  <h3 style="margin-top:28px">修正版:匹配的"从未建设"对照 + 前期延至 2010 + 留出检验 + HonestDiD</h3>
+  <p class="lead">对照改为 3,000 个随机的"从未建设"点(距任何光伏边缘 &gt; 2 km,排除水体、冰雪、不透水面、湿地),按 2010–2016 年 NDVI 水平、斜率、空间标准差,以及 PVOUT、坡度、海拔作马氏距离 1:3 匹配,省份与 CLCD 2017 年覆盖精确匹配。匹配后各变量标准化差均 ≤ 0.07(匹配前坡度 1.12、海拔 0.72)。平行趋势用未参与匹配的 2017 年至建设前的年份做留出检验。</p>
+  <figure style="margin:0"><img src="results/figures/pilot_nw_matched.png" alt="匹配对照与晚建对照的事件研究对比" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <p class="note">蓝色为匹配的从未建设对照,橙色为上一版的晚建站点对照;浅色区为主要用于匹配的年份。站内 NDVI 在建设前 −5 至 −2 年基本平稳,<b>到 e = −1 先降一个台阶</b>,与 G1 发现的 GRW 日期偏晚、动工清表早于面板可见一致。以 e = −1 为参照会把这一步算进"建设前",所以主设定取 1 年预期期(参照 e = −2)。</p>
+  <div class="tw" style="margin-top:12px"><table>
+    <tr><th>结局(362 站 vs 530 匹配点,1 年预期期)</th><th>建后 1–3 年效应(95% CI)</th><th>相对基线</th><th>留出检验 p</th><th>HonestDiD:Mbar = 0.5</th><th>Mbar = 1</th></tr>
+    <tr><td>站内 NDVI 均值</td><td>−0.029(−0.043, −0.016)</td><td>−11%</td><td>0.0003</td><td class="dn">(−0.054, −0.002)</td><td>(−0.073, 0.018)</td></tr>
+    <tr><td>站内 NDVI 标准差</td><td>−0.001(−0.004, 0.002)</td><td>—</td><td>0.036</td><td>含 0</td><td>含 0</td></tr>
+    <tr><td>外围环 NDVI 均值</td><td>+0.003(−0.005, 0.010)</td><td>—</td><td>&lt;0.001</td><td>含 0</td><td>含 0</td></tr>
+    <tr><td>外围环 NDVI 标准差</td><td>+0.007(0.004, 0.011)</td><td>+10%</td><td>0.058</td><td class="up">(0.001, 0.014)</td><td>含 0</td></tr>
+  </table></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>结论</h3>站内绿度下降约 11%,对"建设后趋势偏离不超过建设前最大偏离一半"的情形稳健;外围 60–500 m 绿度不变,但空间异质性上升约 10%(道路、围栏、施工迹地的斑块化),方向与 H3"同质化"相反。站内异质性未变。无预期期的设定下站内效应为 −0.017(−0.028, −0.005),但参照年已被处理,偏小。</div>
+    <div class="card r"><h3>保留意见</h3>留出检验对站内与外围环均值仍拒绝平行趋势,所以 G2 只算"有条件通过":效应的稳健性来自 HonestDiD 的界,而不是平坦的预趋势。站内 30 m NDVI 混合面板与板间地表,下降有一部分是机械性的。下一步用哨兵-2 10 m 板间像元分离这两部分。</div>
+  </div>
+  <p class="note">脚本:<code>gee/11_matched_controls_panel.py</code>、<code>gee/11c_parallel_ndvi_panel.py</code>、<code>analysis/pilot_nw_matched.R</code>(<code>ANTIC=1</code> 为主设定)。结果:<code>results/matched_*.csv</code>。</p>
   <p class="note">脚本:<code>gee/09_pilot_nw_panel.py</code>(面板提取)、<code>analysis/pilot_nw_eventstudy.R</code>(主估计与图)、<code>analysis/pilot_nw_sensitivity.R</code>(预期期与省份条件化)。结果表在 <code>results/pilot_nw_*.csv</code>。</p>
+</section>
+
+<section id="birds">
+  <h2>鸟类多样性:站点层面的近远区对照与多物种占域</h2>
+  <p class="lead">数据来自"中国鸟类群落动态"项目:中国观鸟记录中心与 eBird/GBIF 合并去重后的 464,870 份清单(749 万条物种记录)。设计为近远区对照的交错 DiD:每个光伏站的近区为边缘 0–5 km,远区为 8–20 km(远区剔除距其他光伏站 &lt; 3 km 的清单),比较同站同年近区与远区在建设前后差异的变化。站点 × 年份固定效应吸收区域趋势与当年观测热度,交错时点下不会出现以已处理单元作对照的问题。</p>
+  <h3>① 先排除数据稀疏区</h3>
+  <div class="tw"><table>
+    <tr><th>样本(2018–2023 年建成、日期与 TZ-SAM 一致)</th><th>站点数</th></tr>
+    <tr><td>全部研究站点</td><td>6,682</td></tr>
+    <tr><td>近区、远区 × 建设前、建设后四格各 ≥ 3 份清单</td><td><b>38</b></td></tr>
+    <tr><td>四格各 ≥ 5 份清单</td><td><b>24</b></td></tr>
+    <tr><td>四格各 ≥ 10 份清单</td><td>15</td></tr>
+  </table></div>
+  <p class="note">6,682 个站点中只有不到 1% 有足够观测;西北试点 198 站和 &gt; 100 公顷大站在 5 km 内全部不合格。结论只代表"有人观鸟的光伏站",多在城郊,与典型的大型荒漠基地不同。</p>
+  <h3>② 结果</h3>
+  <div class="tw"><table>
+    <tr><th>方法(近区 × 建设后)</th><th>38 站,29,655 份清单</th><th>24 站,23,972 份清单</th></tr>
+    <tr><td>清单物种数(对数;控制时长、月份、来源)</td><td>−10.3%(−22.9, +4.5)</td><td>−10.2%(−23.0, +4.6)</td></tr>
+    <tr><td>同上 + 观察者固定效应</td><td>−9.6%(−24.3, +8.0)</td><td>−9.7%(−24.3, +7.7)</td></tr>
+    <tr><td>泊松模型</td><td>−17.8%(−36.9, +7.2)</td><td>−17.6%(−36.4, +6.6)</td></tr>
+    <tr><td>多物种占域模型:群落平均占域(logit,120 种)</td><td>+0.22(−0.11, 0.59)</td><td class="dn">−0.41(−0.75, −0.04)</td></tr>
+    <tr><td>占域模型派生丰富度 DiD</td><td>+1.6 种(−0.6, 3.9)</td><td class="dn">−3.9 种(−6.1, −1.7)</td></tr>
+  </table></div>
+  <figure style="margin:12px 0 0"><img src="results/figures/site_birds_did.png" alt="38 个观鸟数据充足的光伏站的近远区事件研究" style="width:100%;max-width:640px;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card r"><h3>判断:不稳定,暂不下结论</h3>清单层面的估计在两个样本中一致(约 −10%,不显著);占域模型却随纳入门槛翻转符号:38 站略为正,数据更充足的 24 站显著为负(派生丰富度 −3.9 种)。38 站的加长链已收敛(R-hat ≤ 1.03),所以差异来自那 14 个只有 3–4 份清单的站点,而不是 MCMC。事件研究还显示近区在建设前 3 年相对偏高(+0.27),存在预趋势。</div>
+    <div class="card"><h3>努力校正的作用</h3>只控制时长等协变量时,清单物种数下降约 10%;用占域模型把检测与占域分开后,38 站样本的方向反而转正。这说明单靠努力协变量不够,检测过程必须显式建模。占域检测部分包括时长、日期及其平方、数据来源。</div>
+  </div>
+  <h3 style="margin-top:24px">③ 景观尺度对照:100 km 网格</h3>
+  <p class="note">用同一项目已拟合的 200 种时空多物种动态占域模型,对比 2020–2024 年新增光伏 ≥ 5 km² 的 101 个网格与匹配网格:6 个多样性指标都未检出变化(丰富度 −0.32 种,−1.71 至 1.07),安慰剂全部为零。网格太粗(光伏最多占 1.7% 面积),只作背景参照。图与表:<code>results/figures/grid_birds_pv.png</code>、<code>results/grid_birds_pv_*.csv</code>。</p>
+  <div class="callout"><b>下一步</b>:① 24 站样本扩大到更长时窗(建设前 5 年、建设后 4 年)并逐站留一检验,看负效应是否由个别站点驱动;② 占域模型加入站点 × 年份随机效应与观察者经验;③ 对大型荒漠基地,观鸟数据无法回答,需要结构化监测(样线、点计数、声学)或 China BON-Birds。脚本:<code>analysis/site_birds_build.py</code>、<code>analysis/site_birds_did.R</code>。</div>
 </section>
 
 <section id="code">

@@ -1,0 +1,4 @@
+set,n_sites,both>=1_2km,both>=5_2km,n_both>=5_2km,median_pre_2km,both>=1_5km,both>=5_5km,n_both>=5_5km,median_pre_5km
+"national, built 2018-2021",5524,0.7,0.2,12,0.0,2.7,1.2,66,0.0
+"NW pilot, built 2019-2021",198,0.5,0.0,0,0.0,1.5,0.0,0,0.0
+"national, >100 ha",200,0.5,0.0,0,0.0,1.5,0.0,0,0.0
