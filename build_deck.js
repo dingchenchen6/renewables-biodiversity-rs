@@ -385,7 +385,7 @@ let n = 0;
        catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
        valAxisMaxVal: 45, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
        showTitle: true, title: "2018 年后新建光伏:建设前一年 30 m 土地覆盖(按面积 %)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
-  s.addText("CLCD 无稀疏植被类(并入草地),湿地并入水体;两产品逐站主导类别一致 75.5%。按站点数一半建在耕地上。风机森林占比:CLCD 12.5%(9,067 台)、GLC 6.3%(4,613 台),只能报区间,需高分影像定标。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  s.addText("CLCD 无稀疏植被类(并入草地),湿地并入水体;两产品逐站主导类别一致 75.5%。按站点数一半建在耕地上。风机森林:CLCD 12.5%、GLC 6.3%;分层抽 36 台哨兵-2 盲判定标后约 8,900 台(5,300–9,600),接近 CLCD。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
   pageNo(s, n);
 }
 
@@ -487,7 +487,7 @@ let n = 0;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
     "重做对照:按建设前 NDVI 轨迹匹配从未建设点,前期延至 2010",
-    "森林风机 6–13% 区间:高分影像抽样定标",
+    "森林风机定标扩大样本(含两产品都判非林的一层)",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];
