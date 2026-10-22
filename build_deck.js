@@ -420,6 +420,24 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 14c2 物种暴露 / species exposure ------------------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "落进了谁的分布区:物种暴露", "BirdLife BOTW 2025 + IUCN 分布图,5 km 网格;中国 3,165 种,受威胁 422 种");
+  s.addImage({ path: "results/figures/exposure_threatened_shift.png", x: 0.5, y: 1.55, w: 7.4, h: 4.11 });
+  s.addText("当期新建光伏面积落在该物种分布区内的比例", { x: 0.5, y: 5.72, w: 7.4, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
+  const g = [["平均暴露下降", "新建光伏所在网格的物种数百分位 50 → 37,受威胁物种 44 → 37(2018–21 → 2022–24)", C.tint],
+             ["旱地物种暴露上升", "猎隼分布区内新建光伏占比 57% → 82%,鹅喉羚 43% → 70%,草原雕 49% → 69%", "F3E7E4"],
+             ["风电:普氏原羚", "88 个分布网格中 22 个出现新风机(208 台);只是分布区重叠,需局地数据确认", C.tintA]];
+  g.forEach((r, i) => {
+    const y = 1.6 + i * 1.5;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.2, y, w: 4.55, h: 1.32, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: 8.4, y: y + 0.1, w: 4.2, h: 0.4, fontFace: F, fontSize: 14, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: 8.4, y: y + 0.5, w: 4.2, h: 0.78, fontFace: F, fontSize: 11, color: C.ink, margin: 0 });
+  });
+  s.addText("与 NEE 预测一致:集中选址降低了丰富度冲突,代价转移到少数开阔、干旱生境物种上。", { x: 8.2, y: 6.1, w: 4.55, h: 0.7, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
+  pageNo(s, n);
+}
+
 // ---- 14d 西北旱区试点 / NW dryland pilot ---------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "西北旱区试点:交错 DiD 事件研究", "365 站(2019–2021 处理 198,2022–2023 晚建对照 167);Landsat 生长季 NDVI,2016–2024");
