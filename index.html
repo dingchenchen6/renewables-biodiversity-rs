@@ -478,7 +478,29 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <div class="card r"><h3>判断:不稳定,暂不下结论</h3>清单层面的估计在两个样本中一致(约 −10%,不显著);占域模型却随纳入门槛翻转符号:38 站略为正,数据更充足的 24 站显著为负(派生丰富度 −3.9 种)。38 站的加长链已收敛(R-hat ≤ 1.03),所以差异来自那 14 个只有 3–4 份清单的站点,而不是 MCMC。事件研究还显示近区在建设前 3 年相对偏高(+0.27),存在预趋势。</div>
     <div class="card"><h3>努力校正的作用</h3>只控制时长等协变量时,清单物种数下降约 10%;用占域模型把检测与占域分开后,38 站样本的方向反而转正。这说明单靠努力协变量不够,检测过程必须显式建模。占域检测部分包括时长、日期及其平方、数据来源。</div>
   </div>
-  <h3 style="margin-top:24px">③ 景观尺度对照:100 km 网格</h3>
+  <h3 style="margin-top:24px">③ 丰度型多样性:沿用 Science 的指标,按评论文章清洗并校正努力</h3>
+  <p class="lead">Zhang 等(2026)用观鸟记录的丰度计算 Shannon 指数。这里在同一近远区设计下分三层比较:① Science 式朴素版,即单份清单的原始 Shannon,不清洗、不校正;② 清洗加努力校正后的清单 Hill 数;③ 每个"站点 × 区 × 时段"在相同样本覆盖度下的 Hill 数(iNEXT,按调查次数的发生频率计,避免多份清单重复计入同一批个体)。</p>
+  <div class="tw"><table>
+    <tr><th>清洗步骤(与评论文章一致)</th><th>38 站</th></tr>
+    <tr><td>原始清单</td><td>33,327</td></tr>
+    <tr><td>同日同点多人清单合并为一次调查(物种计数取最大值)</td><td>26,972 次调查</td></tr>
+    <tr><td>剔除所有计数均为 1 的调查(仅记有无,计数不含丰度信息;观鸟中心清单中占 40%)</td><td>−5,767</td></tr>
+    <tr><td>按物种第 99 百分位截尾极端集群计数;保留单物种调查(H = 0 为有效值)</td><td>21,205 次进入分析</td></tr>
+  </table></div>
+  <figure style="margin:12px 0 0"><img src="results/figures/site_birds_abundance.png" alt="丰度型多样性的近远区对照估计:清洗与努力校正后,以及覆盖度标准化" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <div class="tw" style="margin-top:12px"><table>
+    <tr><th>近区 × 建设后</th><th>38 站</th><th>24 站</th></tr>
+    <tr><td>① 朴素 Shannon H</td><td>+0.001(p = 0.99)</td><td>−0.002(p = 0.96)</td></tr>
+    <tr><td>② exp Shannon(q = 1),控制时长、观察者人数、来源、月份</td><td>+0.9%(p = 0.90)</td><td>+1.8%(p = 0.80)</td></tr>
+    <tr><td>② 逆 Simpson(q = 2)</td><td>+0.5%(p = 0.94)</td><td>+1.5%(p = 0.82)</td></tr>
+    <tr><td>② 总个体数</td><td>−14.0%(p = 0.38)</td><td>−13.4%(p = 0.42)</td></tr>
+    <tr><td>② q = 1 + 观察者固定效应</td><td>+8.2%(p = 0.21)</td><td>+7.4%(p = 0.28)</td></tr>
+    <tr><td>② q = 1,保留仅记有无的调查</td><td>+2.4%(p = 0.66)</td><td>+2.9%(p = 0.61)</td></tr>
+    <tr><td>③ 覆盖度标准化 q = 0 / 1 / 2(C = 0.60)</td><td>+0.1% / −2.7% / −2.5%(区间约 ±25%)</td><td>+3.0% / +1.0% / +1.6%</td></tr>
+  </table></div>
+  <p class="note"><b>解读</b>:丰度型多样性在三层、两个样本中都与零无差异,且不像占域模型那样随纳入门槛翻转。总个体数下降约 14%,方向一致但区间很宽。覆盖度标准化的共同覆盖度只有 0.60,外推偏大,区间约 ±25%,因此能排除的只是很大的效应。38 个站点多在城郊,结论不能外推到大型荒漠基地。脚本:<code>analysis/site_birds_abundance.R</code>。</p>
+
+  <h3 style="margin-top:24px">④ 景观尺度对照:100 km 网格</h3>
   <p class="note">用同一项目已拟合的 200 种时空多物种动态占域模型,对比 2020–2024 年新增光伏 ≥ 5 km² 的 101 个网格与匹配网格:6 个多样性指标都未检出变化(丰富度 −0.32 种,−1.71 至 1.07),安慰剂全部为零。网格太粗(光伏最多占 1.7% 面积),只作背景参照。图与表:<code>results/figures/grid_birds_pv.png</code>、<code>results/grid_birds_pv_*.csv</code>。</p>
   <div class="callout"><b>下一步</b>:① 24 站样本扩大到更长时窗(建设前 5 年、建设后 4 年)并逐站留一检验,看负效应是否由个别站点驱动;② 占域模型加入站点 × 年份随机效应与观察者经验;③ 对大型荒漠基地,观鸟数据无法回答,需要结构化监测(样线、点计数、声学)或 China BON-Birds。脚本:<code>analysis/site_birds_build.py</code>、<code>analysis/site_birds_did.R</code>。</div>
 </section>

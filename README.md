@@ -9,7 +9,7 @@
 | 文件 | 内容 |
 |---|---|
 | `index.html` | 在线页面:定位、证据台账、核心问题、七个模块、数据源与获取、质量关口、两周 pilot、GEE 起步脚本、文献 |
-| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 23 页幻灯片 |
+| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 24 页幻灯片 |
 | `build_deck.js` | 幻灯片生成脚本(pptxgenjs) |
 | `gee/01_preconstruction_landcover.py` | 2018 年后新建光伏的建设前一年 30 m 土地覆盖(GLC_FCS30D) |
 | `gee/02_g1_date_check.py` | G1:抽 100 站取哨兵-2 季度反射率序列 |
@@ -25,6 +25,7 @@
 | `gee/12_wind_forest_check.py` | 森林风机:逐台比较 CLCD 与 GLC,分层抽样哨兵-2 盲判定标 |
 | `analysis/pilot_nw_matched.R` | 匹配的从未建设对照 + 留出预趋势检验 + HonestDiD(`ANTIC=1` 为主设定) |
 | `analysis/bird_coverage_near_pv.py` · `analysis/site_birds_build.py` · `analysis/site_birds_did.R` | 站点周边观鸟覆盖;近远区对照交错 DiD(校正努力)与多物种占域模型 |
+| `analysis/site_birds_abundance.R` | 丰度型多样性(Science 指标):清洗、努力校正与覆盖度标准化 Hill 数 |
 | `analysis/grid_birds_pv.R` | 100 km 网格检测校正多样性的匹配对照(背景参照) |
 | `results/` | 上述脚本输出(站点级与汇总表、目视图集 `g1_visual/`;GRW、TZ-SAM、GLC_FCS30D 的派生量) |
 

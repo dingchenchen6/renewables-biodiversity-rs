@@ -474,6 +474,23 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 14f 丰度型多样性 / abundance-based diversity ----------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "鸟类丰度型多样性:Science 指标 + 评论文章的清洗与努力校正", "同一近远区设计;38 站 33,327 份清单 → 合并重复 26,972 → 剔除仅记有无 5,767 → 21,205 次调查");
+  s.addImage({ path: "results/figures/site_birds_abundance.png", x: 0.5, y: 1.55, w: 8.0, h: 3.84 });
+  const g = [["全部与零无差异", "朴素 Shannon、清洗后 q = 1/2、观察者 FE、覆盖度标准化 q = 0/1/2;24 站结果一致", C.tint],
+             ["总个体数 −14%(n.s.)", "两个样本方向一致,区间很宽", C.tintA],
+             ["功效有限", "覆盖度标准化的共同覆盖度仅 0.60,区间约 ±25%;只能排除大效应,且仅代表城郊站点", "F3E7E4"]];
+  g.forEach((r, i) => {
+    const y = 1.6 + i * 1.5;
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.8, y, w: 3.95, h: 1.32, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: 9.0, y: y + 0.1, w: 3.6, h: 0.4, fontFace: F, fontSize: 14, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: 9.0, y: y + 0.5, w: 3.6, h: 0.78, fontFace: F, fontSize: 11, color: C.ink, margin: 0 });
+  });
+  s.addText("清洗:同日同点多人清单合并(计数取最大);剔除所有计数为 1 的调查(观鸟中心占 40%);99% 截尾;保留单物种调查(按因变量剔除即样本选择)。", { x: 0.5, y: 5.55, w: 8.0, h: 0.9, fontFace: F, fontSize: 12, color: C.teal, bold: true, margin: 0 });
+  pageNo(s, n);
+}
+
 // ---- 15 风险 / risks -----------------------------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "主要风险与对策");
