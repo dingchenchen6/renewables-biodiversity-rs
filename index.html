@@ -96,7 +96,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <header class="hero">
   <div class="rings" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="tag">研究笔记 · v0.3 · 2026 年 10 月</div>
+    <div class="tag">研究笔记 · v0.4 · 2026 年 10 月</div>
     <h1>中国风光电扩张的生物多样性影响</h1>
     <p class="sub">风光电到底建在了哪里,建完之后周边的生境和鸟类发生了什么</p>
     <div class="formula"><span>真实设施足迹</span><span>季度建设日期</span><span>晚建站点反事实</span><span>不依赖观测努力的结局</span></div>
@@ -111,7 +111,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <nav class="toc"><div class="wrap">
   <a href="#verdict">缘起</a><a href="#position">定位</a><a href="#evidence">证据台账</a><a href="#question">问题与假说</a>
   <a href="#workflow">工作流</a><a href="#modules">模块细节</a><a href="#data">数据源与获取</a><a href="#gates">质量关口</a>
-  <a href="#pilot">两周 pilot</a><a href="#first">站点与生境</a><a href="#exposure">物种暴露</a><a href="#pilotnw">旱区试点</a><a href="#birds">鸟类</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
+  <a href="#pilot">两周 pilot</a><a href="#audit">复核</a><a href="#first">站点与生境</a><a href="#exposure">物种暴露</a><a href="#pilotnw">旱区试点</a><a href="#birds">鸟类</a><a href="#code">起步代码</a><a href="#risks">风险</a><a href="#refs">文献</a>
 </div></nav>
 
 <main class="wrap">
@@ -176,7 +176,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
       <li>中小站点负效应更强,可能是选址的混杂(建在高绿度处),而非规模本身;需在匹配中控制建设前绿度</li>
     </ul></div>
     <div class="card r"><h3 style="color:var(--red)">还没核实</h3><ul>
-      <li>GRW 在中国的要素数量与建设日期准确度</li>
+      <li>GRW 建设日期的第二人独立目视复核(第一轮与 TZ-SAM 一致约 80%,见 G1)</li>
       <li>有没有人已经用建设日期做过全国风电的反事实研究(我没检索到,但不等于没有)</li>
       <li>[16] 怎么划分"建设期"和"运行期",有没有对照组(要读全文)</li>
       <li>征求意见稿 [19] 的发布机构、日期与正式版</li>
@@ -321,8 +321,8 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
 <section id="gates">
   <h2>几道关口</h2>
   <p class="lead">这几道关口是看结果之前定的。哪一道过不了,就按右边的办法调整后重跑。</p>
-  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">核对结果和 GRW 建设季度相差不超过两个季度的比例,要达到 85%。<b>结果:哨兵-2 自动断点 77%,和 TZ-SAM 对照 79.6%,只用 GRW 日期过不了</b></div><div class="card a">已经改了:主样本只用 GRW 和 TZ-SAM 一致的站点,处理时点取两者中较早的,并设过渡期</div></div>
-  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究的预趋势联合检验不显著,HonestDiD 的敏感性可以接受。<b>西北试点改过的版本(匹配从未建设点、1 年预期期):站内 NDVI −0.029,Mbar = 0.5 时仍显著;但留出检验仍然拒绝,所以只算有条件通过</b></div><div class="card a">已经做了匹配和前期延长;接下来站内改用 10 m 板间像元</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#1F6F78">G1</span>日期</div><div class="card">核对结果和 GRW 建设季度相差不超过两个季度的比例,要达到 85%。<b>结果:哨兵-2 自动断点 77%(95% CI 68–84%,n = 100),和 TZ-SAM 对照 79.6%(78.7–80.4%,n = 7,987),两个区间的上限都不到 85%,只用 GRW 日期过不了</b></div><div class="card a">已经改了:主样本只用 GRW 和 TZ-SAM 一致的站点,处理时点取两者中较早的,并设过渡期</div></div>
+  <div class="gate"><div class="name"><span class="dot" style="background:#0E2F3C">G2</span>设计</div><div class="card">事件研究的预趋势联合检验不显著,HonestDiD 的敏感性可以接受。<b>西北试点(匹配从未建设点、1 年预期期、按 50 km 区块做空间推断):外围异质性 +0.007,Holm 校正后 p = 0.003,Mbar ≤ 0.5 时区间仍不含 0,算通过;站内 NDVI −0.029 只在 Mbar = 0 时不含 0,Holm 校正后 p = 0.19,只算部分通过</b></div><div class="card a">已经做了匹配和前期延长;接下来站内改用 10 m 板间像元</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#6FA67A">G3</span>功效</div><div class="card">主结局能测出的最小效应,要小于文献里合理的效应量</div><div class="card a">过不了就合并区域或拉长时窗</div></div>
   <div class="gate"><div class="name"><span class="dot" style="background:#E9A23B">G4</span>构念</div><div class="card">在有地面数据的地方,遥感指标和多样性指标的方向要一致</div><div class="card a">过不了就只说生境状况,不往多样性上推</div></div>
 </section>
@@ -339,6 +339,24 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   </div>
 </section>
 
+<section id="audit">
+  <h2>这一轮复核改了什么</h2>
+  <p class="lead">把前面几部分从头到尾又核了一遍,主要查三件事:每个数有没有不确定性,推断有没有把空间相关和少聚类算进去,点估计的结论换个设定还在不在。下面这张表是改动清单。有两处结论因此变弱,我在对应的地方直接改了,没有保留旧说法。</p>
+  <div class="tw"><table>
+    <tr><th>环节</th><th>上一版</th><th>问题</th><th>现在的做法</th><th>结论有没有变</th></tr>
+    <tr><td>G1 日期核对</td><td>只报比例</td><td>没有区间</td><td>Wilson 95% CI</td><td>没变:77%(68–84%)、79.6%(78.7–80.4%),上限都不到 85%</td></tr>
+    <tr><td>两套土地覆盖</td><td>只报一致率 75.5%</td><td>一致率不扣除随机一致</td><td>Cohen's κ,站点自助区间</td><td>没变:κ = 0.62(0.61–0.63),中等一致;裸地、草地、耕地三大类结论相同</td></tr>
+    <tr><td>森林风机</td><td>各层比例点估计乘风机数,8,900(5,300–9,600)</td><td>6/6 这类小样本点估计偏高,区间端点相乘不是合法区间</td><td>每层均匀先验 Beta 后验,蒙特卡洛合计</td><td class="dn">下调:8,180(95% 可信区间 6,420–9,220)</td></tr>
+    <tr><td>西北试点推断</td><td>站点当独立单元</td><td>相邻站点共享气候和放牧,标准误偏小</td><td>50 km 区块聚类的乘数自助;199 次空间区块自助;4 个结局 Holm 校正</td><td class="dn">站内绿度变弱:Holm p = 0.19;外围异质性仍成立:Holm p = 0.003</td></tr>
+    <tr><td>HonestDiD</td><td>协方差按区块聚合</td><td>聚合时事件时间的行列没对齐,结果作废</td><td>协方差改用区块自助的事件研究系数</td><td class="dn">站内绿度只在 Mbar = 0 时不含 0;外围异质性到 Mbar = 0.5 仍不含 0</td></tr>
+    <tr><td>预趋势</td><td>留出年份检验,独立假设</td><td>同上</td><td>区块协方差下的联合 Wald;另做 200 次伪建设年份安慰剂</td><td>预趋势 p = 0.72 / 0.93;检验功效有限,不拒绝不等于平行</td></tr>
+    <tr><td>物种暴露</td><td>只有点估计</td><td>没有区间,也分不清是省份转移还是省内选址</td><td>25 km 区块自助 999 次;保持各省面积不变的省内随机选址零模型 999 次</td><td>方向没变,下降约 2/3 来自省份构成,1/3 来自省内选址</td></tr>
+    <tr><td>鸟类近远区</td><td>聚类稳健标准误</td><td>只有 24–38 个聚类,标准误偏小</td><td>野生聚类自助(Webb 权重,999 次);逐站剔除;覆盖度 0.5 / 0.6 / 0.7</td><td>没变,仍不显著;但 −10% 的点估计有相当一部分靠一个站撑着</td></tr>
+    <tr><td>图件</td><td>各自为政</td><td>字号、配色、地图版式不统一</td><td>统一 183 mm、Helvetica 7 pt;中国地图按标准地图 GS(2024)0650 与 CBNR 版式</td><td>见图 1–5</td></tr>
+  </table></div>
+  <p class="note">复核脚本:<code>analysis/rigor_small.R</code>、<code>analysis/rigor_pilot_matched.R</code>、<code>analysis/rigor_pilot_blockboot.R</code>、<code>analysis/rigor_exposure.R</code>、<code>analysis/rigor_birds.R</code>、<code>analysis/rigor_birds_occ_loso.R</code>;出图脚本 <code>analysis/fig1_siting.R</code> 至 <code>analysis/fig5_birds.R</code>,图在 <code>figures_main/</code>。上一版的 <code>results/rigor_pilot_honestdid.csv</code> 就是协方差没对齐的那份,保留在仓库里备查,不再引用。</p>
+</section>
+
 <section id="first">
   <h2>站点、建设前生境与建设日期</h2>
   <p class="lead">数据是 GRW,在我的 GEE 项目 renewable-conservation 里跑的(2026-10-20)。GRW 把 2017 年的站点统一标成第 4 季度,其实是影像起点之前就已存在的站点,所以我说的"新建"一律从 2018 年算起。脚本见仓库 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/gee"><code>gee/</code></a>,结果表见 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results"><code>results/</code></a>。</p>
@@ -348,6 +366,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">119,974</div>风机(全部)</div>
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">14,421 · 72,838</div>2018 年后新建光伏 · 风机</div>
   </div>
+  <figure style="margin:16px 0 0"><img src="figures_main/fig1_siting.png" alt="图 1:2018 年后新建光伏与风机的位置,以及新建光伏的建设前土地覆盖" style="width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><figcaption class="note" style="margin-top:6px"><b>图 1</b> 2018 年后新建光伏与风电。a 光伏站点,点的面积与站点面积成正比,颜色为建设时段;b 风机按 50 km 网格计数,对数色阶;c 各年新建光伏面积按建设前一年 CLCD 覆盖的构成,柱顶为当年新增面积(km²);d 按站点规模分组,柱顶为站点数和面积占比。底图为自然资源部标准地图 GS(2024)0650,只做了重投影。</figcaption></figure>
 
   <h3 style="margin-top:28px">① 建设前一年 30 m 土地覆盖(2018 年后新建光伏,14,421 块,3,890 km²)</h3>
   <p class="lead">每块地取建设前一年的土地覆盖,逐块统计各类像元的比例,再按面积加权。我用两套 30 m 产品互相校核:CLCD v1.0.5 是中国专题产品,2017–2023 年 7 幅下载到本地,MD5 都核对过;GLC_FCS30D 在 GEE 上,只到 2022 年。</p>
@@ -360,7 +379,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>不透水面</td><td><b>3.9%</b></td><td>3.2%</td><td>9.5%</td></tr>
     <tr><td>森林 · 灌丛</td><td><b>1.8% · 0.2%</b></td><td>1.7% · 0.3%</td><td>3.6%</td></tr>
   </table></div>
-  <p class="note">逐站比较主导类别,两套产品有 75.5% 的站点一致(按面积 76.6%)。不一致的主要是三种情况:GLC 判为森林的站点,CLCD 有 46% 判成了耕地;GLC 的灌丛到了 CLCD 里多半是森林;GLC 的湿地(多是渔光互补的水面和滩涂)在 CLCD 里归到水体或耕地。好在裸地、草地、耕地这三大类,两套产品给出的结论是一样的。</p>
+  <p class="note">逐站比较主导类别,两套产品有 75.5% 的站点一致(按面积 76.6%),扣除随机一致后 Cohen's κ = 0.62(站点自助 95% CI 0.61–0.63),属中等一致。不一致的主要是三种情况:GLC 判为森林的站点,CLCD 有 46% 判成了耕地;GLC 的灌丛到了 CLCD 里多半是森林;GLC 的湿地(多是渔光互补的水面和滩涂)在 CLCD 里归到水体或耕地。好在裸地、草地、耕地这三大类,两套产品给出的结论是一样的。</p>
 
   <h3 style="margin-top:28px">② 2022 年以后,新建光伏一下子转向了裸地</h3>
   <div class="card" style="padding:16px 18px">
@@ -382,18 +401,20 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <p class="lead">交错 DiD 的前提是建设日期准,所以我从三个方向核对。先做自动断点:2020–2023 年每年随机抽 25 个站(面积 ≥ 1 公顷),取 GRW 季度前 8 个、后 6 个季度的哨兵-2 季度中位数反射率,用"季节哑变量加单一阶跃"的模型找断点。最开始用的是简单的前后均值差,结果把季节转换误当成了断点,窗口太窄时断点又会堆在边界上,所以才改成现在这个模型。</p>
   <div class="grid g3">
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">0 与 −1</div>断点众数:地表变化多发生在 GRW 季度或前一季度,符合 GRW"首次可见"的定义</div>
-    <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">77%</div>断点在 GRW 季度 ±2 内,低于预设 85%</div>
+    <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">77%</div>断点在 GRW 季度 ±2 内(95% CI 68–84%),低于预设 85%</div>
     <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">96%</div>阶跃信号较强的一半站点落在 ±2 内</div>
   </div>
   <p class="note" style="margin-top:14px"><b>目视复核。</b>自动断点和 GRW 对不上的 23 个站,逐季看了哨兵-2 真彩色序列(<a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results/g1_visual">图集</a>)。11 站在窗口起点(GRW 季度前 6 季)已可见面板,即 GRW 检出偏晚;2 站约早 3–4 季建成;5 站其实与 GRW 一致,自动断点抓到的是先期清表或后期扩建;5 站因为云或面积太小看不清。这一轮目视判读只有一人完成,还要请第二人独立复核。</p>
   <p class="note"><b>独立数据。</b>把 2018 年后新建的 GRW 地块和 TZ-SAM(2025Q1)按最大重叠面积配对,比较 GRW 季度和 TZ-SAM 给出的建设时间上下界。目视判为"早就有面板"、又能配上 TZ-SAM 的 6 个站里,有 5 个 TZ-SAM 同样显示 GRW 晚了 3–13 个季度,两边对得上。</p>
   <div class="tw"><table>
     <tr><th>GRW 与 TZ-SAM 比较(重叠 ≥ 50%,TZ 日期未左删失,n = 7,987)</th><th>占比</th><th>说明</th></tr>
-    <tr><td>一致(GRW 季度落在 TZ 上下界 ±2 季内)</td><td><b>79.6%</b></td><td>6,355 站</td></tr>
-    <tr><td>GRW 偏晚(晚于 TZ 上界 2 季以上)</td><td><b>14.8%</b></td><td>中位数晚 4.1 季(四分位 2.4–7.2);1–10 公顷站 17.6%,更大站点约 10%</td></tr>
-    <tr><td>GRW 偏早(早于 TZ 下界 2 季以上)</td><td><b>5.6%</b></td><td>多见于 2018–2019 年</td></tr>
+    <tr><td>一致(GRW 季度落在 TZ 上下界 ±2 季内)</td><td><b>79.6%</b>(78.7–80.4%)</td><td>6,355 站</td></tr>
+    <tr><td>GRW 偏晚(晚于 TZ 上界 2 季以上)</td><td><b>14.8%</b>(14.1–15.6%)</td><td>中位数晚 4.1 季(四分位 2.4–7.2);1–10 公顷站 17.6%,更大站点约 10%</td></tr>
+    <tr><td>GRW 偏早(早于 TZ 下界 2 季以上)</td><td><b>5.6%</b>(5.1–6.1%)</td><td>多见于 2018–2019 年</td></tr>
   </table></div>
   <p class="note">结论是单靠 GRW 的日期过不了 G1,一致率约 80%,低于我定的 85%。所以我改了规则。主分析只用 GRW 和 TZ-SAM 一致的 6,355 个站,样本仍然够,进试点的站再逐个做哨兵-2 断点核对。处理时点取 GRW 季度和 TZ 上界中较早的那个,GRW 季度前 2 季到当季算过渡期,配不上 TZ-SAM 的站点只放进稳健性检验。日期偏晚的站会被当成"还没建",既把效应拉向零,又会造出假的预趋势,所以这一步一定要在事件研究之前做。</p>
+
+  <figure style="margin:16px 0 0"><img src="figures_main/fig2_quality.png" alt="图 2:建设日期与土地覆盖产品的质量核对" style="width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><figcaption class="note" style="margin-top:6px"><b>图 2</b> 数据质量。a 哨兵-2 断点减 GRW 季度,蓝底为 ±2 季;b 按 GRW 建设年份,与 TZ-SAM 上下界一致、偏晚、偏早的站点比例,柱顶为站点数(2024 年只有 60 站);c 建设前主导类别的混淆矩阵,按 GLC_FCS30D 的行归一化(面积百分比);d 森林风机三个抽样层的 Beta 后验(均匀先验),标注为判为森林的图片数和该层风机数。</figcaption></figure>
 
   <h3 style="margin-top:28px">⑤ 风机:建设前一年 30 m 覆盖(2018 年后新建 72,838 台)</h3>
   <div class="tw"><table>
@@ -413,7 +434,7 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>只有 CLCD 判森林</td><td>5,346</td><td>7 / 8(另 1 台在林缘)</td><td>0.88(0.53, 0.98)</td></tr>
     <tr><td>只有 GLC 判森林</td><td>892</td><td>5 / 10</td><td>0.50(0.24, 0.76)</td></tr>
   </table></div>
-  <p class="note">按层加权,2018 年后建在森林里的风机约 <b>8,900 台</b>(约 5,300–9,600),占 12% 左右,与 CLCD 接近。GLC_FCS30D 在南方山地漏掉了不少森林机位。两套产品都没判为森林的那一层(62,572 台)我没抽样,所以这个数是下限。还有几处不足:36 张图里有 11 张因为云或无数据看不了;10 m 影像分得清郁闭林冠和草地、耕地,分不清疏林和灌丛;判读目前只有一人完成,需要第二人独立复核。图集见 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results/wind_forest_visual">wind_forest_visual</a>,判读记录见 <code>results/wind_forest_visual_calls.csv</code>。</p>
+  <p class="note">每层的森林比例取均匀先验下的 Beta 后验,各抽 20,000 次后乘以该层风机数再相加:2018 年后建在森林里的风机约 <b>8,180 台</b>(95% 可信区间 6,420–9,220),占 11% 左右,与 CLCD 接近;把林缘那台算作非林,则为 7,660(5,830–8,930)。上一版写的 8,900(5,300–9,600)是各层比例的点估计直接乘风机数,区间取 Wilson 端点相乘,6/6 这样的小样本会把点估计推高,以这里为准。GLC_FCS30D 在南方山地漏掉了不少森林机位。两套产品都没判为森林的那一层(62,572 台)我没抽样,所以这个数是下限。还有几处不足:36 张图里有 11 张因为云或无数据看不了;10 m 影像分得清郁闭林冠和草地、耕地,分不清疏林和灌丛;判读目前只有一人完成,需要第二人独立复核。图集见 <a href="https://github.com/dingchenchen6/renewables-biodiversity-rs/tree/main/results/wind_forest_visual">wind_forest_visual</a>,判读记录见 <code>results/wind_forest_visual_calls.csv</code>。</p>
 </section>
 
 <section id="exposure">
@@ -422,16 +443,16 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="grid g4">
     <div class="card"><div style="font:700 26px Arial;color:var(--deep)">2,432 / 3,165</div>分布区里有 2018 年后新建光伏或风机的物种</div>
     <div class="card r"><div style="font:700 26px Arial;color:var(--deep)">256 / 422</div>其中受威胁物种</div>
-    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">50 → 37</div>新建光伏所在网格物种数的全国百分位,2018–21 → 2022–24</div>
-    <div class="card"><div style="font:700 26px Arial;color:var(--deep)">44 → 37</div>受威胁物种数的全国百分位,同期</div>
+    <div class="card a"><div style="font:700 26px Arial;color:var(--deep)">50 → 37</div>新建光伏所在网格物种数的全国百分位,2018–21 → 2022–24;差 −13.4(95% CI −19.8 至 −6.3)</div>
+    <div class="card"><div style="font:700 26px Arial;color:var(--deep)">44 → 37</div>受威胁物种数的全国百分位,同期;差 −7.8(−14.7 至 −0.9)</div>
   </div>
-  <figure style="margin:16px 0 0"><img src="results/figures/exposure_iucn.png" alt="新建光伏与风机所在网格的物种数、受威胁物种数、小分布区物种数在全国的百分位,分类群与时段" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <figure style="margin:16px 0 0"><img src="figures_main/fig4_exposure.png" alt="图 4:新建光伏与风机所在位置的物种数、受威胁物种数及代表性受威胁物种的暴露变化" style="width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><figcaption class="note" style="margin-top:6px"><b>图 4</b> 物种暴露。a 5 km 网格物种数(BirdLife 与 IUCN 分布图叠加)和 2018 年后新建的 ≥ 10 公顷光伏;b 新建设施所在网格物种数和受威胁物种数的全国百分位(光伏按面积、风机按台数加权),点和线为观测值及 25 km 区块自助 95% CI,灰条为省内随机选址零模型的 95% 范围,P 为单侧;c 光伏两时段百分位之差,按类群;d 暴露变化最大的十种受威胁物种,分布区内新建光伏面积占当期全国新建面积的比例,* 表示差值的 95% CI 不含 0。</figcaption></figure>
   <p class="note">光伏按面积加权,风机按台数加权;50 代表全国平均。2022 年以后光伏转向荒漠,所在位置的物种数和受威胁物种数在四个类群里都明显低于此前。风电两个时段几乎没有变化,物种数在第 46–51 百分位,受威胁物种数在第 39–46 百分位。小分布区物种这一列都在 50 附近,原因是大多数网格里根本没有小分布区物种,并列值把百分位压到了中间;换成"所在网格有没有小分布区物种",新建光伏是 9.0% → 6.9%,全国平均 17.9%。</p>
+  <p class="note"><b>区间和零模型。</b>百分位的区间来自 25 km 区块自助(999 次),空间上挨在一起的站点作为整体重抽。为了分开"整体往西北省份转移"和"省内往物种少的地方选址",我做了一个零模型:保持每个省的新建光伏面积不变,在省内陆地上随机布点 999 次。2018–2021 年的实际位置和省内随机选址没有差别(物种数百分位 50.5,零模型 50.7,单侧 p = 0.46);2022–2024 年零模型的期望已经降到 42.1,实际是 37.1,仍低于零模型(p = 0.009),受威胁物种也一样(36.6 对 44.7,p = 0.002)。粗略地说,2022 年后的下降约三分之二来自省份构成的变化,三分之一来自省内选址。分类群看,物种数百分位的下降在鸟类(−14.1,−19.9 至 −7.4)、兽类和两栖类都不含 0,爬行类不显著;受威胁物种的下降在两栖和爬行类不含 0,鸟类不显著(−3.3,−10.5 至 5.2)。风电两个时段都低于省内随机选址(p = 0.001),两期之间没有变化。</p>
   <h3 style="margin-top:24px">平均数之外:谁的暴露在上升</h3>
-  <p class="lead">按分布区内的新建光伏面积给受威胁物种排序,排在前面的几乎都是草原和荒漠物种。猎隼(EN)的分布区里有 2,563 km² 新建光伏,相当于 2018 年以来全部新增面积的 66%;草原雕(EN)2,191 km²,鹅喉羚(VU)2,063 km²。把时段拆开看,这批物种的暴露在 2022 年后进一步上升,东部的森林、湿地物种则在下降。</p>
-  <figure style="margin:0"><img src="results/figures/exposure_threatened_shift.png" alt="暴露最高的十种受威胁物种,其分布区内新建光伏面积占当期全部新建面积的比例,2018–2021 与 2022–2024 对比" style="width:100%;max-width:820px;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <p class="lead">按分布区内的新建光伏面积给受威胁物种排序,排在前面的几乎都是草原和荒漠物种。猎隼(EN)的分布区里有 2,563 km² 新建光伏,相当于 2018 年以来全部新增面积的 66%;草原雕(EN)2,191 km²,鹅喉羚(VU)2,063 km²。把时段拆开看(图 4d),这批物种的暴露在 2022 年后进一步上升,东部的森林、湿地物种则在下降。</p>
   <div class="grid g2" style="margin-top:14px">
-    <div class="card"><h3>和 NEE 的预测对得上</h3>Zhou 等(2026)预测,全国集中选址会降低与丰富度优先区的冲突,却加重与开阔、干旱生物群区和功能多样性的冲突。2022 年后的真实选址正是这样:按平均数看,新建光伏落在物种更少的地方;但猎隼分布区里新建光伏的占比从 57% 升到 82%,鹅喉羚从 43% 升到 70%,草原雕从 49% 升到 69%。代价没有消失,而是集中到了一小群旱地物种身上。</div>
+    <div class="card"><h3>和 NEE 的预测对得上</h3>Zhou 等(2026)预测,全国集中选址会降低与丰富度优先区的冲突,却加重与开阔、干旱生物群区和功能多样性的冲突。2022 年后的真实选址正是这样:按平均数看,新建光伏落在物种更少的地方;但猎隼分布区里新建光伏的占比从 57% 升到 82%(+25 个百分点,95% CI 14–36),鹅喉羚从 43% 升到 70%(+27,12–42),草原雕从 49% 升到 69%(+20,5–34)。下降最多的是蓝翡翠(−25)、黑眉锦蛇(−21)和白肩雕(−20),区间都不含 0;虎鼬(+10)和无蹼壁虎(−8)的变化区间含 0。代价没有消失,而是集中到了一小群旱地物种身上。</div>
     <div class="card a"><h3>风电值得单独看的物种</h3>按"分布区里有新风机的网格比例"排序,普氏原羚(EN)最突出:它只分布在青海湖周边,88 个 5 km 网格里有 22 个出现了新风机,共 208 台。其次是褐头鸫(VU,分布区 23% 的网格)和东北草原上的栗斑腹鹀(EN,1,545 台)。这些都只是分布区重叠,要确认实际影响,得看局地的种群和栖息地数据。</div>
   </div>
   <p class="note">需要说明的局限:专家分布图会高估物种在局地的实际出现,所以这里的暴露是"潜在共存",不是"确实受影响";光伏按质心归入 5 km 网格,风机按点位;份额指标对分布区很小的物种不稳定,排序时我只纳入分布区 ≥ 50 个网格的物种。下一步打算按生境偏好和海拔把分布区裁成 Area of Habitat,再和 NEE 的情景图层直接对比。脚本 <code>analysis/exposure_iucn.R</code>,结果 <code>results/exposure_*.csv</code>。</p>
@@ -456,20 +477,21 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <div class="callout">这一版让我决定改方案:对照不能只靠晚建站点,要加上按建设前 NDVI 轨迹、PVOUT、坡度等匹配的从未建设点;建设前的时段往前推到 2010 年,让预趋势检验更有把握;用 HonestDiD 报告效应的上下界;站内结局以后换成哨兵-2 10 m 的板间像元。这一版里 H3 既没被支持也没被否定,两个标准差指标都没测出变化。按建设前覆盖分层,裸地站点站内 −0.010(SE 0.005),草地站点 +0.017(SE 0.014),方向和 Li 等 2024 [16] 一致,但都不显著。改完的结果见下面。</div>
   <h3 style="margin-top:28px">改过的版本:匹配的从未建设对照</h3>
   <p class="lead">我先随机布了 3,000 个"从未建设"的候选点,离任何光伏边缘都在 2 km 以上,并排除了水体、冰雪、不透水面和湿地。然后按 2010–2016 年 NDVI 的水平、斜率和空间标准差,加上 PVOUT、坡度、海拔,做 1:3 的马氏距离匹配,省份和 CLCD 2017 年覆盖要求完全一致。匹配后各变量的标准化差都在 0.07 以内(匹配前坡度差 1.12、海拔差 0.72)。为了不让匹配"作弊",平行趋势只用没参与匹配的年份检验,也就是 2017 年到建设前。</p>
-  <figure style="margin:0"><img src="results/figures/pilot_nw_matched.png" alt="匹配对照与晚建对照的事件研究对比" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
-  <p class="note">蓝色为匹配的从未建设对照,橙色为上一版的晚建站点对照;浅色区为主要用于匹配的年份。站内 NDVI 在建设前 −5 到 −2 年基本是平的,<b>到 e = −1 先掉了一个台阶</b>。这和 G1 的发现对得上:GRW 的日期常常偏晚,清表、围栏早在面板能被看到之前就开始了。如果还拿 e = −1 当参照,这一步就被算进了"建设前",所以我把主设定改成 1 年预期期,以 e = −2 为参照。</p>
+  <figure style="margin:16px 0 0"><img src="figures_main/fig3_pilot.png" alt="图 3:西北旱区光伏站与匹配的从未建设点的事件研究、HonestDiD 敏感性和稳健性" style="width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><figcaption class="note" style="margin-top:6px"><b>图 3</b> 西北旱区试点,362 个光伏站对 530 个匹配的从未建设点。a–d Callaway–Sant'Anna 事件研究,1 年预期期,以 e = −2 为参照;竖线为 95% CI,来自按 50 km 区块聚类的乘数自助;灰底为主要用于匹配的年份,蓝底为预期期和建设当年。e HonestDiD 相对幅度界,协方差来自 199 次空间区块自助;Mbar 是建设后趋势偏离相对于建设前最大偏离的倍数。f 站内绿度效应在不同推断方法、匹配方式和逐省剔除下的估计。</figcaption></figure>
+  <p class="note">站内 NDVI 在建设前基本是平的,到 e = −1 先掉了一个台阶(图 3a)。这和 G1 的发现对得上:GRW 的日期常常偏晚,清表、围栏早在面板能被看到之前就开始了。如果还拿 e = −1 当参照,这一步就被算进了"建设前",所以主设定用 1 年预期期,以 e = −2 为参照。这个选择是看过数据之后做的,不设预期期的结果也一并报告(图 3f)。</p>
   <div class="tw" style="margin-top:12px"><table>
-    <tr><th>结局(362 站 vs 530 匹配点,1 年预期期)</th><th>建后 1–3 年效应(95% CI)</th><th>相对基线</th><th>留出检验 p</th><th>HonestDiD:Mbar = 0.5</th><th>Mbar = 1</th></tr>
-    <tr><td>站内 NDVI 均值</td><td>−0.029(−0.043, −0.016)</td><td>−11%</td><td>0.0003</td><td class="dn">(−0.054, −0.002)</td><td>(−0.073, 0.018)</td></tr>
-    <tr><td>站内 NDVI 标准差</td><td>−0.001(−0.004, 0.002)</td><td>—</td><td>0.036</td><td>含 0</td><td>含 0</td></tr>
-    <tr><td>外围环 NDVI 均值</td><td>+0.003(−0.005, 0.010)</td><td>—</td><td>&lt;0.001</td><td>含 0</td><td>含 0</td></tr>
-    <tr><td>外围环 NDVI 标准差</td><td>+0.007(0.004, 0.011)</td><td>+10%</td><td>0.058</td><td class="up">(0.001, 0.014)</td><td>含 0</td></tr>
+    <tr><th>结局(362 站 vs 530 匹配点,1 年预期期)</th><th>建后 1–3 年效应</th><th>相对基线</th><th>95% CI(50 km 区块)</th><th>Holm 校正 p</th><th>预趋势 p(区块协方差)</th><th>HonestDiD 区间不含 0 的最大 Mbar</th></tr>
+    <tr><td>站内 NDVI 均值</td><td>−0.029</td><td>−11%</td><td>(−0.059, −0.009)</td><td>0.19</td><td>0.72</td><td class="dn">0:(−0.055, −0.003)</td></tr>
+    <tr><td>站内 NDVI 标准差</td><td>−0.001</td><td>—</td><td>(−0.006, 0.004)</td><td>1</td><td>—</td><td>—</td></tr>
+    <tr><td>外围环 NDVI 均值</td><td>+0.003</td><td>—</td><td>(−0.008, 0.013)</td><td>1</td><td>—</td><td>—</td></tr>
+    <tr><td>外围环 NDVI 标准差</td><td>+0.007</td><td>+10%</td><td>(0.004, 0.012)</td><td><b>0.003</b></td><td>0.93</td><td class="up">0.5:(0.00004, 0.015)</td></tr>
   </table></div>
+  <p class="note">站内均值和外围标准差的区间是 199 次空间区块自助的百分位区间,另两项用 50 km 区块聚类的乘数自助。Holm 校正针对这 4 个结局,原始 p 用乘数自助。</p>
   <div class="grid g2" style="margin-top:14px">
-    <div class="card"><h3>我从中读到的</h3>站内绿度下降约 11%;只要建设后的趋势偏离不超过建设前最大偏离的一半,这个结论就成立。外围 60–500 m 的绿度没变,空间异质性却升了约 10%,我猜是道路、围栏和施工迹地把周边切成了斑块,方向和 H3 的"同质化"正好相反。站内异质性没变。不设预期期时站内效应是 −0.017(−0.028, −0.005),但那时参照年已经被处理过,估计偏小。</div>
-    <div class="card r"><h3>还不放心的地方</h3>留出检验对站内和外围环的均值仍然拒绝平行趋势,所以 G2 我只算它有条件通过,结论站得住靠的是 HonestDiD 给出的界,不是预趋势本身平坦。站内 30 m NDVI 混着面板和板间地表,下降里有一部分是面板造成的。下一步用哨兵-2 10 m 的板间像元把两者分开。</div>
+    <div class="card"><h3>我从中读到的</h3>外围 60–500 m 的空间异质性升了约 10%,这是这一版里最站得住的结果:区块自助区间不含 0,4 个结局 Holm 校正后 p = 0.003,建设后的趋势偏离即使达到建设前最大偏离的一半,区间仍不含 0。方向和 H3 的"同质化"相反,我猜是道路、围栏和施工迹地把周边切成了斑块。站内绿度下降约 11%,各种匹配方式和逐省剔除下点估计都是负的(−0.017 至 −0.041,图 3f),但把空间相关算进去以后,乘数自助 p = 0.063,Holm 校正后 0.19,HonestDiD 只在完全平行趋势(Mbar = 0)下不含 0。站内异质性和外围绿度都没变。</div>
+    <div class="card r"><h3>还不放心的地方</h3>上一版说站内效应在 Mbar = 0.5 时仍显著,依据的是把站点当成相互独立的推断,HonestDiD 的协方差还有行列没对齐的错误;改用空间区块自助的协方差后这个说法不成立,我撤回。上一版"留出检验拒绝平行趋势"也是独立假设下的结果,换成区块协方差后联合检验 p = 0.72(站内)和 0.93(外围标准差),但这个检验功效有限,不拒绝不等于平行趋势成立。伪建设年份安慰剂(200 次)的 95% 范围是 −0.015 至 0.016,观测值 −0.029 在范围之外,不过安慰剂没有处理空间相关,只作辅助。站内 30 m NDVI 混着面板和板间地表,下一步用哨兵-2 10 m 板间像元把两者分开。</div>
   </div>
-  <p class="note">脚本:<code>gee/11_matched_controls_panel.py</code>、<code>gee/11c_parallel_ndvi_panel.py</code>、<code>analysis/pilot_nw_matched.R</code>(<code>ANTIC=1</code> 为主设定)。结果:<code>results/matched_*.csv</code>。</p>
+  <p class="note">脚本:<code>gee/11_matched_controls_panel.py</code>、<code>gee/11c_parallel_ndvi_panel.py</code>、<code>analysis/pilot_nw_matched.R</code>(<code>ANTIC=1</code> 为主设定)、<code>analysis/rigor_pilot_matched.R</code>、<code>analysis/rigor_pilot_blockboot.R</code>。结果:<code>results/matched_*.csv</code>、<code>results/rigor_pilot_*.csv</code>。</p>
   <p class="note">脚本:<code>gee/09_pilot_nw_panel.py</code>(面板提取)、<code>analysis/pilot_nw_eventstudy.R</code>(主估计与图)、<code>analysis/pilot_nw_sensitivity.R</code>(预期期与省份条件化)。结果表在 <code>results/pilot_nw_*.csv</code>。</p>
 </section>
 
@@ -479,24 +501,26 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
   <h3>① 先把数据太少的站点排除</h3>
   <div class="tw"><table>
     <tr><th>样本(2018–2023 年建成、日期与 TZ-SAM 一致)</th><th>站点数</th></tr>
-    <tr><td>全部研究站点</td><td>6,682</td></tr>
+    <tr><td>全部研究站点</td><td>7,109</td></tr>
+    <tr><td>边缘 20 km 内至少有 1 份清单</td><td>1,654</td></tr>
+    <tr><td>四格各 ≥ 1 份清单</td><td>87</td></tr>
     <tr><td>近区、远区 × 建设前、建设后四格各 ≥ 3 份清单</td><td><b>38</b></td></tr>
     <tr><td>四格各 ≥ 5 份清单</td><td><b>24</b></td></tr>
     <tr><td>四格各 ≥ 10 份清单</td><td>15</td></tr>
   </table></div>
-  <p class="note">6,682 个站点里,观测够用的不到 1%。西北试点的 198 个站和面积超过 100 公顷的大站,5 km 内没有一个够格。所以下面的结论只适用于"有人去观鸟的光伏站",它们多在城郊,和典型的荒漠大基地不是一回事。</p>
+  <p class="note">7,109 个站点里,观测够用的不到 1%(图 5a、b)。西北试点的 198 个站和面积超过 100 公顷的大站,5 km 内没有一个够格。所以下面的结论只适用于"有人去观鸟的光伏站",它们多在城郊,和典型的荒漠大基地不是一回事。</p>
   <h3>② 物种数和占域</h3>
   <div class="tw"><table>
-    <tr><th>方法(近区 × 建设后)</th><th>38 站,29,655 份清单</th><th>24 站,23,972 份清单</th></tr>
-    <tr><td>清单物种数(对数;控制时长、月份、来源)</td><td>−10.3%(−22.9, +4.5)</td><td>−10.2%(−23.0, +4.6)</td></tr>
+    <tr><th>方法(近区 × 建设后)</th><th>38 站,29,644 份清单</th><th>24 站,23,972 份清单</th></tr>
+    <tr><td>清单物种数(对数;控制时长、月份、来源;野生聚类自助区间)</td><td>−10.3%(−20.6, +1.4;p = 0.21)</td><td>−10.2%(−20.3, +1.1;p = 0.23)</td></tr>
     <tr><td>同上 + 观察者固定效应</td><td>−9.6%(−24.3, +8.0)</td><td>−9.7%(−24.3, +7.7)</td></tr>
     <tr><td>泊松模型</td><td>−17.8%(−36.9, +7.2)</td><td>−17.6%(−36.4, +6.6)</td></tr>
-    <tr><td>多物种占域模型:群落平均占域(logit,120 种)</td><td>+0.22(−0.11, 0.59)</td><td class="dn">−0.41(−0.75, −0.04)</td></tr>
+    <tr><td>多物种占域模型:群落平均占域(logit,120 种)</td><td>+0.22(−0.11, 0.59)</td><td class="dn">−0.41(−0.75, −0.04);换一组随机子样本为 +0.09(−0.19, 0.36)</td></tr>
     <tr><td>占域模型派生丰富度 DiD</td><td>+1.6 种(−0.6, 3.9)</td><td class="dn">−3.9 种(−6.1, −1.7)</td></tr>
   </table></div>
-  <figure style="margin:12px 0 0"><img src="results/figures/site_birds_did.png" alt="38 个观鸟数据充足的光伏站的近远区事件研究" style="width:100%;max-width:640px;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
+  <figure style="margin:16px 0 0"><img src="figures_main/fig5_birds.png" alt="图 5:观鸟数据充足的光伏站、数据漏斗,以及近远区设计下各指标的估计" style="width:100%;max-width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"><figcaption class="note" style="margin-top:6px"><b>图 5</b> 观鸟数据能检出什么。a 2018–2023 年建成、日期经核对的光伏站中,边缘 20 km 内有观鸟清单的站点,以及近区、远区 × 建设前、建设后四格清单数都够的站点;b 数据漏斗;c 近区相对远区在建设后的变化,实心点为野生聚类自助区间(Webb 权重,999 次),空心点为聚类稳健区间;覆盖度标准化的 Hill 数在站点 × 区 × 时段层面估计;d 清单物种数的事件研究,参照年 e = −1;e 逐站剔除后的清单物种数估计,竖线为全部站点;f 多物种占域模型中群落层面的近区 × 建设后系数。底图同图 1。</figcaption></figure>
   <div class="grid g2" style="margin-top:14px">
-    <div class="card r"><h3>目前还下不了结论</h3>清单层面的估计在两个样本里一致,都是约 −10%,不显著。占域模型却随纳入门槛翻了方向:38 站略为正,数据更足的 24 站显著为负,派生丰富度少了 3.9 种。38 站我把链跑长后已经收敛(R-hat ≤ 1.03),所以翻转不是 MCMC 的问题,而是那 14 个只有 3–4 份清单的站点带偏了方向。事件研究还显示,近区在建设前 3 年就偏高(+0.27),有预趋势。</div>
+    <div class="card r"><h3>目前还下不了结论</h3>清单层面的估计在两个样本里一致,都是约 −10%。站点只有 24–38 个,聚类稳健标准误会偏小,所以我改用野生聚类自助(Webb 权重,999 次):38 站 95% CI −20.6% 至 +1.4%,p = 0.21。逐个剔除站点,估计在 −11.8% 到 −3.7% 之间,方向不变,但去掉一个站就从 −10% 缩到 −3.7%(图 5e),这个负值有相当一部分靠单个站撑着。占域模型最初看上去随纳入门槛翻了方向:38 站略为正,24 站显著为负(−0.41,−0.75 至 −0.04),派生丰富度少 3.9 种。我原以为是那 14 个只有 3–4 份清单的站点带偏了方向,复核时发现不是:做 24 站逐站剔除时,同一个模型在全部 24 站上重拟合得到 +0.09(−0.19, 0.36),24 个剔除样本的均值在 −0.05 到 +0.35 之间。两次拟合的唯一差别是每个"站点 × 区 × 时段"随机抽的 25 份清单不同,所以 −0.41 更可能是抽样的偶然结果,我不再把它当作负效应的证据。这一轮部分拟合的 R-hat 到了 1.41,链还不够长;8 个子样本种子、加长链的重复检验正在跑。事件研究还显示,近区在建设前 3 年就偏高(+0.27),有预趋势。</div>
     <div class="card"><h3>努力校正改变了什么</h3>只用时长这类协变量控制努力时,清单物种数下降约 10%;用占域模型把"检测到"和"真的在"分开以后,38 站的方向反而转正了。这让我更确定,光放努力协变量不够,检测过程得单独建模。占域模型的检测部分用了时长、日期及其平方和数据来源。</div>
   </div>
   <h3 style="margin-top:24px">③ 换成 Science 用的丰度型指标,但先把数据洗干净</h3>
@@ -508,7 +532,6 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>剔除所有计数均为 1 的调查(仅记有无,计数不含丰度信息;观鸟中心清单中占 40%)</td><td>−5,767</td></tr>
     <tr><td>按物种第 99 百分位截尾极端集群计数;保留单物种调查(H = 0 为有效值)</td><td>21,205 次进入分析</td></tr>
   </table></div>
-  <figure style="margin:12px 0 0"><img src="results/figures/site_birds_abundance.png" alt="丰度型多样性的近远区对照估计:清洗与努力校正后,以及覆盖度标准化" style="width:100%;height:auto;border:1px solid var(--line);border-radius:10px;background:#fff"></figure>
   <div class="tw" style="margin-top:12px"><table>
     <tr><th>近区 × 建设后</th><th>38 站</th><th>24 站</th></tr>
     <tr><td>① 朴素 Shannon H</td><td>+0.001(p = 0.99)</td><td>−0.002(p = 0.96)</td></tr>
@@ -519,11 +542,11 @@ footer{margin-top:60px;padding:30px 0 50px;border-top:1px solid var(--line);colo
     <tr><td>② q = 1,保留仅记有无的调查</td><td>+2.4%(p = 0.66)</td><td>+2.9%(p = 0.61)</td></tr>
     <tr><td>③ 覆盖度标准化 q = 0 / 1 / 2(C = 0.60)</td><td>+0.1% / −2.7% / −2.5%(区间约 ±25%)</td><td>+3.0% / +1.0% / +1.6%</td></tr>
   </table></div>
-  <p class="note">三种算法、两个样本,丰度型多样性都和零没有差别,也没有像占域模型那样随门槛翻转。总个体数少了约 14%,两个样本方向一致,但区间很宽。覆盖度标准化时各单元能共同达到的覆盖度只有 0.60,外推偏多,区间约 ±25%,只能排除很大的效应。这 38 个站多在城郊,结论推不到荒漠大基地上。脚本:<code>analysis/site_birds_abundance.R</code>。</p>
+  <p class="note">三种算法、两个样本,丰度型多样性都和零没有差别,也没有像占域模型那样随门槛翻转(图 5c)。覆盖度取 0.5、0.6、0.7,q 取 0、1、2,共 9 种组合,两个样本里野生聚类自助的 p 都在 0.65 以上。总个体数少了约 14%,两个样本方向一致,但区间很宽。覆盖度标准化时各单元能共同达到的覆盖度只有 0.60,外推偏多,区间约 ±25%,只能排除很大的效应。这 38 个站多在城郊,结论推不到荒漠大基地上。脚本:<code>analysis/site_birds_abundance.R</code>。</p>
 
   <h3 style="margin-top:24px">④ 放到 100 km 网格上看</h3>
   <p class="note">我也用鸟类群落项目里拟合好的 200 种时空多物种动态占域模型,把 2020–2024 年新增光伏 ≥ 5 km² 的 101 个网格和匹配网格做了比较:6 个多样性指标都没测出变化(丰富度 −0.32 种,−1.71 至 1.07),安慰剂检验也都是零。不过网格太粗,光伏最多只占网格面积的 1.7%,这个结果我只当背景参考。图与表:<code>results/figures/grid_birds_pv.png</code>、<code>results/grid_birds_pv_*.csv</code>。</p>
-  <div class="callout">接下来我打算把 24 站的时窗拉长(建设前 5 年、建设后 4 年),逐站剔除一个重跑,看负效应是不是某几个站撑起来的;占域模型里再加上站点 × 年份随机效应和观察者经验。荒漠大基地的鸟类,观鸟数据回答不了,只能靠结构化监测(样线、点计数、声学)或者 China BON-Birds。脚本:<code>analysis/site_birds_build.py</code>、<code>analysis/site_birds_did.R</code>。</div>
+  <div class="callout">清单物种数的逐站剔除已经做了(图 5e),占域模型的逐站剔除还在跑。接下来我打算把 24 站的时窗拉长(建设前 5 年、建设后 4 年);占域模型里再加上站点 × 年份随机效应和观察者经验。荒漠大基地的鸟类,观鸟数据回答不了,只能靠结构化监测(样线、点计数、声学)或者 China BON-Birds。脚本:<code>analysis/site_birds_build.py</code>、<code>analysis/site_birds_did.R</code>。</div>
 </section>
 
 <section id="code">
@@ -605,7 +628,7 @@ Export.table.toDrive({collection: wind, description: 'GRW_wind_China', fileForma
 
 </main>
 <footer><div class="wrap">
-  丁晨晨 · 北京大学 · 研究笔记 v0.3(2026 年 10 月)。这是一份还在进行中的研究记录,结果未经同行评议,请勿引用。文字与图示采用 CC BY 4.0。
+  丁晨晨 · 北京大学 · 研究笔记 v0.4(2026 年 10 月 24 日)。这是一份还在进行中的研究记录,结果未经同行评议,请勿引用。文字与图示采用 CC BY 4.0。
 </div></footer>
 </body>
 </html>

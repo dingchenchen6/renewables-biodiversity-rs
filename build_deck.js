@@ -42,6 +42,17 @@ function badge(s, x, y, label, color) {
 }
 const bul = (arr, size) => arr.map((t, i) => ({ text: t, options: { bullet: true, breakLine: i < arr.length - 1, fontSize: size || 14 } }));
 
+// 右侧结论卡片 / stacked finding cards on the right
+function cards(s, x, w, y0, items, h, gap) {
+  items.forEach((r, i) => {
+    const y = y0 + i * (h + gap);
+    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x, y, w, h, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
+    s.addText(r[0], { x: x + 0.18, y: y + 0.08, w: w - 0.36, h: 0.4, fontFace: F, fontSize: 14, bold: true, color: C.deep, margin: 0 });
+    s.addText(r[1], { x: x + 0.18, y: y + 0.48, w: w - 0.36, h: h - 0.55, fontFace: F, fontSize: 11, color: C.ink, valign: "top", margin: 0 });
+  });
+}
+const RED = "F3E7E4";
+
 let n = 0;
 
 // ---- 1 封面 / cover ------------------------------------------------------
@@ -49,7 +60,7 @@ let n = 0;
   const s = pres.addSlide(); s.background = { color: C.deep }; n++;
   // 太阳 + 风机意象:同心圆 / concentric rings motif
   [3.2, 2.4, 1.6].forEach((d, i) => s.addShape(pres.shapes.OVAL, { x: 10.4 - d / 2, y: 2.2 - d / 2, w: d, h: d, fill: { color: C.amber, transparency: 70 + i * 8 }, line: { color: C.amber, transparency: 60 } }));
-  s.addText("研究工作流 · v0.2", { x: 0.7, y: 1.1, w: 6, h: 0.4, fontFace: F, fontSize: 16, color: C.amber, margin: 0 });
+  s.addText("研究笔记 · v0.4", { x: 0.7, y: 1.1, w: 6, h: 0.4, fontFace: F, fontSize: 16, color: C.amber, margin: 0 });
   s.addText("中国风光电扩张的生物多样性影响", { x: 0.7, y: 1.7, w: 9, h: 0.9, fontFace: F, fontSize: 40, bold: true, color: C.white, margin: 0 });
   s.addText("遥感事后评估:占用了什么、改变了什么、与规划预测是否一致", { x: 0.7, y: 2.6, w: 9.5, h: 0.6, fontFace: F, fontSize: 20, color: "CFE3E6", margin: 0 });
   s.addText("真实设施足迹 × 季度建设日期 × 晚建站点反事实 × 不依赖观测努力的结局", { x: 0.7, y: 4.4, w: 11, h: 0.5, fontFace: F, fontSize: 16, color: C.white, margin: 0 });
@@ -365,6 +376,25 @@ let n = 0;
   pageNo(s, n);
 }
 
+// ---- 14a 复核清单 / audit of this round -------------------------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "这一轮复核改了什么", "查三件事:每个数有没有不确定性;推断是否计入空间相关和少聚类;换个设定结论还在不在");
+  const hdr = { fill: { color: C.deep }, color: C.white, bold: true, fontFace: F, fontSize: 12 };
+  const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 10.5, color: C.ink }, o) });
+  const rows = [
+    [{ text: "环节", options: hdr }, { text: "上一版及其问题", options: hdr }, { text: "现在的做法", options: hdr }, { text: "结论变化", options: hdr }],
+    [c("G1 日期", { bold: true }), c("只报比例,无区间"), c("Wilson 95% CI"), c("不变:77%(68–84%),79.6%(78.7–80.4%)")],
+    [c("土地覆盖产品", { bold: true }), c("只报一致率 75.5%"), c("Cohen's κ + 站点自助"), c("不变:κ = 0.62(0.61–0.63)")],
+    [c("森林风机", { bold: true }), c("点估计乘风机数,8,900(5,300–9,600)"), c("每层 Beta 后验,蒙特卡洛合计"), c("下调:8,180(6,420–9,220)", { color: C.red, bold: true })],
+    [c("西北试点", { bold: true }), c("站点当独立单元;HonestDiD 协方差未对齐"), c("50 km 区块乘数自助 + 199 次区块自助;Holm 校正"), c("站内绿度变弱(Holm 0.19);外围异质性成立(Holm 0.003)", { color: C.red, bold: true })],
+    [c("物种暴露", { bold: true }), c("只有点估计"), c("25 km 区块自助;省内随机选址零模型"), c("方向不变;约 2/3 省份构成、1/3 省内选址")],
+    [c("鸟类", { bold: true }), c("聚类稳健 SE,只有 24–38 个聚类"), c("野生聚类自助;逐站剔除;覆盖度 0.5–0.7"), c("仍不显著;−10% 有一部分靠单个站")],
+    [c("图件", { bold: true }), c("字号、配色、地图版式不统一"), c("183 mm、Helvetica 7 pt;标准地图 GS(2024)0650 + CBNR 版式"), c("图 1–5")],
+  ];
+  s.addTable(rows, { x: 0.6, y: 1.6, w: W - 1.2, colW: [1.6, 3.3, 3.75, 3.48], rowH: 0.6, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
+  pageNo(s, n);
+}
+
 // ---- 14b 首批实测 / first live results ----------------------------------
 {
   const s = pres.addSlide(); n++; title(s, "首批实测:中国站点规模与建设前生境", "GRW,项目 renewable-conservation,2026-10-20;只计 2018 年后新建站点(2017 为左删失)");
@@ -385,62 +415,52 @@ let n = 0;
        catAxisLabelFontFace: F, catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
        valAxisMaxVal: 45, valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
        showTitle: true, title: "2018 年后新建光伏:建设前一年 30 m 土地覆盖(按面积 %)", titleFontFace: F, titleFontSize: 14, titleColor: C.deep });
-  s.addText("CLCD 无稀疏植被类(并入草地),湿地并入水体;两产品逐站主导类别一致 75.5%。按站点数一半建在耕地上。风机森林:CLCD 12.5%、GLC 6.3%;分层抽 36 台哨兵-2 盲判定标后约 8,900 台(5,300–9,600),接近 CLCD。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  s.addText("CLCD 无稀疏植被类(并入草地),湿地并入水体;两产品逐站主导类别一致 75.5%(κ = 0.62)。按站点数一半建在耕地上。风机森林:CLCD 12.5%、GLC 6.3%;分层抽 36 台哨兵-2 盲判定标后约 8,180 台(95% 可信区间 6,420–9,220),接近 CLCD。", { x: 4.5, y: 6.2, w: 8.2, h: 0.75, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
   pageNo(s, n);
 }
 
-// ---- 14c 选址转向与 G1 / siting shift and date check ------------------------
+// ---- 14c 图 1:选址与建设前覆盖 / Figure 1 siting and pre-construction cover ----
 {
-  const s = pres.addSlide(); n++; title(s, "选址急转向裸地 · G1 日期三重核对", "左:建设前一年 30 m 覆盖按建设年份;右:哨兵-2 自动断点、目视复核、TZ-SAM 独立日期");
-  const yrs = ["2018", "2019", "2020", "2021", "2022", "2023", "2024*"];
-  const ser = [
-    ["裸地", [33.6, 18.7, 15.6, 18.9, 44.5, 73.9, 77.9], "CDB48E"],
-    ["稀疏植被", [7.9, 8.8, 10.8, 10.7, 12.1, 5.8, 2.6], "A9C3A0"],
-    ["草地", [23.7, 25.0, 41.9, 24.8, 16.1, 7.4, 2.6], C.sage],
-    ["耕地", [21.9, 28.9, 21.7, 31.2, 18.8, 7.4, 4.1], C.amber],
-    ["其他", [12.9, 18.6, 10.0, 14.4, 8.5, 5.5, 12.8], "8C969C"],
-  ];
-  s.addChart(pres.charts.BAR, ser.map(r => ({ name: r[0], labels: yrs, values: r[1] })),
-    { x: 0.5, y: 1.55, w: 7.4, h: 5.0, barDir: "col", barGrouping: "percentStacked", valAxisLabelFormatCode: "0%",
-      chartColors: ser.map(r => r[2]), showLegend: true, legendPos: "b", legendFontSize: 11, legendFontFace: F,
-      catAxisLabelFontFace: "Arial", catAxisLabelFontSize: 12, catAxisLabelColor: C.ink, valAxisLabelColor: C.mute,
-      valGridLine: { color: "E3E9EC", size: 0.5 }, catGridLine: { style: "none" },
-      showTitle: true, title: "新建光伏面积的建设前覆盖构成(%)", titleFontFace: F, titleFontSize: 13, titleColor: C.deep });
-  s.addText("* 2024 年 GRW 只到第 2 季度", { x: 0.6, y: 6.6, w: 7, h: 0.3, fontFace: F, fontSize: 10.5, color: C.mute, margin: 0 });
-  const g = [["77%", "哨兵-2 自动断点在 GRW 季度 ±2 内(100 站;预设 85%)", "F3E7E4"],
-             ["79.6%", "与 TZ-SAM 建设时间上下界一致(n = 7,987)", C.tint],
-             ["14.8%", "GRW 偏晚,中位数晚 4.1 季;目视复核 6 站中 5 站与 TZ 互证", C.tintA]];
-  g.forEach((r, i) => {
-    const y = 1.6 + i * 1.32;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.3, y, w: 4.45, h: 1.15, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
-    s.addText(r[0], { x: 8.5, y: y + 0.08, w: 4.1, h: 0.5, fontFace: "Arial", fontSize: 22, bold: true, color: C.deep, margin: 0 });
-    s.addText(r[1], { x: 8.5, y: y + 0.6, w: 4.1, h: 0.5, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
-  });
-  s.addText("对策:主样本只用 GRW 与 TZ-SAM 一致的 6,355 站;处理时点取两者较早者;GRW 季度前 2 季至当季为过渡期。", { x: 8.3, y: 5.6, w: 4.45, h: 1.0, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
+  const s = pres.addSlide(); n++; title(s, "图 1 选址急转向裸地", "2018 年后新建光伏与风机;建设前一年 CLCD v1.0.5 覆盖;底图为标准地图 GS(2024)0650");
+  s.addImage({ path: "figures_main/fig1_siting.png", x: 0.5, y: 1.55, w: 6.53, h: 5.35 });
+  cards(s, 7.35, 5.4, 1.6, [
+    ["2022 年后转向裸地", "裸地占新建光伏面积:2019–21 年 12–18% → 2022 年 42% → 2023 年 71% → 2024 年 70%;耕地同期由 22–31% 降到 4–7%(GLC_FCS30D 给出同样的拐点)", C.tintA],
+    ["大站在裸地,小站在耕地", "> 100 ha 的 484 站只占站点数 3%,却占面积 61%,其中裸地 55.8%;1–10 ha 站点 52% 建在耕地上", C.tint],
+    ["风机与森林", "CLCD 判为森林 12.5%(9,067 台),GLC 仅 6.3%;分层抽样定标约 8,180 台(95% 可信区间 6,420–9,220),未抽样层不计,是下限", RED],
+  ], 1.55, 0.2);
   pageNo(s, n);
 }
 
-// ---- 14c2 物种暴露 / species exposure ------------------------------------
+// ---- 14c1 图 2:数据质量 / Figure 2 data quality ---------------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "落进了谁的分布区:物种暴露", "BirdLife BOTW 2025 + IUCN 分布图,5 km 网格;中国 3,165 种,受威胁 422 种");
-  s.addImage({ path: "results/figures/exposure_threatened_shift.png", x: 0.5, y: 1.55, w: 7.4, h: 4.11 });
-  s.addText("当期新建光伏面积落在该物种分布区内的比例", { x: 0.5, y: 5.72, w: 7.4, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
-  const g = [["平均暴露下降", "新建光伏所在网格的物种数百分位 50 → 37,受威胁物种 44 → 37(2018–21 → 2022–24)", C.tint],
-             ["旱地物种暴露上升", "猎隼分布区内新建光伏占比 57% → 82%,鹅喉羚 43% → 70%,草原雕 49% → 69%", "F3E7E4"],
-             ["风电:普氏原羚", "88 个分布网格中 22 个出现新风机(208 台);只是分布区重叠,需局地数据确认", C.tintA]];
-  g.forEach((r, i) => {
-    const y = 1.6 + i * 1.5;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.2, y, w: 4.55, h: 1.32, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
-    s.addText(r[0], { x: 8.4, y: y + 0.1, w: 4.2, h: 0.4, fontFace: F, fontSize: 14, bold: true, color: C.deep, margin: 0 });
-    s.addText(r[1], { x: 8.4, y: y + 0.5, w: 4.2, h: 0.78, fontFace: F, fontSize: 11, color: C.ink, margin: 0 });
-  });
-  s.addText("与 NEE 预测一致:集中选址降低了丰富度冲突,代价转移到少数开阔、干旱生境物种上。", { x: 8.2, y: 6.1, w: 4.55, h: 0.7, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
+  const s = pres.addSlide(); n++; title(s, "图 2 数据质量:建设日期与土地覆盖产品", "G1 未通过 → 主样本只用 GRW 与 TZ-SAM 一致的站点");
+  s.addImage({ path: "figures_main/fig2_quality.png", x: 0.5, y: 1.6, w: 7.6, h: 4.98 });
+  cards(s, 8.35, 4.4, 1.6, [
+    ["77%(95% CI 68–84%)", "哨兵-2 自动断点在 GRW 季度 ±2 内(100 站);预设门槛 85%", RED],
+    ["79.6%(78.7–80.4%)", "与 TZ-SAM 建设时间上下界一致(n = 7,987);GRW 偏晚 14.8%,中位数晚 4.1 季", C.tint],
+    ["κ = 0.62(0.61–0.63)", "CLCD 与 GLC_FCS30D 建设前主导类别中等一致;分歧集中在南方山地的森林、灌丛和耕地", C.tintA],
+  ], 1.35, 0.18);
+  s.addText("对策:主样本 6,355 站;处理时点取两者较早者;GRW 季度前 2 季至当季为过渡期。目视判读需第二人独立复核。", { x: 8.35, y: 6.2, w: 4.4, h: 0.75, fontFace: F, fontSize: 11, color: C.teal, bold: true, margin: 0 });
+  pageNo(s, n);
+}
+
+// ---- 14c2 图 4:物种暴露 / Figure 4 species exposure ----------------------------
+{
+  const s = pres.addSlide(); n++; title(s, "图 4 落进了谁的分布区:物种暴露", "BirdLife BOTW 2025 + IUCN 分布图,5 km 网格;25 km 区块自助 999 次;省内随机选址零模型 999 次");
+  s.addImage({ path: "figures_main/fig4_exposure.png", x: 0.5, y: 1.55, w: 5.65, h: 5.4 });
+  cards(s, 6.45, 6.3, 1.6, [
+    ["平均暴露下降", "光伏所在网格物种数百分位 50.5 → 37.1(差 −13.4,95% CI −19.8 至 −6.3);受威胁物种 44.4 → 36.6(−7.8,−14.7 至 −0.9)", C.tint],
+    ["省份转移 + 省内选址", "2018–21 与省内随机选址无差别(p = 0.46);2022–24 零模型期望降到 42.1,实际 37.1 仍更低(p = 0.009)。约 2/3 来自省份构成,1/3 来自省内选址", C.tintA],
+    ["旱地物种暴露上升", "分布区内新建光伏占比:猎隼 +25 个百分点(14–36),鹅喉羚 +27(12–42),草原雕 +20(5–34);蓝翡翠、黑眉锦蛇、白肩雕下降", RED],
+    ["风电", "两期都低于省内随机选址(p = 0.001),两期之间没有变化;普氏原羚 88 个分布网格中 22 个出现新风机", C.tint],
+  ], 1.12, 0.14);
+  s.addText("与 NEE 预测一致:集中选址降低了丰富度冲突,代价转移到少数开阔、干旱生境物种上。", { x: 6.45, y: 6.5, w: 6.3, h: 0.45, fontFace: F, fontSize: 11.5, color: C.teal, bold: true, margin: 0 });
   pageNo(s, n);
 }
 
 // ---- 14d 西北旱区试点 / NW dryland pilot ---------------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "西北旱区试点:交错 DiD 事件研究", "365 站(2019–2021 处理 198,2022–2023 晚建对照 167);Landsat 生长季 NDVI,2016–2024");
+  const s = pres.addSlide(); n++; title(s, "西北旱区试点(第一版):晚建对照的事件研究", "365 站(2019–2021 处理 198,2022–2023 晚建对照 167);Landsat 生长季 NDVI,2016–2024");
   s.addImage({ path: "results/figures/pilot_nw_eventstudy.png", x: 0.5, y: 1.55, w: 7.3, h: 5.45 });
   const g = [["站内:G2 未通过", "建后 1–3 年 −0.022(−0.042, −0.002),但建设前偏离达 0.025;设 2 年预期期后降为 −0.004", "F3E7E4"],
              ["外围环:设计可用", "建设前平坦(p = 0.60);60–500 m 未检出外溢,−0.009(−0.026, 0.007)", C.tint],
@@ -455,57 +475,49 @@ let n = 0;
   pageNo(s, n);
 }
 
-// ---- 14d2 匹配对照修正版 / matched never-built controls --------------------
+// ---- 14d2 图 3:匹配对照 + 空间推断 / Figure 3 matched controls, spatial inference ----
 {
-  const s = pres.addSlide(); n++; title(s, "修正版:匹配的从未建设对照 + HonestDiD", "362 站 vs 530 个匹配点(2010–2016 NDVI 轨迹、PVOUT、坡度、海拔;省份与 CLCD 覆盖精确匹配);1 年预期期");
-  s.addImage({ path: "results/figures/pilot_nw_matched.png", x: 0.5, y: 1.55, w: 7.2, h: 5.22 });
-  const g = [["站内 NDVI −0.029(约 −11%)", "95% CI −0.043 至 −0.016;HonestDiD 在 Mbar = 0.5 仍显著(−0.054, −0.002)", "F3E7E4"],
-             ["外围环异质性 +0.007(约 +10%)", "外围 NDVI 均值不变;异质性上升,方向与 H3 同质化相反", C.tint],
-             ["G2 有条件通过", "e = −1 已先降一个台阶(清表早于面板可见);留出检验仍拒绝,稳健性靠 HonestDiD 的界", C.tintA]];
-  g.forEach((r, i) => {
-    const y = 1.6 + i * 1.6;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.0, y, w: 4.75, h: 1.42, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
-    s.addText(r[0], { x: 8.2, y: y + 0.1, w: 4.4, h: 0.42, fontFace: F, fontSize: 15, bold: true, color: C.deep, margin: 0 });
-    s.addText(r[1], { x: 8.2, y: y + 0.55, w: 4.4, h: 0.8, fontFace: F, fontSize: 11.5, color: C.ink, margin: 0 });
-  });
+  const s = pres.addSlide(); n++; title(s, "图 3 西北试点:匹配的从未建设对照 + 空间推断", "362 站 vs 530 个匹配点;1 年预期期(参照 e = −2);50 km 区块聚类;4 个结局 Holm 校正");
+  s.addImage({ path: "figures_main/fig3_pilot.png", x: 0.5, y: 1.6, w: 7.7, h: 4.96 });
+  cards(s, 8.45, 4.3, 1.6, [
+    ["外围异质性 +0.007(约 +10%)", "区块自助 95% CI 0.004–0.012;Holm p = 0.003;Mbar ≤ 0.5 仍不含 0。最站得住的信号,方向与 H3 同质化相反", C.tint],
+    ["站内 NDVI −0.029(约 −11%)", "区块自助 CI −0.059 至 −0.009,但乘数自助 p = 0.063、Holm 0.19;HonestDiD 只在 Mbar = 0 不含 0。各匹配与逐省剔除均为负", RED],
+    ["撤回的说法", "上一版\"Mbar = 0.5 仍显著\"和\"留出检验拒绝\"来自独立假设与未对齐的协方差;区块协方差下预趋势 p = 0.72 / 0.93,检验功效有限", C.tintA],
+  ], 1.62, 0.16);
   pageNo(s, n);
 }
 
-// ---- 14e 鸟类多样性 / bird diversity ------------------------------------
+// ---- 14e 图 5:鸟类 / Figure 5 birds -------------------------------------------
 {
-  const s = pres.addSlide(); n++; title(s, "鸟类:站点层面的近远区对照与多物种占域", "近区 0–5 km vs 远区 8–20 km,站点 × 年份固定效应;CBRC + eBird/GBIF 合并去重清单");
+  const s = pres.addSlide(); n++; title(s, "图 5 鸟类:观鸟数据能检出什么", "近区 0–5 km vs 远区 8–20 km,站点 × 年份固定效应;24–38 个聚类,用野生聚类自助(Webb,999 次)");
   const hdr = { fill: { color: C.deep }, color: C.white, bold: true, fontFace: F, fontSize: 12 };
   const c = (t, o = {}) => ({ text: t, options: Object.assign({ fontFace: F, fontSize: 11.5, color: C.ink }, o) });
   const rows = [
     [{ text: "近区 × 建设后", options: hdr }, { text: "38 站(每格 ≥ 3)", options: hdr }, { text: "24 站(每格 ≥ 5)", options: hdr }],
-    [c("清单物种数(控制时长、月份、来源)"), c("−10.3%(−22.9, +4.5)"), c("−10.2%(−23.0, +4.6)")],
+    [c("清单物种数(野生聚类自助)"), c("−10.3%(−20.6, +1.4)p = 0.21"), c("−10.2%(−20.3, +1.1)p = 0.23")],
     [c("+ 观察者固定效应"), c("−9.6%(−24.3, +8.0)"), c("−9.7%(−24.3, +7.7)")],
-    [c("占域模型:群落平均(logit)"), c("+0.22(−0.11, 0.59)"), c("−0.41(−0.75, −0.04)", { color: C.red, bold: true })],
+    [c("逐站剔除的范围"), c("−11.8% 至 −3.7%"), c("−11.8% 至 −3.7%")],
+    [c("占域模型:群落平均(logit)"), c("+0.22(−0.11, 0.59)"), c("−0.41(−0.75, −0.04);重抽子样本 +0.09(−0.19, 0.36)", { color: C.red, bold: true, fontSize: 10.5 })],
     [c("派生丰富度 DiD"), c("+1.6 种(−0.6, 3.9)"), c("−3.9 种(−6.1, −1.7)", { color: C.red, bold: true })],
   ];
-  s.addTable(rows, { x: 0.5, y: 1.6, w: 7.0, colW: [2.8, 2.1, 2.1], rowH: 0.55, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
-  s.addText("6,682 个研究站点中只有 38 个(<1%)四格各 ≥ 3 份清单;西北试点与大站全部不合格。", { x: 0.5, y: 4.55, w: 7.0, h: 0.5, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
-  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 5.15, w: 7.0, h: 1.6, fill: { color: "F3E7E4" }, line: { color: "F3E7E4" }, rectRadius: 0.06 });
-  s.addText("判断:不稳定,暂不下结论。占域结果随纳入门槛翻转(38 站已收敛,R-hat ≤ 1.03),由 14 个稀疏站点驱动;近区建设前 3 年偏高,存在预趋势。大型荒漠基地需结构化监测或 China BON-Birds。", { x: 0.7, y: 5.25, w: 6.6, h: 1.4, fontFace: F, fontSize: 12, color: C.ink, margin: 0 });
-  s.addImage({ path: "results/figures/site_birds_did.png", x: 7.8, y: 1.6, w: 5.0, h: 3.17 });
-  s.addText("清单层面事件研究(38 站)", { x: 7.8, y: 4.85, w: 5.0, h: 0.35, fontFace: F, fontSize: 11, color: C.mute, margin: 0 });
+  s.addTable(rows, { x: 0.5, y: 1.6, w: 7.1, colW: [2.6, 2.25, 2.25], rowH: 0.55, border: { type: "solid", pt: 0.75, color: "D5DEE2" }, valign: "middle" });
+  s.addText("7,109 个研究站点中只有 38 个(<1%)四格各 ≥ 3 份清单;西北试点与 > 100 ha 大站全部不合格。", { x: 0.5, y: 5.05, w: 7.1, h: 0.45, fontFace: F, fontSize: 11.5, color: C.mute, margin: 0 });
+  s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.5, y: 5.55, w: 7.1, h: 1.35, fill: { color: RED }, line: { color: RED }, rectRadius: 0.06 });
+  s.addText("判断:暂不下结论。−10% 不显著,且去掉一个站就缩到 −3.7%;占域的 −0.41 换一组随机子样本就变成 +0.09,不作为证据;近区建设前 3 年偏高,有预趋势。大型荒漠基地需结构化监测或 China BON-Birds。", { x: 0.7, y: 5.62, w: 6.7, h: 1.2, fontFace: F, fontSize: 12, color: C.ink, margin: 0 });
+  s.addImage({ path: "figures_main/fig5_birds.png", x: 7.95, y: 1.55, w: 4.78, h: 5.35 });
   pageNo(s, n);
 }
 
-// ---- 14f 丰度型多样性 / abundance-based diversity ----------------------------
+// ---- 14f 丰度型多样性 / abundance-based diversity (Figure 5c) ----------------------
 {
   const s = pres.addSlide(); n++; title(s, "鸟类丰度型多样性:Science 指标 + 评论文章的清洗与努力校正", "同一近远区设计;38 站 33,327 份清单 → 合并重复 26,972 → 剔除仅记有无 5,767 → 21,205 次调查");
-  s.addImage({ path: "results/figures/site_birds_abundance.png", x: 0.5, y: 1.55, w: 8.0, h: 3.84 });
-  const g = [["全部与零无差异", "朴素 Shannon、清洗后 q = 1/2、观察者 FE、覆盖度标准化 q = 0/1/2;24 站结果一致", C.tint],
-             ["总个体数 −14%(n.s.)", "两个样本方向一致,区间很宽", C.tintA],
-             ["功效有限", "覆盖度标准化的共同覆盖度仅 0.60,区间约 ±25%;只能排除大效应,且仅代表城郊站点", "F3E7E4"]];
-  g.forEach((r, i) => {
-    const y = 1.6 + i * 1.5;
-    s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 8.8, y, w: 3.95, h: 1.32, fill: { color: r[2] }, line: { color: r[2] }, rectRadius: 0.06 });
-    s.addText(r[0], { x: 9.0, y: y + 0.1, w: 3.6, h: 0.4, fontFace: F, fontSize: 14, bold: true, color: C.deep, margin: 0 });
-    s.addText(r[1], { x: 9.0, y: y + 0.5, w: 3.6, h: 0.78, fontFace: F, fontSize: 11, color: C.ink, margin: 0 });
-  });
-  s.addText("清洗:同日同点多人清单合并(计数取最大);剔除所有计数为 1 的调查(观鸟中心占 40%);99% 截尾;保留单物种调查(按因变量剔除即样本选择)。", { x: 0.5, y: 5.55, w: 8.0, h: 0.9, fontFace: F, fontSize: 12, color: C.teal, bold: true, margin: 0 });
+  s.addImage({ path: "figures_main/panels/fig5c_bird_effects.png", x: 0.5, y: 1.55, w: 7.6, h: 4.66 });
+  cards(s, 8.45, 4.3, 1.6, [
+    ["全部与零无差异", "朴素 Shannon、清洗后 q = 1/2、观察者 FE;覆盖度标准化 9 种组合(C = 0.5–0.7 × q = 0–2)野生聚类自助 p 均 ≥ 0.65", C.tint],
+    ["总个体数 −14%(n.s.)", "两个样本方向一致,区间很宽", C.tintA],
+    ["功效有限", "覆盖度标准化区间约 ±25%,只能排除大效应;38 个站多在城郊,推不到荒漠大基地", RED],
+  ], 1.45, 0.18);
+  s.addText("清洗:同日同点多人清单合并(计数取最大);剔除所有计数为 1 的调查(观鸟中心占 40%);99% 截尾;保留单物种调查。实心点为野生聚类自助区间,空心点为聚类稳健区间。", { x: 0.5, y: 6.28, w: 12.25, h: 0.6, fontFace: F, fontSize: 11, color: C.teal, bold: true, margin: 0 });
   pageNo(s, n);
 }
 
@@ -559,16 +571,17 @@ let n = 0;
   s.addText("下一步", { x: 0.7, y: 0.8, w: 8, h: 0.8, fontFace: F, fontSize: 36, bold: true, color: C.white, margin: 0 });
   const ns = [
     "站内结局改用哨兵-2 10 m 板间像元,分离面板机械效应",
-    "鸟类:24 站留一检验与更长时窗;大型基地布设结构化监测",
+    "鸟类:占域模型逐站剔除与更长时窗;大型基地布设结构化监测",
+    "G1 日期与森林风机的目视判读请第二人独立复核",
     "联系 NEE 作者组索取情景图层",
     "通过鸟类学合作网络接洽 China BON-Birds",
   ];
   ns.forEach((t, i) => {
-    const y = 2.0 + i * 1.05;
+    const y = 1.85 + i * 0.92;
     badge(s, 0.8, y, String(i + 1), C.amber);
     s.addText(t, { x: 1.7, y, w: 10.5, h: 0.6, fontFace: F, fontSize: 18, color: C.white, valign: "middle", margin: 0 });
   });
-  s.addText("在线版本与数据源清单:dingchenchen6.github.io/renewables-biodiversity-rs", { x: 0.7, y: 6.5, w: 11, h: 0.4, fontFace: F, fontSize: 13, color: "9FB8BE", margin: 0 });
+  s.addText("在线版本与数据源清单:dingchenchen6.github.io/renewables-biodiversity-rs", { x: 0.7, y: 6.65, w: 11, h: 0.4, fontFace: F, fontSize: 13, color: "9FB8BE", margin: 0 });
 }
 
 pres.writeFile({ fileName: "RS_Renewables_Biodiversity_Workflow.pptx" }).then(f => console.log("wrote", f));

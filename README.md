@@ -2,14 +2,14 @@
 
 **在线页面**:https://dingchenchen6.github.io/renewables-biodiversity-rs/
 
-研究笔记 v0.3(2026 年 10 月),丁晨晨,北京大学。
+研究笔记 v0.4(2026 年 10 月 24 日),丁晨晨,北京大学。
 
 以遥感识别的真实设施足迹与季度建设日期为暴露,以不依赖观测努力的栖息地状况指标与物种暴露为结局,以晚建站点为反事实,评估中国地面光伏与陆上风电扩张的生物多样性代价,并检验 Zhou et al. (2026, *Nat. Ecol. Evol.*) 的选址情景预测。
 
 | 文件 | 内容 |
 |---|---|
 | `index.html` | 在线页面:定位、证据台账、核心问题、七个模块、数据源与获取、质量关口、两周 pilot、GEE 起步脚本、文献 |
-| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 25 页幻灯片 |
+| `RS_Renewables_Biodiversity_Workflow.pptx` / `.pdf` | 27 页幻灯片 |
 | `build_deck.js` | 幻灯片生成脚本(pptxgenjs) |
 | `gee/01_preconstruction_landcover.py` | 2018 年后新建光伏的建设前一年 30 m 土地覆盖(GLC_FCS30D) |
 | `gee/02_g1_date_check.py` | G1:抽 100 站取哨兵-2 季度反射率序列 |
@@ -28,8 +28,14 @@
 | `analysis/site_birds_abundance.R` | 丰度型多样性(Science 指标):清洗、努力校正与覆盖度标准化 Hill 数 |
 | `analysis/exposure_iucn.R` | 物种暴露:BirdLife BOTW 2025 与 IUCN 分布图,5 km 网格,设施加权百分位与物种层面暴露 |
 | `analysis/grid_birds_pv.R` | 100 km 网格检测校正多样性的匹配对照(背景参照) |
-| `results/` | 上述脚本输出(站点级与汇总表、目视图集 `g1_visual/`;GRW、TZ-SAM、GLC_FCS30D 的派生量) |
+| `analysis/rigor_small.R` | 复核:G1 比例的 Wilson 区间;CLCD 与 GLC 主导类别的 Cohen's κ(站点自助);森林风机分层 Beta 后验 |
+| `analysis/rigor_pilot_matched.R` · `analysis/rigor_pilot_blockboot.R` | 复核:西北试点按 50 km 区块的乘数自助、Holm 校正、匹配与逐省稳健性、伪建设年份安慰剂;199 次空间区块自助的协方差与 HonestDiD(`results/rigor_pilot_honestdid.csv` 为协方差未对齐的旧版,已作废) |
+| `analysis/rigor_exposure.R` | 复核:暴露百分位的 25 km 区块自助;保持各省面积不变的省内随机选址零模型;物种份额的区间 |
+| `analysis/rigor_birds.R` · `analysis/rigor_birds_occ_loso.R` · `analysis/rigor_birds_occ_seeds.R` | 复核:鸟类近远区设计的野生聚类自助(Webb 权重)、逐站剔除、覆盖度 0.5–0.7;占域模型的逐站剔除与子样本种子敏感性 |
+| `analysis/fig_theme.R` · `analysis/china_std_map.R` · `analysis/fig1_siting.R` … `analysis/fig5_birds.R` | 主图 1–5(183 mm、Helvetica 7 pt);中国地图沿用 CBNR / 红外相机项目的标准地图模块(自然资源部 GS(2024)0650) |
+| `figures_main/` | 主图 PDF(矢量)与 600 dpi PNG;`panels/` 为幻灯片用的单独分图 |
+| `results/` | 上述脚本输出(含 `rigor_*.csv` 复核结果)(站点级与汇总表、目视图集 `g1_visual/`;GRW、TZ-SAM、GLC_FCS30D 的派生量) |
 
-GEE 数据集 ID 已于 2026-10-20 在项目 renewable-conservation 中在线实测。Python 脚本运行:`HTTPS_PROXY=socks5h://127.0.0.1:7897 python gee/01_preconstruction_landcover.py`(国内网络需代理;需 earthengine-api、pandas、pysocks)。CLCD v1.0.5(Yang & Huang,Zenodo doi:10.5281/zenodo.18180184,CC BY 4.0)需先下载 2017–2023 年全国幅,再设 `CLCD_DIR` 运行 `gee/04`。派生数据遵循各源数据许可:GRW(CC BY 4.0)、GLC_FCS30D、TZ-SAM(CC BY-NC 4.0,`results/g1_tzsam_*` 仅限非商业使用)。`results/g1_visual/` 图集含经修改的 Copernicus Sentinel 数据(2018–2024)。
+GEE 数据集 ID 已于 2026-10-20 在项目 renewable-conservation 中在线实测。Python 脚本运行:`HTTPS_PROXY=socks5h://127.0.0.1:7897 python gee/01_preconstruction_landcover.py`(国内网络需代理;需 earthengine-api、pandas、pysocks)。CLCD v1.0.5(Yang & Huang,Zenodo doi:10.5281/zenodo.18180184,CC BY 4.0)需先下载 2017–2023 年全国幅,再设 `CLCD_DIR` 运行 `gee/04`。主图中国地图底图为自然资源部标准地图 GS(2024)0650,未修改要素,只做了重投影。派生数据遵循各源数据许可:GRW(CC BY 4.0)、GLC_FCS30D、TZ-SAM(CC BY-NC 4.0,`results/g1_tzsam_*` 仅限非商业使用)。`results/g1_visual/` 图集含经修改的 Copernicus Sentinel 数据(2018–2024)。
 
 文字与图示:CC BY 4.0;代码:MIT。
